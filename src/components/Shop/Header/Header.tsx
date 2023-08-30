@@ -1,6 +1,7 @@
 import { Box } from "@mui/material"
 
-import { Logo, Navbar } from "../.."
+import { Logo } from "../.."
+import { Navbar } from "./Navbar"
 
 export const Header = () => {
   return (
