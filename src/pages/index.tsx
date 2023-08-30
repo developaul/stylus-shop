@@ -1,10 +1,10 @@
+import { ShopLayout } from "@/layouts"
+
 const HomePage = () => {
   return (
-    <>
-      <p>
-        HomePage
-      </p>
-    </>
+    <ShopLayout title="Tienda" >
+
+    </ShopLayout>
   )
 }
 
