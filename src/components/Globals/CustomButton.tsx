@@ -1,6 +1,5 @@
-import { Button, ButtonProps } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import { FC } from 'react';
+import { Button, ButtonProps, styled } from '@mui/material';
 
 const ButtonStyled = styled(Button)`
   border-color: #C8C8C8;

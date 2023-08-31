@@ -1,8 +1,7 @@
-import { useRouter } from 'next/router'
 import { useMemo } from 'react';
+import { useRouter } from 'next/router'
 
-import { Box, ButtonBase, } from '@mui/material'
-import { styled } from '@mui/material/styles';
+import { Box, ButtonBase, styled } from '@mui/material'
 
 const BoxStyled = styled(Box)`
   margin: 40px 0;

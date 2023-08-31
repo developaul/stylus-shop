@@ -1,16 +1,10 @@
 import { FC } from 'react'
 import {
   FormControl,
-
+  styled,
   TextField,
   Typography
 } from '@mui/material'
-import { styled } from '@mui/material/styles';
-
-interface Props {
-  label: string;
-  placeholder: string;
-}
 
 const TextFieldStyled = styled(TextField)`
   background-color: #F6F6F6;
@@ -24,6 +18,11 @@ const FormControlStyled = styled(FormControl)`
     border-radius: 14px;
   }
 `
+
+interface Props {
+  label: string;
+  placeholder: string;
+}
 
 export const CustomTextField: FC<Props> = ({ label, placeholder }) => {
 

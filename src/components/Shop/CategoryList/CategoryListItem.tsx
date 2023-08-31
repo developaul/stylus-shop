@@ -1,10 +1,9 @@
 import { FC } from 'react'
-import { ButtonBase, Grid, Typography } from '@mui/material'
-import { styled } from '@mui/material/styles';
-
-import { Category as ICategory } from '@/interfaces'
 import Image from 'next/image'
 import { useRouter } from 'next/router';
+import { ButtonBase, Grid, Typography, styled } from '@mui/material'
+
+import { Category as ICategory } from '@/interfaces'
 
 const ButtonBaseStyled = styled(ButtonBase)`
   padding: 14px 24px;
