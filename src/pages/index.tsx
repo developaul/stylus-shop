@@ -1,5 +1,8 @@
-import { CategoryGrid, CategoryList, ProductSlider } from "@/components"
 import { ShopLayout } from "@/layouts"
+import {
+  CategoryGrid, CategoryList, Footer,
+  ProductSlider, Services, StoreSlider
+} from "@/components"
 
 import { products } from "@/constants"
 
@@ -12,6 +15,9 @@ const HomePage = () => {
         products={products}
       />
       <CategoryGrid />
+      {/* <StoreSlider /> */}
+      <Services />
+      <Footer />
     </ShopLayout>
   )
 }
