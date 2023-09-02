@@ -3,7 +3,12 @@ export const productSliderBreakPoints = {
     slidesPerView: 1,
     centeredSlides: true
   },
-  [600]: {
+  [550]: {
+    slidesPerView: 2,
+    spaceBetween: 10,
+    centeredSlides: false
+  },
+  [750]: {
     slidesPerView: 3,
     spaceBetween: 10,
     centeredSlides: false

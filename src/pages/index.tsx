@@ -1,4 +1,4 @@
-import { CategoryList, ProductSlider } from "@/components"
+import { CategoryGrid, CategoryList, ProductSlider } from "@/components"
 import { ShopLayout } from "@/layouts"
 
 import { products } from "@/constants"
@@ -11,6 +11,7 @@ const HomePage = () => {
         title="Los más vendidos"
         products={products}
       />
+      <CategoryGrid />
     </ShopLayout>
   )
 }
