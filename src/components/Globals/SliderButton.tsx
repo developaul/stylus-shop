@@ -11,7 +11,7 @@ import { Direction } from '@/interfaces';
 const IconButtonStyled = styled(IconButton)`
   position: absolute;
   top: 50%;
-  z-index: 0;
+  transform: translateY(-50%);
   border: 1px solid #000;
 `
 

@@ -4,7 +4,7 @@ import {
   ProductSlider, Services, StoreSlider
 } from "@/components"
 
-import { products } from "@/constants"
+import { products, stores } from "@/constants"
 
 const HomePage = () => {
   return (
@@ -15,7 +15,9 @@ const HomePage = () => {
         products={products}
       />
       <CategoryGrid />
-      {/* <StoreSlider /> */}
+      <StoreSlider
+        stores={stores}
+      />
       <Services />
       <Footer />
     </ShopLayout>

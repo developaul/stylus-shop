@@ -4,6 +4,9 @@ import { createTheme } from "@mui/material";
 
 export const lightTheme = createTheme({
   typography: {
+    subtitle1: {
+      fontSize: 28,
+    },
     subtitle2: {
       fontSize: 14,
       [breakPoints.md]: {
