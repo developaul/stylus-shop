@@ -1,6 +1,6 @@
 import { ShopLayout } from "@/layouts"
 import {
-  CategoryGrid, CategoryList, Footer,
+  CategoryGrid, CategoryList,
   ProductSlider, Services, StoreSlider
 } from "@/components"
 
@@ -19,7 +19,6 @@ const HomePage = () => {
         stores={stores}
       />
       <Services />
-      <Footer />
     </ShopLayout>
   )
 }

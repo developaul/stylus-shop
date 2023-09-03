@@ -1,8 +1,8 @@
-import { FC, ReactElement } from 'react'
 import Head from 'next/head'
+import { FC, ReactElement } from 'react'
 import { Container } from '@mui/material'
 
-import { Header } from '@/components'
+import { Footer, Header } from '@/components'
 
 interface Props {
   children: ReactElement | ReactElement[]
@@ -22,6 +22,8 @@ export const ShopLayout: FC<Props> = ({ children, title }) => {
         <Header />
 
         {children}
+
+        <Footer />
       </Container>
     </>
   )
