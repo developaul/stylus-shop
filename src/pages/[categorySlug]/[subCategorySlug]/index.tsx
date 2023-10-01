@@ -4,15 +4,16 @@ import { Breadcrumbs, Link, Typography } from '@mui/material'
 
 import {
   getAllCategorySlugs,
-  getCategoryBySlug,
   getAllSubCategorySlugs,
-  getSubCategoryBySlug
+  getSubCategoryBySlug,
+  getAllCategories
 } from '@/server'
 
 import {
   CategoryList,
   Services, StoreSlider,
-  ShopLayout
+  ShopLayout,
+  ProductList
 } from '@/components'
 
 import { Category, SubCategory } from '@/interfaces'
@@ -20,14 +21,15 @@ import { stores } from '@/constants'
 
 interface Props {
   category: Category
+  categories: Category[]
   subCategory: SubCategory
 }
 
-const SubCategoryPage: NextPage<Props> = ({ category, subCategory }) => {
+const SubCategoryPage: NextPage<Props> = ({ categories, category, subCategory }) => {
 
   return (
     <ShopLayout title={`Ropa para ${category.title}`} >
-      <CategoryList />
+      <CategoryList categories={categories} />
 
       <Breadcrumbs
         sx={{
@@ -54,6 +56,9 @@ const SubCategoryPage: NextPage<Props> = ({ category, subCategory }) => {
         <Typography color="text.primary">{subCategory.title}</Typography>
       </Breadcrumbs>
 
+      <ProductList
+        subCategory={subCategory}
+      />
 
       <StoreSlider
         stores={stores}
@@ -82,10 +87,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { categorySlug, subCategorySlug } = params as { categorySlug: string, subCategorySlug: string }
 
-  const [category, subCategory] = await Promise.all([
-    getCategoryBySlug(categorySlug),
+  const [categories, subCategory] = await Promise.all([
+    getAllCategories(),
     getSubCategoryBySlug(subCategorySlug)
   ])
+
+  const category = categories.find((category) => category.slug === categorySlug)
 
   if (!category || !subCategory) {
     return {
@@ -99,6 +106,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: {
       category,
+      categories,
       subCategory
     },
     revalidate: 86_400

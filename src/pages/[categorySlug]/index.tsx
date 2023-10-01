@@ -4,8 +4,8 @@ import { Typography } from '@mui/material'
 
 import {
   getAllCategorySlugs,
-  getCategoryBySlug,
-  getAllSubCategories
+  getAllSubCategories,
+  getAllCategories
 } from '@/server'
 
 import {
@@ -19,14 +19,15 @@ import { products, stores } from '@/constants'
 
 interface Props {
   category: Category
+  categories: Category[]
   subCategories: SubCategory[]
 }
 
-const CategoryPage: NextPage<Props> = ({ category, subCategories }) => {
+const CategoryPage: NextPage<Props> = ({ categories, category, subCategories }) => {
 
   return (
     <ShopLayout title={`Ropa para ${category.title}`} >
-      <CategoryList />
+      <CategoryList categories={categories} />
 
       <Typography
         sx={{ textAlign: 'center', mt: 5, mb: 2 }}
@@ -67,10 +68,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { categorySlug } = params as { categorySlug: string }
 
-  const [category, subCategories] = await Promise.all([
-    getCategoryBySlug(categorySlug),
+  const [categories, subCategories] = await Promise.all([
+    getAllCategories(),
     getAllSubCategories()
   ])
+
+  const category = categories.find((category) => category.slug === categorySlug)
 
   if (!category) {
     return {
@@ -84,6 +87,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: {
       category,
+      categories,
       subCategories
     },
     revalidate: 86_400

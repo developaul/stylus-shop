@@ -71,4 +71,25 @@ export const products: Product[] = [
     image: '/images/blusa.svg',
     title: 'Blusa 7'
   }
-] 
+]
+
+export const enum Size {
+  'XS' = 'XS',
+  'S' = 'S',
+  'M' = 'M',
+  'L' = 'L',
+  'XL' = 'XL',
+  'XXL' = 'XXL',
+  'XXXL' = 'XXXL',
+  'All' = 'Todos'
+}
+
+export const SizeEnum = [
+  Size.XS,
+  Size.S,
+  Size.M,
+  Size.L,
+  Size.XL,
+  Size.XXL,
+  Size.XXXL,
+]

@@ -1,8 +1,12 @@
 export * from './Header'
+export * from './Footer'
+
 export * from './CategoryList'
-export * from './ProductSlider'
 export * from './CategoryGrid'
 export * from './SubCategoryGrid'
+
+export * from './ProductSlider'
+export * from './ProductList'
+
 export * from './StoreSlider'
 export * from './Services'
-export * from './Footer'

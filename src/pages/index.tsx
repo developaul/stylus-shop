@@ -19,7 +19,7 @@ interface Props {
 const HomePage: NextPage<Props> = ({ categories }) => {
   return (
     <ShopLayout title="Tienda" >
-      <CategoryList />
+      <CategoryList categories={categories} />
       <ProductSlider
         title="Los más vendidos"
         products={products}
