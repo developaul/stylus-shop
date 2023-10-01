@@ -1,4 +1,4 @@
-import { AuthLayout } from '@/layouts'
+import { AuthLayout } from '@/components/layouts'
 import { RegisterForm } from '@/components'
 
 const Register = () => {

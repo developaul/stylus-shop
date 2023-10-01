@@ -1,6 +1,6 @@
 import { Box, Container } from "@mui/material"
 
-import { AuthLayout } from "@/layouts"
+import { AuthLayout } from "@/components/layouts"
 import { SignInForm } from "@/components"
 
 const Signin = () => {

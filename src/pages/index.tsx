@@ -1,4 +1,4 @@
-import { ShopLayout } from "@/layouts"
+import { ShopLayout } from "@/components/layouts"
 import {
   CategoryGrid, CategoryList,
   ProductSlider, Services, StoreSlider

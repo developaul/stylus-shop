@@ -1,31 +1,28 @@
 import { Category } from "@/interfaces";
 
-export const categories: Category[] = [
+export const categories: Omit<Category, '_id'>[] = [
   {
-    _id: '1',
     title: 'Damas',
-    icon: '/icons/zapatos-de-mujer-bailaora-flamenca.svg',
+    icon: '/category/women.svg',
     slug: 'mujer',
     image: '/images/pantalones.svg'
   },
   {
-    _id: '2',
     title: 'Caballeros',
-    icon: '/icons/corbata.svg',
+    icon: '/category/men.svg',
     slug: 'hombre',
     image: '/images/pantalones.svg'
   },
   {
-    _id: '3',
+
     title: 'Niños',
-    icon: '/icons/gorro.svg',
+    icon: '/category/kid.svg',
     slug: 'ninos',
     image: '/images/pantalones.svg'
   },
   {
-    _id: '4',
     title: 'Bebés',
-    icon: '/icons/ropa-de-bebe.svg',
+    icon: '/category/baby.svg',
     slug: 'bebes',
     image: '/images/pantalones.svg'
   }
