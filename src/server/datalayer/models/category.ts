@@ -11,6 +11,4 @@ const categorySchema = new Schema({
 
 type CategoryMongo = Category
 
-const CategoryModel: Model<CategoryMongo> = mongoose.models.Product ?? model('Category', categorySchema)
-
-export default CategoryModel
+export const CategoryModel: Model<CategoryMongo> = mongoose.models.Category ?? model('Category', categorySchema)

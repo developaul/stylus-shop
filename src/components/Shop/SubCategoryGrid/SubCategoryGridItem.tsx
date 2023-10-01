@@ -1,36 +1,37 @@
 import React, { FC } from 'react'
+import { useRouter } from 'next/router'
 import {
   Card, CardActionArea, CardMedia,
   Grid, Typography
 } from '@mui/material'
 
-import { Category } from '@/interfaces'
-import { useRouter } from 'next/router'
+import { Category, SubCategory } from '@/interfaces'
 
 interface Props {
+  subCategory: SubCategory
   category: Category
 }
 
-export const CategoryGridItem: FC<Props> = ({ category }) => {
+export const SubCategoryGridItem: FC<Props> = ({ category, subCategory }) => {
 
   const router = useRouter()
 
   const onRedirect = () => {
-    router.push(`/${category.slug}`)
+    router.push(`/${category.slug}/${subCategory.slug}`)
   }
 
   return (
     <Grid
       sx={{ position: 'relative' }}
       xs={12}
-      sm={6}
+      sm={4}
       item>
       <Card sx={{ borderRadius: 2 }} >
         <CardActionArea onClick={onRedirect} >
           <CardMedia
             sx={{ height: 250 }}
-            image={category.image}
-            title={category.title}
+            image={subCategory.image}
+            title={subCategory.title}
           />
           <Typography
             variant='h6'
@@ -39,10 +40,10 @@ export const CategoryGridItem: FC<Props> = ({ category }) => {
               top: '90%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
-              color: 'white'
+              color: 'black'
             }}
           >
-            {category.title}
+            {subCategory.title}
           </Typography>
         </CardActionArea>
       </Card>

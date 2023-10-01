@@ -1,12 +1,22 @@
-import { ShopLayout } from "@/components/layouts"
+import { GetStaticProps, NextPage } from "next"
+
+import { getAllCategories } from "@/server"
+
 import {
   CategoryGrid, CategoryList,
-  ProductSlider, Services, StoreSlider
+  ProductSlider, Services, StoreSlider,
+  ShopLayout
 } from "@/components"
 
-import { products, stores } from "@/constants"
 
-const HomePage = () => {
+import { products, stores } from "@/constants"
+import { Category } from "@/interfaces"
+
+interface Props {
+  categories: Category[]
+}
+
+const HomePage: NextPage<Props> = ({ categories }) => {
   return (
     <ShopLayout title="Tienda" >
       <CategoryList />
@@ -14,7 +24,9 @@ const HomePage = () => {
         title="Los más vendidos"
         products={products}
       />
-      <CategoryGrid />
+      <CategoryGrid
+        categories={categories}
+      />
       <StoreSlider
         stores={stores}
       />
@@ -22,5 +34,17 @@ const HomePage = () => {
     </ShopLayout>
   )
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  const categories = await getAllCategories()
+
+  return {
+    props: {
+      categories
+    },
+    revalidate: 86_400
+  }
+}
+
 
 export default HomePage

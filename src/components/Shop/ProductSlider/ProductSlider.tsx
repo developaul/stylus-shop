@@ -21,7 +21,7 @@ export const ProductSlider: FC<Props> = ({ title, products }) => {
   return (
     <Box
       maxWidth={950}
-      sx={{ margin: '100px auto' }}
+      sx={{ marginX: 'auto' }}
       display='flex'
       flexDirection='column' >
       <Typography

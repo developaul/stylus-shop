@@ -1,15 +1,16 @@
 import { FC } from 'react'
 import { Box, Grid, Typography } from '@mui/material'
 
-import { CategoryGridItem } from './CategoryGridItem'
+import { SubCategoryGridItem } from './SubCategoryGridItem'
 
-import { Category } from '@/interfaces'
+import { Category, SubCategory } from '@/interfaces'
 
 interface Props {
-  categories: Category[]
+  subCategories: SubCategory[]
+  category: Category
 }
 
-export const CategoryGrid: FC<Props> = ({ categories }) => {
+export const SubCategoryGrid: FC<Props> = ({ category, subCategories }) => {
   return (
     <Box
       maxWidth={950}
@@ -20,16 +21,19 @@ export const CategoryGrid: FC<Props> = ({ categories }) => {
       <Typography
         variant='h6'
         sx={{ marginBottom: 5 }}
-      >Categorías</Typography>
+      >
+        Subcategorías
+      </Typography>
 
       <Grid
         sx={{ paddingX: { xs: 0, md: 7.5 } }}
         spacing={2}
         container>
-        {categories.map((category) => (
-          <CategoryGridItem
-            key={category._id}
+        {subCategories.map((subCategory) => (
+          <SubCategoryGridItem
             category={category}
+            key={subCategory._id}
+            subCategory={subCategory}
           />
         ))}
       </Grid>

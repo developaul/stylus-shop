@@ -1,29 +1,47 @@
-import { Category } from "@/interfaces";
+import { Category, SubCategory } from "@/interfaces";
 
 export const categories: Omit<Category, '_id'>[] = [
   {
     title: 'Damas',
-    icon: '/category/women.svg',
+    icon: '/assets/icons/category/women.svg',
     slug: 'mujer',
-    image: '/images/pantalones.svg'
+    image: '/assets/images/category/pantalones.svg'
   },
   {
     title: 'Caballeros',
-    icon: '/category/men.svg',
+    icon: '/assets/icons/category/men.svg',
     slug: 'hombre',
-    image: '/images/pantalones.svg'
+    image: '/assets/images/category/pantalones.svg'
   },
   {
 
     title: 'Niños',
-    icon: '/category/kid.svg',
+    icon: '/assets/icons/category/kid.svg',
     slug: 'ninos',
-    image: '/images/pantalones.svg'
+    image: '/assets/images/category/pantalones.svg'
   },
   {
     title: 'Bebés',
-    icon: '/category/baby.svg',
+    icon: '/assets/icons/category/baby.svg',
     slug: 'bebes',
-    image: '/images/pantalones.svg'
+    image: '/assets/images/category/pantalones.svg'
   }
+]
+
+export const subCategories: Omit<SubCategory, '_id'>[] = [
+  {
+    title: 'Medias',
+    slug: 'medias',
+    image: '/assets/images/subCategory/medias.jpg'
+  },
+  {
+    title: 'Camisetas',
+    slug: 'camisetas',
+    image: '/assets/images/subCategory/camiseta.jpg'
+  },
+  {
+    title: 'Gorras',
+    slug: 'gorras',
+    image: '/assets/images/subCategory/gorra.jpg'
+  },
 ]

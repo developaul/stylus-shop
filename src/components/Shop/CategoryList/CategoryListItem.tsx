@@ -23,7 +23,7 @@ export const CategoryListItem: FC<Props> = ({ category }) => {
   return (
     <Grid item>
       <Link
-        href={`/categoria/${category.slug}`}
+        href={`/${category.slug}`}
         component={NextLink}
       >
         <ButtonBaseStyled

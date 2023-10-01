@@ -31,6 +31,4 @@ productSchema.index({ title: 'text' })
 
 type ProductMongo = Omit<Product, 'category' | 'subCategory'>
 
-const ProductModel: Model<ProductMongo> = mongoose.models.Product ?? model('Product', productSchema)
-
-export default ProductModel
+export const ProductModel: Model<ProductMongo> = mongoose.models.Product ?? model('Product', productSchema)
