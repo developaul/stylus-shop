@@ -1,6 +1,7 @@
 import mongoose, { Schema, model, Model } from 'mongoose'
 
-import { Product, SizeEnum } from '@/interfaces'
+import { Product } from '@/interfaces'
+import { SizeEnum } from '@/constants'
 
 const productSchema = new Schema({
   title: { type: String, required: true },
@@ -21,7 +22,7 @@ const productSchema = new Schema({
     type: Schema.ObjectId,
     required: true,
   },
-  subCategory: {
+  subCategoryId: {
     type: Schema.ObjectId,
     required: true,
   },

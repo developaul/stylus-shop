@@ -5,7 +5,7 @@ export const products: Product[] = [
     _id: '1',
     category: {
       icon: '',
-      path: 'mujer',
+      slug: 'mujer',
       title: 'Damas'
     },
     image: '/images/blusa.svg',
