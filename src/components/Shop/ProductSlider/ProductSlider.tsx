@@ -11,7 +11,7 @@ import { productSliderBreakPoints } from '@/constants';
 
 interface Props {
   title: string;
-  products: Product[]
+  products: Pick<Product, '_id' | 'images' | 'title' | 'slug'>[]
 }
 
 export const ProductSlider: FC<Props> = ({ title, products }) => {

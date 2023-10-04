@@ -5,7 +5,8 @@ import { Typography } from '@mui/material'
 import {
   getAllCategorySlugs,
   getAllSubCategories,
-  getAllCategories
+  getAllCategories,
+  getBestProductsByCategorySlug
 } from '@/server'
 
 import {
@@ -14,16 +15,17 @@ import {
   ShopLayout
 } from '@/components'
 
-import { Category, SubCategory } from '@/interfaces'
-import { products, stores } from '@/constants'
+import { Category, Product, SubCategory } from '@/interfaces'
+import { stores } from '@/constants'
 
 interface Props {
   category: Category
   categories: Category[]
+  bestProducts: Pick<Product, '_id' | 'images' | 'title' | 'slug'>[]
   subCategories: SubCategory[]
 }
 
-const CategoryPage: NextPage<Props> = ({ categories, category, subCategories }) => {
+const CategoryPage: NextPage<Props> = ({ categories, category, subCategories, bestProducts }) => {
 
   return (
     <ShopLayout title={`Ropa para ${category.title}`} >
@@ -38,7 +40,7 @@ const CategoryPage: NextPage<Props> = ({ categories, category, subCategories }) 
 
       <ProductSlider
         title={`Los más vendidos - ${category.title}`}
-        products={products}
+        products={bestProducts}
       />
 
       <SubCategoryGrid
@@ -68,9 +70,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { categorySlug } = params as { categorySlug: string }
 
-  const [categories, subCategories] = await Promise.all([
+  const [categories, subCategories, bestProducts] = await Promise.all([
     getAllCategories(),
-    getAllSubCategories()
+    getAllSubCategories(),
+    getBestProductsByCategorySlug(categorySlug)
   ])
 
   const category = categories.find((category) => category.slug === categorySlug)
@@ -88,6 +91,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       category,
       categories,
+      bestProducts,
       subCategories
     },
     revalidate: 86_400

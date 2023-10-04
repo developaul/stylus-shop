@@ -1,6 +1,6 @@
 import { GetStaticProps, NextPage } from "next"
 
-import { getAllCategories } from "@/server"
+import { getAllCategories, getBestProducts } from "@/server"
 
 import {
   CategoryGrid, CategoryList,
@@ -8,21 +8,21 @@ import {
   ShopLayout
 } from "@/components"
 
-
-import { products, stores } from "@/constants"
-import { Category } from "@/interfaces"
+import { stores } from "@/constants"
+import { Category, Product } from "@/interfaces"
 
 interface Props {
   categories: Category[]
+  bestProducts: Pick<Product, '_id' | 'images' | 'title' | 'slug'>[]
 }
 
-const HomePage: NextPage<Props> = ({ categories }) => {
+const HomePage: NextPage<Props> = ({ categories, bestProducts }) => {
   return (
     <ShopLayout title="Tienda" >
       <CategoryList categories={categories} />
       <ProductSlider
         title="Los más vendidos"
-        products={products}
+        products={bestProducts}
       />
       <CategoryGrid
         categories={categories}
@@ -36,11 +36,15 @@ const HomePage: NextPage<Props> = ({ categories }) => {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const categories = await getAllCategories()
+  const [categories, bestProducts] = await Promise.all([
+    getAllCategories(),
+    getBestProducts()
+  ])
 
   return {
     props: {
-      categories
+      categories,
+      bestProducts
     },
     revalidate: 86_400
   }
