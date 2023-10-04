@@ -16,12 +16,17 @@ const ButtonBaseStyled = styled(ButtonBase)`
 
 interface Props {
   category: ICategory
+  categorySlugSelected?: string
 }
 
-export const CategoryListItem: FC<Props> = ({ category }) => {
+export const CategoryListItem: FC<Props> = ({ category, categorySlugSelected }) => {
   const { query } = useRouter()
 
-  const isSelected = useMemo(() => query.categorySlug === category.slug, [category.slug, query.categorySlug]) 
+  const isSelected = useMemo(() => {
+    if (categorySlugSelected) return categorySlugSelected === category.slug
+
+    return query.categorySlug === category.slug
+  }, [category.slug, categorySlugSelected, query.categorySlug])
 
   return (
     <Grid item>

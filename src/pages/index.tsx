@@ -9,11 +9,11 @@ import {
 } from "@/components"
 
 import { stores } from "@/constants"
-import { Category, Product } from "@/interfaces"
+import { Category, ShortProduct } from "@/interfaces"
 
 interface Props {
   categories: Category[]
-  bestProducts: Pick<Product, '_id' | 'images' | 'title' | 'slug'>[]
+  bestProducts: ShortProduct[]
 }
 
 const HomePage: NextPage<Props> = ({ categories, bestProducts }) => {

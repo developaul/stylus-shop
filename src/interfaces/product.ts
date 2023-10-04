@@ -17,3 +17,5 @@ export interface Product {
   category: Category
   subCategory: SubCategory
 }
+
+export interface ShortProduct extends Pick<Product, '_id' | 'images' | 'title' | 'slug'> { }

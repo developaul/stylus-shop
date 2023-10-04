@@ -30,3 +30,15 @@ export const getCategoryBySlug = async (slug: string): Promise<Category | null> 
 
   return JSON.parse(JSON.stringify(category))
 }
+
+export const getCategoryById = async (categoryId: string): Promise<Category | null> => {
+  await mongoConnection.connect()
+
+  const category = await CategoryModel.findById(categoryId).lean()
+
+  await mongoConnection.disconnect()
+
+  if (!category) return null
+
+  return JSON.parse(JSON.stringify(category))
+}

@@ -15,13 +15,13 @@ import {
   ShopLayout
 } from '@/components'
 
-import { Category, Product, SubCategory } from '@/interfaces'
+import { Category, ShortProduct, SubCategory } from '@/interfaces'
 import { stores } from '@/constants'
 
 interface Props {
   category: Category
   categories: Category[]
-  bestProducts: Pick<Product, '_id' | 'images' | 'title' | 'slug'>[]
+  bestProducts: ShortProduct[]
   subCategories: SubCategory[]
 }
 

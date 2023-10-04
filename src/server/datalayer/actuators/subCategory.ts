@@ -31,3 +31,15 @@ export const getSubCategoryBySlug = async (slug: string): Promise<SubCategory | 
 
   return JSON.parse(JSON.stringify(subCategory))
 }
+
+export const getSubCategoryById = async (subCategoryId: string): Promise<SubCategory | null> => {
+  await mongoConnection.connect()
+
+  const subCategory = await SubCategoryModel.findById(subCategoryId).lean()
+
+  await mongoConnection.disconnect()
+
+  if (!subCategory) return null
+
+  return JSON.parse(JSON.stringify(subCategory))
+}

@@ -10,6 +10,7 @@ interface Props {
 }
 
 export const ProductSlide: FC<Props> = ({ product }) => {
+  console.log("🚀 ~ file: ProductSlide.tsx:13 ~ product:", product)
   const router = useRouter()
 
   const onRedirect = () => {

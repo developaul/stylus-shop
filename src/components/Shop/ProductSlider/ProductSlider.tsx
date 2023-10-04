@@ -6,12 +6,12 @@ import { Autoplay, Navigation } from 'swiper/modules';
 import { ProductSlide } from './ProductSlide';
 import { SliderButton } from '@/components/Globals/SliderButton';
 
-import { Direction, Product } from '@/interfaces';
+import { Direction, ShortProduct } from '@/interfaces';
 import { productSliderBreakPoints } from '@/constants';
 
 interface Props {
   title: string;
-  products: Pick<Product, '_id' | 'images' | 'title' | 'slug'>[]
+  products: ShortProduct[]
 }
 
 export const ProductSlider: FC<Props> = ({ title, products }) => {
