@@ -58,14 +58,16 @@ const CategoryPage: NextPage<Props> = ({ categories, product, relatedProducts })
           component={NextLink}
           underline="hover"
           color="inherit"
-          href={`/${product.subCategory.slug}`}
+          href={`/${product.category.slug}/${product.subCategory.slug}`}
         >
           {product.subCategory.title}
         </Link>
         <Typography color="text.primary">{product.title}</Typography>
       </Breadcrumbs>
 
-      <ProductCard />
+      <ProductCard
+        product={product}
+      />
 
       {/* TODO: Details */}
 

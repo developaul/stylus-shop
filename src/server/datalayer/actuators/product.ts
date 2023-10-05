@@ -40,7 +40,11 @@ export const getBestProductsByCategorySlug = async (categorySlug: string): Promi
 export const getRelatedProductsByProduct = async (product: Product): Promise<ShortProduct> => {
   await mongoConnection.connect()
   const relatedProducts = await ProductModel
-    .find({ categoryId: product.categoryId, subCategoryId: product.subCategoryId })
+    .find({
+      _id: { $ne: product._id },
+      categoryId: product.categoryId,
+      subCategoryId: product.subCategoryId
+    })
     .limit(15)
     .lean()
   await mongoConnection.disconnect()

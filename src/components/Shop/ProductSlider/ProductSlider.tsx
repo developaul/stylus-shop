@@ -29,7 +29,7 @@ export const ProductSlider: FC<Props> = ({ title, products }) => {
         sx={{ marginBottom: 5 }}
       >{title}</Typography>
       <Box
-        sx={{ position: 'relative' }}
+        sx={{ position: 'relative', height: 380 }}
         maxWidth={950}
       >
         <SliderButton
@@ -38,7 +38,7 @@ export const ProductSlider: FC<Props> = ({ title, products }) => {
         />
         <Swiper
           ref={ref}
-          style={{ marginRight: 60, marginLeft: 60 }}
+          style={{ marginRight: 60, marginLeft: 60, height: '100%' }}
           breakpoints={productSliderBreakPoints}
           loop={true}
           autoplay={{

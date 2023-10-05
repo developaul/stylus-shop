@@ -19,3 +19,9 @@ export interface Product {
 }
 
 export interface ShortProduct extends Pick<Product, '_id' | 'images' | 'title' | 'slug'> { }
+
+export interface CartProduct extends Pick<Product, '_id' | 'slug' | 'title' | 'inStock' | 'price'> {
+  image: string;
+  quantity: number;
+  size?: Size
+}

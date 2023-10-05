@@ -10,7 +10,6 @@ interface Props {
 }
 
 export const ProductSlide: FC<Props> = ({ product }) => {
-  console.log("🚀 ~ file: ProductSlide.tsx:13 ~ product:", product)
   const router = useRouter()
 
   const onRedirect = () => {
@@ -19,7 +18,7 @@ export const ProductSlide: FC<Props> = ({ product }) => {
 
   return (
     <SwiperSlide>
-      <Card sx={{ maxWidth: 200, margin: '0 auto' }}>
+      <Card sx={{ maxWidth: 200, margin: '0 auto', height: 350 }}>
         <CardActionArea onClick={onRedirect}>
           <CardMedia
             component={'img'}
@@ -28,7 +27,11 @@ export const ProductSlide: FC<Props> = ({ product }) => {
             alt={product.title}
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography
+              // gutterBottom
+              sx={{}}
+              variant="h6"
+              component="span">
               {product.title}
             </Typography>
           </CardContent>

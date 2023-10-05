@@ -1,7 +1,30 @@
-import React from 'react'
+import { FC } from 'react'
+import { Box, Grid, Typography } from '@mui/material'
 
-export const ProductCard = () => {
+import { Product } from '@/interfaces'
+import { ProductImages } from './ProductImages'
+import { ProductConfig } from './ProductConfig'
+
+interface Props {
+  product: Product
+}
+
+export const ProductCard: FC<Props> = ({ product }) => {
   return (
-    <div>ProductCard</div>
+    <Box>
+      <Typography variant='h5' component='h2' >{product.category.title} / {product.title}</Typography>
+
+      <Grid spacing={6} container>
+        <Grid xs={12} md={7} item>
+          <ProductImages
+            images={product.images}
+            title={product.title} />
+        </Grid>
+
+        <Grid xs={12} md={5} item>
+          <ProductConfig product={product} />
+        </Grid>
+      </Grid>
+    </Box>
   )
 }
