@@ -11,8 +11,14 @@ interface Props {
 
 export const ProductCard: FC<Props> = ({ product }) => {
   return (
-    <Box>
-      <Typography variant='h5' component='h2' >{product.category.title} / {product.title}</Typography>
+    <Box sx={{ mb: 8 }}>
+      <Typography
+        sx={{ mb: 6 }}
+        variant='h5'
+        component='h2'
+      >
+        {product.category.title} / {product.title}
+      </Typography>
 
       <Grid spacing={6} container>
         <Grid xs={12} md={7} item>

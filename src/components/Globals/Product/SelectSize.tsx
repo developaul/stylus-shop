@@ -16,7 +16,7 @@ const SelectSize: FC<Props> = ({ onChange, value, sizes }) => {
   }
 
   return (
-    <FormControl fullWidth>
+    <FormControl sx={{ my: 3 }} fullWidth>
       <InputLabel id="size-simple-select-label">Talla</InputLabel>
       <Select
         labelId="size-simple-select-label"

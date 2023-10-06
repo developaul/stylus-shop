@@ -19,7 +19,22 @@ interface Props {
 const BoxStyled = styled(Box)`
   display: flex;
   align-items: center;
+  margin-bottom: 8px;
 `
+
+const ButtonStyled = styled(Button)(
+  ({ theme }) => `
+  text-transform: capitalize;
+  font-weight: 400;
+  color: ${theme.palette.grey[800]};
+  border-color: ${theme.palette.grey[800]};
+  border-radius: 50px;
+
+  &:hover {
+    border-color: ${theme.palette.grey[800]};
+    background-color: ${theme.palette.common.white}
+  }
+`)
 
 export const ProductConfig: FC<Props> = ({ product }) => {
 
@@ -43,8 +58,8 @@ export const ProductConfig: FC<Props> = ({ product }) => {
     }))
   }, [])
 
-  const isFavoriteProduct = useMemo(() =>
-    favoriteProducts.some(favoriteProducts => favoriteProducts._id === product._id), [favoriteProducts, product._id]
+  const isFavoriteProduct = useMemo(() => favoriteProducts
+    .some(favoriteProducts => favoriteProducts._id === product._id), [favoriteProducts, product._id]
   )
 
   const handleAddFavoriteProduct = () => {
@@ -61,7 +76,11 @@ export const ProductConfig: FC<Props> = ({ product }) => {
   return (
     <Box>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} >
-        <Typography>{product.title}</Typography>
+        <Typography
+          component='h1'
+          variant='h5' >
+          {product.title}
+        </Typography>
 
         {
           isFavoriteProduct ?
@@ -93,9 +112,9 @@ export const ProductConfig: FC<Props> = ({ product }) => {
         }
       </Box>
 
-      <Typography>{Currency.format(product.price)}</Typography>
+      <Typography sx={{ mb: 0.5 }} variant='subtitle2' >{Currency.format(product.price)}</Typography>
 
-      <Typography>Disponibles: {product.inStock}</Typography>
+      <Typography variant='body1' >Disponibles: {product.inStock}</Typography>
 
       <SelectSize
         sizes={product.sizes}
@@ -103,8 +122,8 @@ export const ProductConfig: FC<Props> = ({ product }) => {
         onChange={onChange}
       />
 
-      <Box sx={{ display: 'flex', justifyContent: 'space-between' }} >
-        <Typography variant='subtitle2' >Cambios y devoluciones</Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} >
+        <Typography sx={{ fontWeight: 800 }} variant='subtitle1' >Cambios y devoluciones</Typography>
         <ErrorOutlineIcon fontSize='large' />
       </Box>
 
@@ -123,7 +142,7 @@ export const ProductConfig: FC<Props> = ({ product }) => {
         <Typography>Envíos a todo el Perú.</Typography>
       </BoxStyled>
 
-      <Divider sx={{ my: 2 }} />
+      <Divider sx={{ my: 4 }} />
 
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <ProductCounter
@@ -132,12 +151,12 @@ export const ProductConfig: FC<Props> = ({ product }) => {
           maxValue={tempProduct.inStock}
         />
 
-        <Button
+        <ButtonStyled
           variant='outlined'
           startIcon={<ShoppingCartOutlinedIcon />}
         >
           Añadir a carrito
-        </Button>
+        </ButtonStyled>
       </Box>
     </Box>
   )
