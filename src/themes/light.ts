@@ -3,6 +3,12 @@ import { createTheme } from "@mui/material";
 
 
 export const lightTheme = createTheme({
+  palette: {
+    error: {
+      main: '#FE0000',
+      "300": '#FF6B6B'
+    },
+  },
   typography: {
     subtitle1: {
       fontSize: 28,
@@ -21,4 +27,5 @@ export const lightTheme = createTheme({
     }
   }
 });
+console.log("🚀 ~ file: light.ts:29 ~ lightTheme:", lightTheme)
 

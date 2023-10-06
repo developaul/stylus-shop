@@ -11,14 +11,17 @@ import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
 import 'swiper/css/pagination';
 import 'swiper/css/thumbs';
+import { FavoriteProductsProvider } from '@/context/FavoriteProducts';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ProductFilterProvider>
-      <ThemeProvider theme={lightTheme}>
-        <CssBaseline />
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </ProductFilterProvider>
+    <FavoriteProductsProvider>
+      <ProductFilterProvider>
+        <ThemeProvider theme={lightTheme}>
+          <CssBaseline />
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </ProductFilterProvider>
+    </FavoriteProductsProvider>
   )
 }

@@ -25,3 +25,7 @@ export interface CartProduct extends Pick<Product, '_id' | 'slug' | 'title' | 'i
   quantity: number;
   size?: Size
 }
+
+export interface FavoriteProduct extends Pick<Product, '_id' | 'slug' | 'title'> {
+  image: string;
+}

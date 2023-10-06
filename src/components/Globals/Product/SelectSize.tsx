@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, memo } from 'react'
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
 
 import { Size } from '@/constants'
@@ -9,7 +9,7 @@ interface Props {
   sizes: Size[]
 }
 
-export const SelectSize: FC<Props> = ({ onChange, value, sizes }) => {
+const SelectSize: FC<Props> = ({ onChange, value, sizes }) => {
 
   const handleChange = ({ target }: SelectChangeEvent<Size>) => {
     onChange(target.name, target.value)
@@ -21,7 +21,7 @@ export const SelectSize: FC<Props> = ({ onChange, value, sizes }) => {
       <Select
         labelId="size-simple-select-label"
         id="size-simple-select"
-        value={value}
+        value={value ?? ''}
         name='size'
         label="Talla"
         onChange={handleChange}
@@ -39,3 +39,5 @@ export const SelectSize: FC<Props> = ({ onChange, value, sizes }) => {
     </FormControl>
   )
 }
+
+export default memo(SelectSize)

@@ -32,6 +32,8 @@ export const ProductFilterProvider: FC<Props> = ({ children }) => {
     <ProductFilterContext.Provider
       value={{
         ...state,
+
+        // methods
         updateSizeFilter,
         updateOrder
       }}>
