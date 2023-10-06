@@ -8,9 +8,9 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 
 import { ProductCounter, SelectSize } from '@/components'
+import { FavoriteProductsContext, CartProductsContext } from '@/context';
 import { CartProduct, Product } from '@/interfaces'
 import { Currency } from '@/utils'
-import { FavoriteProductsContext } from '@/context/FavoriteProducts';
 
 interface Props {
   product: Product
@@ -39,6 +39,7 @@ const ButtonStyled = styled(Button)(
 export const ProductConfig: FC<Props> = ({ product }) => {
 
   const { favoriteProducts, addFavoriteProduct, removeFavoriteProduct } = useContext(FavoriteProductsContext)
+  const { addProductToCart } = useContext(CartProductsContext)
 
   const [tempProduct, setTempProduct] = useState<CartProduct>({
     _id: product._id,
@@ -71,6 +72,10 @@ export const ProductConfig: FC<Props> = ({ product }) => {
       slug,
       title
     })
+  }
+
+  const handleAddCartProduct = () => {
+    addProductToCart(tempProduct)
   }
 
   return (
@@ -152,6 +157,8 @@ export const ProductConfig: FC<Props> = ({ product }) => {
         />
 
         <ButtonStyled
+          onClick={handleAddCartProduct}
+          disabled={!tempProduct.size}
           size='large'
           variant='outlined'
           startIcon={<ShoppingCartOutlinedIcon fontSize='large' />}

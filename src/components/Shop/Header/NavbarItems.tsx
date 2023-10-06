@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Button, Drawer, Grid, GridDirection, styled } from '@mui/material'
 import {
@@ -7,7 +7,10 @@ import {
   ShoppingCartOutlined as ShoppingCartOutlinedIcon
 } from '@mui/icons-material';
 
+import { CartProductsContext } from '@/context';
+
 import { FavoriteList } from '../FavoriteList';
+import { CartDrawer } from '../CartDrawer';
 
 interface Props {
   direction: GridDirection
@@ -24,13 +27,12 @@ const ButtonStyled = styled(Button)(
 export const NavbarItems: FC<Props> = ({ direction, gap }) => {
   const router = useRouter()
 
+  const { cartProducts } = useContext(CartProductsContext)
+
   const [cartListIsOpen, setCartListIsOpen] = useState(false)
   const [favoriteListIsOpen, setFavoriteListIsOpen] = useState(false)
 
-  const onRedirect = () => {
-    router.push('/signin')
-  }
-
+  const onRedirect = () => router.push('/signin')
   const toggleCartListIsOpen = () => setCartListIsOpen(prev => !prev)
   const toggleFavoriteListIsOpen = () => setFavoriteListIsOpen(prev => !prev)
 
@@ -58,7 +60,7 @@ export const NavbarItems: FC<Props> = ({ direction, gap }) => {
             onClick={toggleCartListIsOpen}
             startIcon={<ShoppingCartOutlinedIcon color='info' />}
           >
-            Carrito (0)
+            Carrito ({cartProducts.length})
           </ButtonStyled>
         </Grid>
       </Grid>
@@ -78,7 +80,7 @@ export const NavbarItems: FC<Props> = ({ direction, gap }) => {
         open={cartListIsOpen}
         onClose={toggleCartListIsOpen}
       >
-        CARRITO
+        <CartDrawer onClose={toggleCartListIsOpen} />
       </Drawer>
     </>
   )

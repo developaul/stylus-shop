@@ -4,17 +4,20 @@ import { Box, ButtonBase, Typography, styled } from '@mui/material'
 interface Props {
   value: number;
   maxValue: number;
-  onChange: (name: string, value: any) => void
+  direction: 'row' | 'column';
+  size: 'medium' | 'small'
+  onChange: (name: string, value: any) => void;
 }
 
 const ButtonBaseStyled = styled(ButtonBase)`
-  width: 50px;
-  height: 50px;
   font-size: 24px;
   background-color: #EFEFEF;
 `
 
-const ProductCounter: FC<Props> = ({ value, maxValue, onChange }) => {
+const ProductCounter: FC<Props> = ({
+  value, maxValue, direction = 'row',
+  size = 'medium', onChange
+}) => {
 
   const handleIncrease = () => {
     const newValue = Math.min(maxValue, value + 1)
@@ -30,16 +33,30 @@ const ProductCounter: FC<Props> = ({ value, maxValue, onChange }) => {
 
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', border: `1px solid #EFEFEF`, borderRadius: '50%' }} >
+    <Box sx={{
+      display: 'flex',
+      alignItems: 'center',
+      border: `1px solid #EFEFEF`,
+      borderRadius: '50%',
+      flexDirection: direction
+    }} >
       <ButtonBaseStyled
         onClick={handleIncrease}
-        sx={{ borderTopLeftRadius: '50%', borderBottomLeftRadius: '50%' }}>
+        sx={{
+          ...direction === 'row'
+            ? { borderTopLeftRadius: '50%', borderBottomLeftRadius: '50%' }
+            : { borderTopLeftRadius: '50%', borderTopRightRadius: '50%' },
+          ...size === 'medium'
+            ? { width: 50, height: 50 }
+            : { width: 35, height: 35 }
+        }}>
         +
       </ButtonBaseStyled>
       <Typography
         sx={{
-          width: 50,
-          height: 50,
+          ...size === 'medium'
+            ? { width: 50, height: 50 }
+            : { width: 35, height: 35 },
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center'
@@ -49,7 +66,14 @@ const ProductCounter: FC<Props> = ({ value, maxValue, onChange }) => {
       </Typography>
       <ButtonBaseStyled
         onClick={handleDecrease}
-        sx={{ borderTopRightRadius: '50%', borderBottomRightRadius: '50%' }}>
+        sx={{
+          ...direction === 'row'
+            ? { borderTopRightRadius: '50%', borderBottomRightRadius: '50%' }
+            : { borderBottomLeftRadius: '50%', borderBottomRightRadius: '50%' },
+          ...size === 'medium'
+            ? { width: 50, height: 50 }
+            : { width: 35, height: 35 }
+        }}>
         -
       </ButtonBaseStyled>
     </Box>

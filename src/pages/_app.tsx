@@ -12,17 +12,20 @@ import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
 import 'swiper/css/pagination';
 import 'swiper/css/thumbs';
+import { CartProductsProvider } from '@/context/CartProducts';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <SWRConfig value={{ fetcher: (resource, init) => fetch(resource, init).then(res => res.json()) }}>
       <FavoriteProductsProvider>
-        <ProductFilterProvider>
-          <ThemeProvider theme={lightTheme}>
-            <CssBaseline />
-            <Component {...pageProps} />
-          </ThemeProvider>
-        </ProductFilterProvider>
+        <CartProductsProvider>
+          <ProductFilterProvider>
+            <ThemeProvider theme={lightTheme}>
+              <CssBaseline />
+              <Component {...pageProps} />
+            </ThemeProvider>
+          </ProductFilterProvider>
+        </CartProductsProvider>
       </FavoriteProductsProvider>
     </SWRConfig>
   )

@@ -1,12 +1,26 @@
 import { CartProductsState } from '.';
 
+import { CartProduct } from '@/interfaces';
+
 type CartProductsActionType =
-  | { type: '[CartProducts] - Add product to cart' }
+  | { type: '[CartProducts] - Load products from storage', payload: CartProduct[] }
+  | { type: '[CartProducts] - Add product to cart', payload: CartProduct[] }
+  | { type: '[CartProducts] - Remove product from cart', payload: CartProduct[] }
+  | { type: '[CartProducts] - Update product from cart', payload: CartProduct[] }
 
 export const cartProductsReducer = (state: CartProductsState, action: CartProductsActionType): CartProductsState => {
   switch (action.type) {
+    case '[CartProducts] - Load products from storage':
+      return { ...state, cartProducts: action.payload }
+
     case '[CartProducts] - Add product to cart':
-      return { ...state, }
+      return { ...state, cartProducts: action.payload }
+
+    case '[CartProducts] - Remove product from cart':
+      return { ...state, cartProducts: action.payload }
+
+    case '[CartProducts] - Update product from cart':
+      return { ...state, cartProducts: action.payload }
 
     default:
       return state
