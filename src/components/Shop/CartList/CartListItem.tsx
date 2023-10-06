@@ -42,7 +42,7 @@ export const CartListItem: FC<Props> = ({ product, onClose }) => {
         direction='column'
       />
 
-      <ListItemButton sx={{ gap: 2, width: 400 }} onClick={onRedirect} >
+      <ListItemButton sx={{ gap: 2, width: { xs: 200, md: 400 } }} onClick={onRedirect} >
         <ListItemAvatar>
           <Image
             alt={product.title}
@@ -52,13 +52,14 @@ export const CartListItem: FC<Props> = ({ product, onClose }) => {
           />
         </ListItemAvatar>
         <ListItemText
+          primaryTypographyProps={{ sx: { fontSize: { xs: 14, md: 20 } } }}
           primary={product.title}
           secondary={`Cantidad: ${product.quantity}`}
         />
       </ListItemButton>
 
       <ListItemText
-        primaryTypographyProps={{ variant: 'subtitle2' }}
+        primaryTypographyProps={{ variant: 'subtitle2', sx: { fontSize: { xs: 10, md: 20 } } }}
         primary={price}
       />
     </ListItem>

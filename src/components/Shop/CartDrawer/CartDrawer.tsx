@@ -1,5 +1,5 @@
 import { FC, useContext } from 'react'
-import { Box, Button, IconButton, Typography } from '@mui/material'
+import { Box, Button, IconButton, Typography, styled } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close';
 
 import { CartProductsContext } from '@/context'
@@ -10,6 +10,22 @@ import { Currency } from '@/utils';
 interface Props {
   onClose: () => void
 }
+
+const ButtonStyled = styled(Button)(
+  ({ theme }) => `
+  text-transform: none;
+  font-weight: 400;
+  background-color: ${theme.palette.grey[400]};
+  border-color: ${theme.palette.grey[400]};
+  color: ${theme.palette.common.black};
+  border-radius: 50px;
+
+  &:hover {
+    border-color: ${theme.palette.grey[400]};
+    background-color: ${theme.palette.grey[400]};
+  }
+`)
+
 
 export const CartDrawer: FC<Props> = ({ onClose }) => {
 
@@ -37,9 +53,11 @@ export const CartDrawer: FC<Props> = ({ onClose }) => {
               <Typography variant='subtitle2'>{Currency.format(orderSummary.orderValue)}</Typography>
             </Box>
 
-            <Button sx={{}} variant='contained' >
-              Continuar con la compra
-            </Button>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 4 }}>
+              <ButtonStyled variant='contained' >
+                Continuar con la compra
+              </ButtonStyled>
+            </Box>
           </>
         )
       }

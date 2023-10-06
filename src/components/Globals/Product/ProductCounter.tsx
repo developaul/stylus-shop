@@ -4,8 +4,8 @@ import { Box, ButtonBase, Typography, styled } from '@mui/material'
 interface Props {
   value: number;
   maxValue: number;
-  direction: 'row' | 'column';
-  size: 'medium' | 'small'
+  direction?: 'row' | 'column';
+  size?: 'medium' | 'small'
   onChange: (name: string, value: any) => void;
 }
 
