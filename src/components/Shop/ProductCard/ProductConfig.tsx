@@ -59,7 +59,7 @@ export const ProductConfig: FC<Props> = ({ product }) => {
   }, [])
 
   const isFavoriteProduct = useMemo(() => favoriteProducts
-    .some(favoriteProducts => favoriteProducts._id === product._id), [favoriteProducts, product._id]
+    .some(favoriteProduct => favoriteProduct._id === product._id), [favoriteProducts, product._id]
   )
 
   const handleAddFavoriteProduct = () => {
@@ -152,8 +152,9 @@ export const ProductConfig: FC<Props> = ({ product }) => {
         />
 
         <ButtonStyled
+          size='large'
           variant='outlined'
-          startIcon={<ShoppingCartOutlinedIcon />}
+          startIcon={<ShoppingCartOutlinedIcon fontSize='large' />}
         >
           Añadir a carrito
         </ButtonStyled>
