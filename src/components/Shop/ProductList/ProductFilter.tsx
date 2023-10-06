@@ -30,14 +30,14 @@ export const ProductFilter: FC<Props> = ({ }) => {
   }
 
   return (
-    <Box>
+    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
       <FormControl sx={{ m: 1, width: 250 }}>
         <InputLabel id="order-simple-select-label">Orden</InputLabel>
         <Select
           labelId="order-simple-select-label"
           id="order-simple-select"
           value={order}
-          label="Age"
+          label="Orden"
           onChange={onChangeOrder}
         >
           <MenuItem value={Order.Desc}>Más Recientes</MenuItem>

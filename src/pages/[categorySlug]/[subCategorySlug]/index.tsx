@@ -1,5 +1,5 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import NextLink from 'next/link'
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { Breadcrumbs, Link, Typography } from '@mui/material'
 
 import {
@@ -26,6 +26,7 @@ interface Props {
 }
 
 const SubCategoryPage: NextPage<Props> = ({ categories, category, subCategory }) => {
+
 
   return (
     <ShopLayout title={`Ropa para ${category.title}`} >
@@ -57,6 +58,7 @@ const SubCategoryPage: NextPage<Props> = ({ categories, category, subCategory })
       </Breadcrumbs>
 
       <ProductList
+        categoryId={category._id}
         subCategory={subCategory}
       />
 
