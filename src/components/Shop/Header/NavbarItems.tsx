@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useRouter } from 'next/router';
-import { Button, Grid, GridDirection } from '@mui/material'
+import { Button, Grid, GridDirection, styled } from '@mui/material'
 import {
   PersonOutlineRounded as PersonOutlineRoundedIcon,
   FavoriteBorderRounded as FavoriteBorderRoundedIcon,
@@ -12,6 +12,13 @@ interface Props {
   gap: number
 }
 
+const ButtonStyled = styled(Button)(
+  ({ theme }) => `
+  text-transform: capitalize;
+  font-weight: 400;
+  color: ${theme.palette.common.black};
+`)
+
 export const NavbarItems: FC<Props> = ({ direction, gap }) => {
   const router = useRouter()
 
@@ -22,26 +29,26 @@ export const NavbarItems: FC<Props> = ({ direction, gap }) => {
   return (
     <Grid container direction={direction} gap={gap} >
       <Grid item>
-        <Button
+        <ButtonStyled
           startIcon={<PersonOutlineRoundedIcon />}
           onClick={onRedirect}
         >
           Iniciar sesión
-        </Button>
+        </ButtonStyled>
       </Grid>
       <Grid item>
-        <Button
-          startIcon={<FavoriteBorderRoundedIcon />}
+        <ButtonStyled
+          startIcon={<FavoriteBorderRoundedIcon color='error' />}
         >
           Favoritos
-        </Button>
+        </ButtonStyled>
       </Grid>
       <Grid item>
-        <Button
-          startIcon={<ShoppingCartOutlinedIcon />}
+        <ButtonStyled
+          startIcon={<ShoppingCartOutlinedIcon color='info' />}
         >
           Carrito (0)
-        </Button>
+        </ButtonStyled>
       </Grid>
     </Grid>
   )

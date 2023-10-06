@@ -8,6 +8,9 @@ export const lightTheme = createTheme({
       main: '#FE0000',
       "300": '#FF6B6B'
     },
+    info: {
+      main: "#2864FF"
+    }
   },
   typography: {
     subtitle1: {

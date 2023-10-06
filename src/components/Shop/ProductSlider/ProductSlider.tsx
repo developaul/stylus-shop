@@ -24,12 +24,9 @@ export const ProductSlider: FC<Props> = ({ title, products }) => {
       sx={{ marginX: 'auto' }}
       display='flex'
       flexDirection='column' >
-      <Typography
-        variant='h6'
-        sx={{ marginBottom: 5 }}
-      >{title}</Typography>
+      <Typography variant='h6' component='h2' sx={{ marginBottom: 5 }} >{title}</Typography>
       <Box
-        sx={{ position: 'relative', height: 380 }}
+        sx={{ position: 'relative', height: 300 }}
         maxWidth={950}
       >
         <SliderButton

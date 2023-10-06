@@ -13,12 +13,13 @@ export const CategoryGrid: FC<Props> = ({ categories }) => {
   return (
     <Box
       maxWidth={950}
-      sx={{ margin: '100px auto' }}
+      sx={{ margin: '40px auto' }}
       display='flex'
       flexDirection='column'
     >
       <Typography
         variant='h6'
+        component='h3'
         sx={{ marginBottom: 5 }}
       >Categorías</Typography>
 

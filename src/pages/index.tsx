@@ -10,6 +10,7 @@ import {
 
 import { stores } from "@/constants"
 import { Category, ShortProduct } from "@/interfaces"
+import { Box } from "@mui/material"
 
 interface Props {
   categories: Category[]
@@ -20,10 +21,14 @@ const HomePage: NextPage<Props> = ({ categories, bestProducts }) => {
   return (
     <ShopLayout title="Tienda" >
       <CategoryList categories={categories} />
+
+      <Box sx={{ my: 8 }} />
+
       <ProductSlider
         title="Los más vendidos"
         products={bestProducts}
       />
+
       <CategoryGrid
         categories={categories}
       />
