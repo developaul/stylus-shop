@@ -9,5 +9,8 @@ export * from './ProductSlider'
 export * from './ProductList'
 export * from './ProductCard'
 
+export * from './CartList'
+export * from './OrderSummary'
+
 export * from './StoreSlider'
 export * from './Services'

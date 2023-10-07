@@ -30,9 +30,13 @@ export const CartProductsProvider: FC<Props> = ({ children }) => {
 
   const orderSummary = useMemo(() => {
     const orderValue = state.cartProducts.reduce((prev, current) => prev + (current.price * current.quantity), 0)
+    const delivery = 10
+    const total = orderValue + delivery
 
     return {
-      orderValue
+      orderValue,
+      delivery,
+      total
     }
   }, [state.cartProducts])
 

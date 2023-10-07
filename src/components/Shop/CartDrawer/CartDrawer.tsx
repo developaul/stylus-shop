@@ -1,10 +1,10 @@
 import { FC, useContext } from 'react'
+import { useRouter } from 'next/router';
 import { Box, Button, IconButton, Typography, styled } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close';
 
-import { CartProductsContext } from '@/context'
-
 import { CartList } from '../CartList';
+import { CartProductsContext } from '@/context'
 import { Currency } from '@/utils';
 
 interface Props {
@@ -26,10 +26,15 @@ const ButtonStyled = styled(Button)(
   }
 `)
 
-
 export const CartDrawer: FC<Props> = ({ onClose }) => {
+  const router = useRouter()
 
   const { cartProducts, orderSummary } = useContext(CartProductsContext)
+
+  const onRedirect = () => {
+    onClose()
+    router.push('/carrito')
+  }
 
   return (
     <Box>
@@ -43,7 +48,7 @@ export const CartDrawer: FC<Props> = ({ onClose }) => {
         Carrito ({cartProducts.length})
       </Typography>
 
-      <CartList onClose={onClose} />
+      <CartList enableCounter onClose={onClose} />
 
       {
         Boolean(cartProducts.length) && (
@@ -54,7 +59,7 @@ export const CartDrawer: FC<Props> = ({ onClose }) => {
             </Box>
 
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 4 }}>
-              <ButtonStyled variant='contained' >
+              <ButtonStyled onClick={onRedirect} variant='contained' >
                 Continuar con la compra
               </ButtonStyled>
             </Box>

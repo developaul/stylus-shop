@@ -10,10 +10,11 @@ import { Currency } from '@/utils'
 
 interface Props {
   product: CartProduct
-  onClose: () => void
+  enableCounter?: boolean
+  onClose?: () => void
 }
 
-export const CartListItem: FC<Props> = ({ product, onClose }) => {
+export const CartListItem: FC<Props> = ({ product, enableCounter = false, onClose }) => {
   const router = useRouter()
 
   const { updateCartProduct } = useContext(CartProductsContext)
@@ -28,19 +29,23 @@ export const CartListItem: FC<Props> = ({ product, onClose }) => {
   }, [product, updateCartProduct])
 
   const onRedirect = () => {
-    onClose()
+    onClose && onClose()
     router.push(`/producto/${product.slug}`)
   }
 
   return (
     <ListItem sx={{ gap: 2 }} >
-      <ProductCounter
-        size='small'
-        value={product.quantity}
-        maxValue={product.inStock}
-        onChange={handleUpdateCartProduct}
-        direction='column'
-      />
+      {
+        enableCounter && (
+          <ProductCounter
+            size='small'
+            value={product.quantity}
+            maxValue={product.inStock}
+            onChange={handleUpdateCartProduct}
+            direction='column'
+          />
+        )
+      }
 
       <ListItemButton sx={{ gap: 2, width: { xs: 200, md: 400 } }} onClick={onRedirect} >
         <ListItemAvatar>
