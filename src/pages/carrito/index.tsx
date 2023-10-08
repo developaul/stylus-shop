@@ -9,7 +9,7 @@ const CartPage: NextPage = () => {
   return (
     <ShopLayout title='Carito de compras' >
 
-      <Grid sx={{ mt: 6 }} container>
+      <Grid sx={{ mt: 6 }} spacing={4} container>
         <Grid xs={12} md={6} item>
           <CartList />
         </Grid>

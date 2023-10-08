@@ -1,7 +1,7 @@
 import { FC, useCallback, useContext, useMemo } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { ListItem, ListItemAvatar, ListItemButton, ListItemText } from '@mui/material'
+import { ListItem, ListItemAvatar, ListItemButton, ListItemText, Box } from '@mui/material'
 
 import { ProductCounter } from '@/components'
 import { CartProductsContext } from '@/context'
@@ -17,7 +17,7 @@ interface Props {
 export const CartListItem: FC<Props> = ({ product, enableCounter = false, onClose }) => {
   const router = useRouter()
 
-  const { updateCartProduct } = useContext(CartProductsContext)
+  const { updateCartProduct, removeProductFromCart } = useContext(CartProductsContext)
 
   const price = useMemo(() => Currency.format(product.price * product.quantity), [product.price, product.quantity])
 
@@ -34,7 +34,8 @@ export const CartListItem: FC<Props> = ({ product, enableCounter = false, onClos
   }
 
   return (
-    <ListItem sx={{ gap: 2 }} >
+    <ListItem
+      sx={{ gap: 2 }} >
       {
         enableCounter && (
           <ProductCounter
@@ -63,10 +64,17 @@ export const CartListItem: FC<Props> = ({ product, enableCounter = false, onClos
         />
       </ListItemButton>
 
-      <ListItemText
-        primaryTypographyProps={{ variant: 'subtitle2', sx: { fontSize: { xs: 10, md: 20 } } }}
-        primary={price}
-      />
+      <Box>
+        <ListItemText
+          primaryTypographyProps={{ variant: 'subtitle2', sx: { fontSize: { xs: 10, md: 20 } } }}
+          primary={price}
+        />
+        <ListItemButton
+          onClick={() => removeProductFromCart(product)}
+        >
+          Eliminar
+        </ListItemButton>
+      </Box>
     </ListItem>
   )
 }

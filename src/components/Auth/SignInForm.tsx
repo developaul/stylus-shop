@@ -1,38 +1,75 @@
-import React from 'react'
-import { Box, Grid, Typography } from '@mui/material'
+import { Box, FormControl, Grid, TextField, Typography } from '@mui/material'
+import { useForm } from 'react-hook-form'
 
-import { CustomButton, CustomTextField } from '..'
+import { CustomButton } from '..'
+import { Validations } from '@/utils'
+
+interface FormData {
+  email: string
+  password: string
+}
 
 export const SignInForm = () => {
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<FormData>();
+
+  const onSubmit = (args: FormData) => {
+    console.log("🚀 ~ file: SignInForm.tsx:21 ~ onSubmit ~ args:", args)
+  }
+
   return (
-    <>
+    <form onSubmit={handleSubmit(onSubmit)} noValidate >
       <Grid container direction='column' gap={2}>
         <Grid item>
-          <CustomTextField
-            label={'Email'}
-            placeholder='Email@mail.com'
-          />
+          <FormControl fullWidth>
+            <Typography sx={{ mb: 1 }} component='label' htmlFor={'email-input'} >Email:</Typography>
+            <TextField
+              {...register('email', {
+                required: 'El email es obligatorio',
+                validate: Validations.isEmail
+              })}
+              error={Boolean(errors.email)}
+              helperText={errors.email?.message}
+              fullWidth
+              type='email'
+              id="email-input"
+              placeholder='example@example.com'
+            />
+          </FormControl>
         </Grid>
 
         <Grid item>
-          <CustomTextField
-            label={'Contraseña'}
-            placeholder='*********'
-          />
+          <FormControl fullWidth>
+            <Typography sx={{ mb: 1 }} component='label' htmlFor={'password-input'} >Contraseña:</Typography>
+            <TextField
+              {...register(
+                'password',
+                { required: 'La contraseña es obligatoria', minLength: { value: 6, message: 'Minimo 6 caracteres' } }
+              )}
+              error={Boolean(errors.password)}
+              helperText={errors.password?.message}
+              fullWidth
+              type='password'
+              id="password-input"
+              placeholder='*********'
+            />
+          </FormControl>
         </Grid>
       </Grid>
 
-      <Typography
-        sx={{ margin: '40px 0' }}
-      >¿Olvidaste tu contraseña?</Typography>
 
-      <Box display='flex' alignItems='center' justifyContent='center'>
+      <Box sx={{ mt: 4 }} display='flex' alignItems='center' justifyContent='center'>
         <CustomButton
+          type='submit'
           variant='outlined'
         >
           Ingresar
         </CustomButton>
       </Box>
-    </>
+    </form>
   )
 }
