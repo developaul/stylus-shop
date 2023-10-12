@@ -9,15 +9,22 @@ type Data =
   | { name: string }
   | Paginate<PreviewProduct[]>
 
-export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-  switch (req.method) {
-    case 'GET':
-      return getProducts(req, res)
+export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+  try {
+    switch (req.method) {
+      case 'GET':
+        return await getProducts(req, res)
 
-    default:
-      return res
-        .status(400)
-        .json({ name: 'Bad request' })
+      default:
+        return res
+          .status(400)
+          .json({ name: 'Bad request' })
+    }
+  } catch (error) {
+    console.log("error getProducts:", error)
+    return res
+      .status(500)
+      .json({ name: 'Server error' })
   }
 }
 
