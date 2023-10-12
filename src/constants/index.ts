@@ -5,5 +5,6 @@ export * from './breakpoints'
 export * from './store'
 export * from './contact'
 export * from './filter'
+export * from './user'
 
 export * as Seed from './seed'
