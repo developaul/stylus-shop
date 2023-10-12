@@ -7,10 +7,11 @@ import { CartProductsContext } from '@/context'
 
 interface Props {
   enableCounter?: boolean
+  enableDelete?: boolean
   onClose?: () => void
 }
 
-export const CartList: FC<Props> = ({ onClose, enableCounter }) => {
+export const CartList: FC<Props> = ({ onClose, enableCounter = false, enableDelete = false }) => {
 
   const { cartProducts } = useContext(CartProductsContext)
 
@@ -25,10 +26,10 @@ export const CartList: FC<Props> = ({ onClose, enableCounter }) => {
       <List>
         {
           cartProducts.length ?
-            cartProducts.map((product) => <CartListItem enableCounter={enableCounter} key={product._id} product={product} onClose={onClose} />) :
+            cartProducts.map((product) => <CartListItem enableDelete={enableDelete} enableCounter={enableCounter} key={product._id} product={product} onClose={onClose} />) :
             (
               <ListItem>
-                <ListItemText primary={'No hay productos favoritos aun...'} />
+                <ListItemText primary={'No hay productos en el carrito aun...'} />
               </ListItem>
             )
         }

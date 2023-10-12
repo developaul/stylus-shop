@@ -11,7 +11,7 @@ const CartPage: NextPage = () => {
 
       <Grid sx={{ mt: 6 }} spacing={4} container>
         <Grid xs={12} md={6} item>
-          <CartList />
+          <CartList enableDelete enableCounter />
         </Grid>
         <Grid xs={12} md={6} item>
           <OrderSummary />
@@ -19,7 +19,7 @@ const CartPage: NextPage = () => {
       </Grid>
 
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', my: 4 }}>
-        <Button LinkComponent={NextLink} href='/orden' >
+        <Button LinkComponent={NextLink} href='/checkout' >
           Continuar con pedido
         </Button>
       </Box>

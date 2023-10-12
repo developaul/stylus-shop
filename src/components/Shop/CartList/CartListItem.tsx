@@ -11,10 +11,11 @@ import { Currency } from '@/utils'
 interface Props {
   product: CartProduct
   enableCounter?: boolean
+  enableDelete?: boolean
   onClose?: () => void
 }
 
-export const CartListItem: FC<Props> = ({ product, enableCounter = false, onClose }) => {
+export const CartListItem: FC<Props> = ({ product, enableCounter = false, enableDelete = false, onClose }) => {
   const router = useRouter()
 
   const { updateCartProduct, removeProductFromCart } = useContext(CartProductsContext)
@@ -69,11 +70,15 @@ export const CartListItem: FC<Props> = ({ product, enableCounter = false, onClos
           primaryTypographyProps={{ variant: 'subtitle2', sx: { fontSize: { xs: 10, md: 20 } } }}
           primary={price}
         />
-        <ListItemButton
-          onClick={() => removeProductFromCart(product)}
-        >
-          Eliminar
-        </ListItemButton>
+        {
+          enableDelete && (
+            <ListItemButton
+              onClick={() => removeProductFromCart(product)}
+            >
+              Eliminar
+            </ListItemButton>
+          )
+        }
       </Box>
     </ListItem>
   )
