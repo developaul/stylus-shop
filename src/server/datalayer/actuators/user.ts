@@ -4,28 +4,7 @@ import { mongoConnection } from ".."
 import { UserModel } from "../models"
 
 import { AuthProvider } from "@/constants"
-import { ShortUser, User } from "@/interfaces"
-
-
-export const getUserById = async (userId: string): Promise<ShortUser> => {
-  await mongoConnection.connect()
-  const user = await UserModel.findById(userId)
-    .select({
-      firstName: 1,
-      lastName: 1,
-      email: 1,
-      cartProducts: 1,
-      favoriteProducts: 1
-    })
-    .lean()
-
-  // if (!user) return null
-
-  await mongoConnection.disconnect()
-
-  return user!
-}
-
+import { TokenUser, User } from "@/interfaces"
 
 interface CreateUserArgs {
   firstName: string,
@@ -69,16 +48,12 @@ interface CheckUserArgs {
   provider: AuthProvider
 }
 
-export const checkUserByCredentials = async ({ email, password }: Omit<CheckUserArgs, 'provider'>): Promise<ShortUser | null> => {
+export const checkUserByCredentials = async ({ email, password }: Omit<CheckUserArgs, 'provider'>): Promise<TokenUser | null> => {
   await mongoConnection.connect()
   const user = await UserModel.findOne({ email })
     .select({
-      firstName: 1,
-      lastName: 1,
+      _id: 1,
       email: 1,
-      cartProducts: 1,
-      favoriteProducts: 1,
-      password: 1
     })
     .lean()
   await mongoConnection.disconnect()
@@ -92,7 +67,7 @@ export const checkUserByCredentials = async ({ email, password }: Omit<CheckUser
   return restUser
 }
 
-export const checkUser = async ({ email, password, provider }: CheckUserArgs): Promise<ShortUser | null> => {
+export const checkUser = async ({ email, password, provider }: CheckUserArgs): Promise<TokenUser | null> => {
 
   if (provider === AuthProvider.Credentials)
     return checkUserByCredentials({ email, password })

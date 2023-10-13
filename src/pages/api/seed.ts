@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { mongoConnection, SubCategoryModel, CategoryModel, ProductModel, } from '@/server'
+import { mongoConnection, SubCategoryModel, CategoryModel, ProductModel, UserModel, } from '@/server'
 
 import { Seed } from '@/constants'
 
@@ -20,10 +20,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   await CategoryModel.deleteMany()
   await SubCategoryModel.deleteMany()
   await ProductModel.deleteMany()
+  await UserModel.deleteMany()
 
   await CategoryModel.insertMany(Seed.categories)
   await SubCategoryModel.insertMany(Seed.subCategories)
   await ProductModel.insertMany(Seed.products)
+  await UserModel.insertMany(Seed.users)
 
   await mongoConnection.disconnect()
 

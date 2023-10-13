@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app'
+import { SessionProvider } from 'next-auth/react';
 import { SWRConfig } from 'swr';
 
 import { CssBaseline, ThemeProvider } from '@mui/material'
@@ -16,21 +17,23 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/pagination';
 import 'swiper/css/thumbs';
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    <SWRConfig value={{ fetcher: (resource, init) => fetch(resource, init).then(res => res.json()) }}>
-      <UserProvider>
-        <FavoriteProductsProvider>
-          <CartProductsProvider>
-            <ProductFilterProvider>
-              <ThemeProvider theme={lightTheme}>
-                <CssBaseline />
-                <Component {...pageProps} />
-              </ThemeProvider>
-            </ProductFilterProvider>
-          </CartProductsProvider>
-        </FavoriteProductsProvider>
-      </UserProvider>
-    </SWRConfig>
+    <SessionProvider session={session}>
+      <SWRConfig value={{ fetcher: (resource, init) => fetch(resource, init).then(res => res.json()) }}>
+        <UserProvider>
+          <FavoriteProductsProvider>
+            <CartProductsProvider>
+              <ProductFilterProvider>
+                <ThemeProvider theme={lightTheme}>
+                  <CssBaseline />
+                  <Component {...pageProps} />
+                </ThemeProvider>
+              </ProductFilterProvider>
+            </CartProductsProvider>
+          </FavoriteProductsProvider>
+        </UserProvider>
+      </SWRConfig>
+    </SessionProvider>
   )
 }

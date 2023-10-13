@@ -1,5 +1,17 @@
-import { Category, Product, SubCategory } from "@/interfaces";
-import { Size } from '@/constants'
+import bcrypt from 'bcryptjs'
+
+import { Category, Product, User, SubCategory } from "@/interfaces";
+import { AuthProvider, Size } from '@/constants'
+
+export const users: Omit<User, '_id' | 'favoriteProducts' | 'cartProducts'>[] = [
+  {
+    email: 'developaul@gmail.com',
+    firstName: 'developaul',
+    lastName: 'developaul',
+    password: bcrypt.hashSync('123456'),
+    provider: AuthProvider.Credentials,
+  }
+]
 
 export const categories: Category[] = [
   {

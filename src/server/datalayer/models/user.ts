@@ -36,7 +36,7 @@ const userSchema = new Schema({
     required: true
   },
   favoriteProducts: { type: [ObjectId], default: [] },
-  cartProducts: { type: UserCartProductSchema, default: [] }
+  cartProducts: { type: [UserCartProductSchema], default: [] }
 }, { timestamps: true })
 
 type UserMongo = User

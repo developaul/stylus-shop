@@ -15,3 +15,5 @@ export interface User {
 export interface ShortUser extends Pick<User, '_id' | 'firstName' | 'lastName' | 'email' | 'cartProducts' | 'favoriteProducts'> {
 
 }
+
+export interface TokenUser extends Pick<User, '_id' | 'email'> { }
