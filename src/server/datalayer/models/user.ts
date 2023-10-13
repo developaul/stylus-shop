@@ -35,7 +35,7 @@ const userSchema = new Schema({
     },
     required: true
   },
-  favoriteProducts: { type: [ObjectId], default: [] },
+  favoriteProductIds: { type: [ObjectId], default: [] },
   cartProducts: { type: [UserCartProductSchema], default: [] }
 }, { timestamps: true })
 

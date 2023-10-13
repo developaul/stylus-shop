@@ -1,7 +1,8 @@
-import { FC, ReactElement, useEffect, useReducer } from 'react'
+import { FC, ReactElement, useContext, useEffect, useReducer } from 'react'
 import { FavoriteProductsContext, favoriteProductsReducer } from './'
 
 import { FavoriteProduct } from '@/interfaces'
+import { UserContext } from '..'
 
 export interface FavoriteProductsState {
   favoriteProducts: FavoriteProduct[]
@@ -16,6 +17,8 @@ interface Props {
 }
 
 export const FavoriteProductsProvider: FC<Props> = ({ children }) => {
+  const { user } = useContext(UserContext)
+
   const [state, dispatch] = useReducer(favoriteProductsReducer, FavoriteProducts_INITIAL_STATE)
 
   useEffect(() => {
@@ -27,7 +30,13 @@ export const FavoriteProductsProvider: FC<Props> = ({ children }) => {
     }
   }, [])
 
+  useEffect(() => {
+    if (!user) return
+    loadFavoriteProducts(user.favoriteProducts)
+  }, [user])
+
   const loadFavoriteProducts = (favoriteProducts: FavoriteProduct[]) => {
+    localStorage.setItem('favorites', JSON.stringify(favoriteProducts))
     dispatch({ type: '[FavoriteProducts] - Load favorite products', payload: favoriteProducts })
   }
 

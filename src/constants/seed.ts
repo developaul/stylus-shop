@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs'
 import { Category, Product, User, SubCategory } from "@/interfaces";
 import { AuthProvider, Size } from '@/constants'
 
-export const users: Omit<User, '_id' | 'favoriteProducts' | 'cartProducts'>[] = [
+export const users: Omit<User, '_id' | 'favoriteProductIds' | 'cartProducts'>[] = [
   {
     email: 'developaul@gmail.com',
     firstName: 'developaul',

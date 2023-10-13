@@ -1,7 +1,10 @@
-import { Box, FormControl, Grid, TextField, Typography } from '@mui/material'
+import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
+import { Box, FormControl, Grid, TextField, Typography } from '@mui/material'
 
+import { UserContext } from '@/context'
 import { CustomButton } from '..'
+
 import { Validations } from '@/utils'
 
 interface FormData {
@@ -11,14 +14,16 @@ interface FormData {
 
 export const SignInForm = () => {
 
+  const { login } = useContext(UserContext)
+
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm<FormData>();
 
-  const onSubmit = (args: FormData) => {
-    console.log("🚀 ~ file: SignInForm.tsx:21 ~ onSubmit ~ args:", args)
+  const onSubmit = ({ email, password }: FormData) => {
+    login(email, password)
   }
 
   return (

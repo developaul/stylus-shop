@@ -11,12 +11,18 @@ export const authOptions: AuthOptions = {
         email: { label: 'Email', type: 'email', placeholder: 'example@example.com' },
         password: { label: 'Password', type: 'password' }
       },
-      authorize: (credentials): Promise<any> => {
-        return checkUser({
+      authorize: async (credentials): Promise<any> => {
+
+        console.log({ credentials })
+
+        const user = await checkUser({
           email: credentials?.email ?? '',
           password: credentials?.password ?? '',
           provider: AuthProvider.Credentials
-        })
+        }).catch(console.log)
+        console.log('AFTER', { user })
+
+        return user
       }
     })
   ],
@@ -25,7 +31,7 @@ export const authOptions: AuthOptions = {
     newUser: '/register'
   },
   callbacks: {
-    async jwt({ token, user, account }) {
+    async jwt({ token, user, account }: any) {
       if (!account) return token
 
       token.accessToken = account.access_token
@@ -39,12 +45,14 @@ export const authOptions: AuthOptions = {
           break;
       }
 
+      console.log("🚀 ~ file: [...nextauth].ts:49 ~ jwt ~ token:", token)
       return token
     },
     async session({ session, user, token }: any) {
       session.accessToken = token.accessToken
       session.user = token.user
 
+      console.log("🚀 ~ file: [...nextauth].ts:55 ~ session ~ session:", session)
       return session
     }
   }

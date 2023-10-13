@@ -1,6 +1,6 @@
 import { ProductModel, getCategoryById, getSubCategoryById, mongoConnection } from "..";
 
-import { Product, ShortProduct } from "@/interfaces";
+import { FavoriteProduct, Product, ShortProduct } from "@/interfaces";
 
 export const getBestProducts = async (): Promise<ShortProduct[]> => {
 
@@ -78,4 +78,19 @@ export const getProductBySlug = async (slug: string): Promise<Product | null> =>
   await mongoConnection.disconnect()
 
   return JSON.parse(JSON.stringify({ ...product, category, subCategory }))
+}
+
+export const getFavoriteProductsByIds = async (productIds: string[]): Promise<FavoriteProduct[]> => {
+
+  const products = await ProductModel
+    .find({ _id: { $in: productIds } })
+    .select({
+      _id: 1,
+      slug: 1,
+      images: 1,
+      title: 1
+    })
+    .lean()
+
+  return products.map(({ images, ...rest }) => ({ ...rest, image: images[0] }))
 }

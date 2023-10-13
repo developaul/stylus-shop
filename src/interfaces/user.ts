@@ -1,4 +1,4 @@
-import { UserCartProduct } from "."
+import { FavoriteProduct, UserCartProduct } from "."
 import { AuthProvider } from "@/constants"
 
 export interface User {
@@ -9,11 +9,11 @@ export interface User {
   password?: string
   provider: AuthProvider,
   cartProducts: UserCartProduct[]
-  favoriteProducts: string[]
+  favoriteProductIds: string[]
 }
 
-export interface ShortUser extends Pick<User, '_id' | 'firstName' | 'lastName' | 'email' | 'cartProducts' | 'favoriteProducts'> {
-
+export interface ShortUser extends Pick<User, '_id' | 'firstName' | 'lastName' | 'email' | 'cartProducts' | 'favoriteProductIds'> {
+  favoriteProducts: FavoriteProduct[]
 }
 
 export interface TokenUser extends Pick<User, '_id' | 'email'> { }

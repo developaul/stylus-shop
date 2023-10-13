@@ -7,7 +7,7 @@ const userApi = axios.create({
 })
 
 export const getUserById = async (userId: string): Promise<ShortUser> => {
-  const { data } = await userApi.get<ShortUser>('/:userId', { params: userId })
+  const { data } = await userApi.get<ShortUser>(`/${userId}`)
 
   return data
 }

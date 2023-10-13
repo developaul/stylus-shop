@@ -54,6 +54,7 @@ export const checkUserByCredentials = async ({ email, password }: Omit<CheckUser
     .select({
       _id: 1,
       email: 1,
+      password: 1
     })
     .lean()
   await mongoConnection.disconnect()
