@@ -2,17 +2,17 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { UserModel, getFavoriteProductsByIds, mongoConnection } from '@/server'
 
-import { ShortUser } from '@/interfaces'
+import { FavoriteProduct } from '@/interfaces'
 
 type Data =
   | { message: string }
-  | ShortUser
+  | FavoriteProduct[]
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   try {
     switch (req.method) {
       case 'GET':
-        return await getUserById(req, res)
+        return await getFavoriteProducts(req, res)
 
       default:
         return res
@@ -20,33 +20,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
           .json({ message: 'Bad request' })
     }
   } catch (error) {
-    console.log("error getUserById:", error)
+    console.log("error add Favorite Product:", error)
     return res
       .status(500)
       .json({ message: 'Server error' })
   }
 }
 
-export const getUserById = async (req: NextApiRequest, res: NextApiResponse<Data>): Promise<void> => {
+export const getFavoriteProducts = async (req: NextApiRequest, res: NextApiResponse<Data>): Promise<void> => {
   const { userId } = req.query
 
   await mongoConnection.connect()
-  const user = await UserModel.findById(userId)
-    .select({
-      firstName: 1,
-      lastName: 1,
-      email: 1,
-      cartProducts: 1,
-      favoriteProductIds: 1
-    })
-    .lean()
+  const user = await UserModel.findById(userId).select({ favoriteProductIds: 1 }).lean()
   await mongoConnection.disconnect()
 
-  if (!user) {
-    return res
-      .status(400)
-      .json({ message: 'User not found' })
-  }
+  if (!user) return res.status(404).json({ message: 'User not found' })
 
-  return res.status(200).json(user)
+  const favoriteProducts = user.favoriteProductIds.length ? await getFavoriteProductsByIds(user.favoriteProductIds) : []
+
+  return res.status(200).json(favoriteProducts)
 }

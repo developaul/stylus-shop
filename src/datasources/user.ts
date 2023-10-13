@@ -1,6 +1,6 @@
 import axios from "axios"
 
-import { ShortUser } from "@/interfaces"
+import { FavoriteProduct, ShortUser } from "@/interfaces"
 
 const userApi = axios.create({
   baseURL: '/api/user'
@@ -13,9 +13,15 @@ export const getUserById = async (userId: string): Promise<ShortUser> => {
 }
 
 export const addFavoriteProduct = async (userId: string, favoriteProductId: string): Promise<void> => {
-  await userApi.post('/addFavoriteProduct', { userId, favoriteProductId })
+  await userApi.post('/favorites/add', { userId, favoriteProductId })
 }
 
 export const removeFavoriteProduct = async (userId: string, favoriteProductId: string): Promise<void> => {
-  await userApi.post('/removeFavoriteProduct', { userId, favoriteProductId })
+  await userApi.post('/favorites/remove', { userId, favoriteProductId })
+}
+
+export const getFavoriteProducts = async (userId: string): Promise<FavoriteProduct[]> => {
+  const { data } = await userApi.get<FavoriteProduct[]>(`/favorites/${userId}`)
+
+  return data
 }

@@ -1,9 +1,9 @@
-import { FC, ReactElement, useContext, useEffect, useReducer } from 'react'
+import { FC, ReactElement, useEffect, useReducer } from 'react'
 import { FavoriteProductsContext, favoriteProductsReducer } from './'
 
-import { UserContext } from '..'
 import { userDataSource } from '@/datasources'
 import { FavoriteProduct } from '@/interfaces'
+import { useSession } from 'next-auth/react'
 
 export interface FavoriteProductsState {
   favoriteProducts: FavoriteProduct[]
@@ -18,7 +18,7 @@ interface Props {
 }
 
 export const FavoriteProductsProvider: FC<Props> = ({ children }) => {
-  const { user } = useContext(UserContext)
+  const { data: session, status } = useSession()
 
   const [state, dispatch] = useReducer(favoriteProductsReducer, FavoriteProducts_INITIAL_STATE)
 
@@ -32,9 +32,20 @@ export const FavoriteProductsProvider: FC<Props> = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    if (!user) return
-    loadFavoriteProducts(user.favoriteProducts)
-  }, [user])
+    if (['unauthenticated', 'loading'].includes(status) || !session?.user) return
+
+    loadFavoriteProductsFromDb(session.user._id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session?.user, status])
+
+  const loadFavoriteProductsFromDb = async (userId: string) => {
+    try {
+      const favoriteProducts = await userDataSource.getFavoriteProducts(userId)
+      loadFavoriteProducts(favoriteProducts)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   const loadFavoriteProducts = (favoriteProducts: FavoriteProduct[]) => {
     localStorage.setItem('favorites', JSON.stringify(favoriteProducts))
@@ -43,14 +54,14 @@ export const FavoriteProductsProvider: FC<Props> = ({ children }) => {
 
   const addFavoriteProduct = (favoriteProduct: FavoriteProduct) => {
     const newFavoriteProducts = state.favoriteProducts.concat(favoriteProduct)
-    if (user) userDataSource.addFavoriteProduct(user._id, favoriteProduct._id).catch(console.error)
+    if (session?.user) userDataSource.addFavoriteProduct(session.user._id, favoriteProduct._id).catch(console.error)
     localStorage.setItem('favorites', JSON.stringify(newFavoriteProducts))
     dispatch({ type: '[FavoriteProducts] - Add favorite product', payload: newFavoriteProducts })
   }
 
   const removeFavoriteProduct = (productId: string) => {
     const newFavoriteProducts = state.favoriteProducts.filter(favoriteProduct => favoriteProduct._id !== productId)
-    if (user) userDataSource.removeFavoriteProduct(user._id, productId).catch(console.error)
+    if (session?.user) userDataSource.removeFavoriteProduct(session.user._id, productId).catch(console.error)
     localStorage.setItem('favorites', JSON.stringify(newFavoriteProducts))
     dispatch({ type: '[FavoriteProducts] - Remove favorite product', payload: newFavoriteProducts })
   }

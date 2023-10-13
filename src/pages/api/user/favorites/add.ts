@@ -2,11 +2,8 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { UserModel, mongoConnection } from '@/server'
 
-import { ShortUser } from '@/interfaces'
-
 type Data =
   | { message: string }
-  | ShortUser
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   try {
@@ -20,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
           .json({ message: 'Bad request' })
     }
   } catch (error) {
-    console.log("error addFavoriteProduct:", error)
+    console.log("error add Favorite Product:", error)
     return res
       .status(500)
       .json({ message: 'Server error' })

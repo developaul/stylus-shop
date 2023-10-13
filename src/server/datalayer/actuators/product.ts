@@ -81,6 +81,7 @@ export const getProductBySlug = async (slug: string): Promise<Product | null> =>
 }
 
 export const getFavoriteProductsByIds = async (productIds: string[]): Promise<FavoriteProduct[]> => {
+  await mongoConnection.connect()
 
   const products = await ProductModel
     .find({ _id: { $in: productIds } })
@@ -91,6 +92,7 @@ export const getFavoriteProductsByIds = async (productIds: string[]): Promise<Fa
       title: 1
     })
     .lean()
+  await mongoConnection.disconnect()
 
   return products.map(({ images, ...rest }) => ({ ...rest, image: images[0] }))
 }
