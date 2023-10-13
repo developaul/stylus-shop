@@ -8,7 +8,7 @@ type UserActionType =
 export const userReducer = (state: UserState, action: UserActionType): UserState => {
   switch (action.type) {
     case '[User] - Load user':
-      return { ...state, user: action.payload }
+      return { ...state, user: action.payload, isLoggedIn: true }
 
     default:
       return state

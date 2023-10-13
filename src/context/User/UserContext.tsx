@@ -4,6 +4,7 @@ import { ShortUser } from '@/interfaces';
 
 interface ContextProps {
   user: ShortUser | null
+  isLoggedIn: boolean
 
   // methods
   logout: () => void

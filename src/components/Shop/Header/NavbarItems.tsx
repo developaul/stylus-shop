@@ -7,7 +7,7 @@ import {
   ShoppingCartOutlined as ShoppingCartOutlinedIcon
 } from '@mui/icons-material';
 
-import { CartProductsContext } from '@/context';
+import { CartProductsContext, UserContext } from '@/context';
 
 import { FavoriteList } from '../FavoriteList';
 import { CartDrawer } from '../CartDrawer';
@@ -27,6 +27,7 @@ const ButtonStyled = styled(Button)(
 export const NavbarItems: FC<Props> = ({ direction, gap }) => {
   const router = useRouter()
 
+  const { isLoggedIn } = useContext(UserContext)
   const { cartProducts } = useContext(CartProductsContext)
 
   const [cartListIsOpen, setCartListIsOpen] = useState(false)
@@ -39,14 +40,16 @@ export const NavbarItems: FC<Props> = ({ direction, gap }) => {
   return (
     <>
       <Grid container direction={direction} gap={gap} >
-        <Grid item>
-          <ButtonStyled
-            startIcon={<PersonOutlineRoundedIcon />}
-            onClick={onRedirect}
-          >
-            Iniciar sesión
-          </ButtonStyled>
-        </Grid>
+        {!isLoggedIn && (
+          <Grid item>
+            <ButtonStyled
+              startIcon={<PersonOutlineRoundedIcon />}
+              onClick={onRedirect}
+            >
+              Iniciar sesión
+            </ButtonStyled>
+          </Grid>
+        )}
         <Grid item>
           <ButtonStyled
             onClick={toggleFavoriteListIsOpen}

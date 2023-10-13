@@ -8,10 +8,12 @@ import { getUserById } from '@/datasources'
 
 export interface UserState {
   user: ShortUser | null
+  isLoggedIn: boolean
 }
 
 const User_INITIAL_STATE: UserState = {
-  user: null
+  user: null,
+  isLoggedIn: false
 }
 
 interface Props {
