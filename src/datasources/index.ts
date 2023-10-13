@@ -1,1 +1,1 @@
-export * from './user'
+export * as userDataSource from './user'

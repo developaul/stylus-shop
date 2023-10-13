@@ -4,7 +4,8 @@ import { Button, Drawer, Grid, GridDirection, styled } from '@mui/material'
 import {
   PersonOutlineRounded as PersonOutlineRoundedIcon,
   FavoriteBorderRounded as FavoriteBorderRoundedIcon,
-  ShoppingCartOutlined as ShoppingCartOutlinedIcon
+  ShoppingCartOutlined as ShoppingCartOutlinedIcon,
+  LogoutRounded as LogoutRoundedIcon
 } from '@mui/icons-material';
 
 import { CartProductsContext, UserContext } from '@/context';
@@ -27,7 +28,7 @@ const ButtonStyled = styled(Button)(
 export const NavbarItems: FC<Props> = ({ direction, gap }) => {
   const router = useRouter()
 
-  const { isLoggedIn } = useContext(UserContext)
+  const { isLoggedIn, logout } = useContext(UserContext)
   const { cartProducts } = useContext(CartProductsContext)
 
   const [cartListIsOpen, setCartListIsOpen] = useState(false)
@@ -40,7 +41,16 @@ export const NavbarItems: FC<Props> = ({ direction, gap }) => {
   return (
     <>
       <Grid container direction={direction} gap={gap} >
-        {!isLoggedIn && (
+        {isLoggedIn ? (
+          <Grid item>
+            <ButtonStyled
+              startIcon={<LogoutRoundedIcon />}
+              onClick={logout}
+            >
+              Cerrar sesión
+            </ButtonStyled>
+          </Grid>
+        ) : (
           <Grid item>
             <ButtonStyled
               startIcon={<PersonOutlineRoundedIcon />}

@@ -3,8 +3,8 @@ import { useSession, signOut, signIn } from 'next-auth/react'
 
 import { UserContext, userReducer } from './'
 
+import { userDataSource } from '@/datasources'
 import { ShortUser } from '@/interfaces'
-import { getUserById } from '@/datasources'
 
 export interface UserState {
   user: ShortUser | null
@@ -33,7 +33,7 @@ export const UserProvider: FC<Props> = ({ children }) => {
 
   const loadUser = async (userId: string) => {
     try {
-      const user = await getUserById(userId)
+      const user = await userDataSource.getUserById(userId)
       dispatch({ type: '[User] - Load user', payload: user })
     } catch (error) {
       console.error(error)

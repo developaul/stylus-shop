@@ -11,3 +11,11 @@ export const getUserById = async (userId: string): Promise<ShortUser> => {
 
   return data
 }
+
+export const addFavoriteProduct = async (userId: string, favoriteProductId: string): Promise<void> => {
+  await userApi.post('/addFavoriteProduct', { userId, favoriteProductId })
+}
+
+export const removeFavoriteProduct = async (userId: string, favoriteProductId: string): Promise<void> => {
+  await userApi.post('/removeFavoriteProduct', { userId, favoriteProductId })
+}

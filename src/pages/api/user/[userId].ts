@@ -5,7 +5,7 @@ import { UserModel, getFavoriteProductsByIds, mongoConnection } from '@/server'
 import { ShortUser } from '@/interfaces'
 
 type Data =
-  | { name: string }
+  | { message: string }
   | ShortUser
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
@@ -17,13 +17,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       default:
         return res
           .status(400)
-          .json({ name: 'Bad request' })
+          .json({ message: 'Bad request' })
     }
   } catch (error) {
     console.log("error getUserById:", error)
     return res
       .status(500)
-      .json({ name: 'Server error' })
+      .json({ message: 'Server error' })
   }
 }
 
@@ -44,7 +44,7 @@ export const getUserById = async (req: NextApiRequest, res: NextApiResponse<Data
   if (!user) {
     return res
       .status(400)
-      .json({ name: 'User not found' })
+      .json({ message: 'User not found' })
   }
 
   const favoriteProducts = user.favoriteProductIds.length ? await getFavoriteProductsByIds(user.favoriteProductIds) : []

@@ -1,8 +1,9 @@
 import { FC, ReactElement, useContext, useEffect, useReducer } from 'react'
 import { FavoriteProductsContext, favoriteProductsReducer } from './'
 
-import { FavoriteProduct } from '@/interfaces'
 import { UserContext } from '..'
+import { userDataSource } from '@/datasources'
+import { FavoriteProduct } from '@/interfaces'
 
 export interface FavoriteProductsState {
   favoriteProducts: FavoriteProduct[]
@@ -42,12 +43,14 @@ export const FavoriteProductsProvider: FC<Props> = ({ children }) => {
 
   const addFavoriteProduct = (favoriteProduct: FavoriteProduct) => {
     const newFavoriteProducts = state.favoriteProducts.concat(favoriteProduct)
+    if (user) userDataSource.addFavoriteProduct(user._id, favoriteProduct._id).catch(console.error)
     localStorage.setItem('favorites', JSON.stringify(newFavoriteProducts))
     dispatch({ type: '[FavoriteProducts] - Add favorite product', payload: newFavoriteProducts })
   }
 
   const removeFavoriteProduct = (productId: string) => {
     const newFavoriteProducts = state.favoriteProducts.filter(favoriteProduct => favoriteProduct._id !== productId)
+    if (user) userDataSource.removeFavoriteProduct(user._id, productId).catch(console.error)
     localStorage.setItem('favorites', JSON.stringify(newFavoriteProducts))
     dispatch({ type: '[FavoriteProducts] - Remove favorite product', payload: newFavoriteProducts })
   }
