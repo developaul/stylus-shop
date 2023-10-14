@@ -48,7 +48,7 @@ export const CartDrawer: FC<Props> = ({ onClose }) => {
         Carrito ({cartProducts.length})
       </Typography>
 
-      <CartList enableCounter onClose={onClose} />
+      <CartList enableDelete enableCounter onClose={onClose} />
 
       {
         Boolean(cartProducts.length) && (
