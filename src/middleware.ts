@@ -12,7 +12,21 @@ export async function middleware(req: NextRequest) {
     if (!session) return NextResponse.next()
 
     const url = req.nextUrl.clone()
-    url.pathname = '/'
+    url.pathname = req.nextUrl.searchParams.get('page') ?? '/'
+    url.search = ''
+
+    return NextResponse.redirect(url)
+  }
+
+  if (requestedPage.startsWith('/checkout')) {
+    const session = await getToken({ req, secret: process.env.NEXTAUTH_URL })
+
+    if (session) return NextResponse.next()
+
+    const url = req.nextUrl.clone()
+
+    url.pathname = '/signin'
+    url.search = `page=${requestedPage}`
 
     return NextResponse.redirect(url)
   }
@@ -21,5 +35,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/signin', '/register'],
+  matcher: ['/signin', '/register', '/checkout'],
 }
