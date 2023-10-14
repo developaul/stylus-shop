@@ -11,6 +11,13 @@ export interface UserState {
   isLoggedIn: boolean
 }
 
+export interface RegisterArgs {
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+}
+
 const User_INITIAL_STATE: UserState = {
   user: null,
   isLoggedIn: false
@@ -40,6 +47,19 @@ export const UserProvider: FC<Props> = ({ children }) => {
     }
   }
 
+  const register = async (args: RegisterArgs) => {
+    try {
+      const { email, password } = args
+
+      await userDataSource.registerUser(args)
+
+      await signIn('credentials', { email, password })
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   const login = async (email: string, password: string) => {
     await signIn('credentials', { email, password }).catch(console.error)
   }
@@ -55,7 +75,8 @@ export const UserProvider: FC<Props> = ({ children }) => {
       value={{
         ...state,
         login,
-        logout
+        logout,
+        register
       }}>
       {children}
     </UserContext.Provider>

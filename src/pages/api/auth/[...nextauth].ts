@@ -1,7 +1,8 @@
-import { AuthProvider } from "@/constants"
-import { checkUser, checkUserByCredentials } from "@/server"
 import NextAuth, { AuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
+
+import { checkUser } from "@/server"
+import { AuthProvider } from "@/constants"
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -12,15 +13,11 @@ export const authOptions: AuthOptions = {
         password: { label: 'Password', type: 'password' }
       },
       authorize: async (credentials): Promise<any> => {
-
-        console.log({ credentials })
-
         const user = await checkUser({
           email: credentials?.email ?? '',
           password: credentials?.password ?? '',
           provider: AuthProvider.Credentials
         }).catch(console.log)
-        console.log('AFTER', { user })
 
         return user
       }
@@ -29,6 +26,11 @@ export const authOptions: AuthOptions = {
   pages: {
     signIn: '/signin',
     newUser: '/register'
+  },
+  session: {
+    maxAge: 2592000, // 30d
+    strategy: 'jwt',
+    updateAge: 86400 // 24h
   },
   callbacks: {
     async jwt({ token, user, account }: any) {
@@ -45,14 +47,12 @@ export const authOptions: AuthOptions = {
           break;
       }
 
-      console.log("🚀 ~ file: [...nextauth].ts:49 ~ jwt ~ token:", token)
       return token
     },
     async session({ session, user, token }: any) {
       session.accessToken = token.accessToken
       session.user = token.user
 
-      console.log("🚀 ~ file: [...nextauth].ts:55 ~ session ~ session:", session)
       return session
     }
   }

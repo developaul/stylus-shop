@@ -1,7 +1,10 @@
+import { useContext } from 'react';
 import { Box, FormControl, Grid, TextField, Typography } from '@mui/material'
 import { useForm } from 'react-hook-form';
 
+import { UserContext } from '@/context';
 import { CustomButton } from '..'
+
 import { Validations } from '@/utils';
 
 interface FormData {
@@ -13,22 +16,20 @@ interface FormData {
 
 export const RegisterForm = () => {
 
+  const { register: _register } = useContext(UserContext)
+
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm<FormData>();
 
-  const onSubmit = (args: FormData) => {
-    console.log("🚀 ~ file: SignInForm.tsx:22 ~ onSubmit ~ args:", args)
-  }
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate >
+    <form onSubmit={handleSubmit(_register)} noValidate >
       <Grid container direction='column' gap={2}>
         <Grid item>
           <FormControl fullWidth>
-            <Typography sx={{ mb: 1 }} component='label' htmlFor={'firstName-input'} >Email:</Typography>
+            <Typography sx={{ mb: 1 }} component='label' htmlFor={'firstName-input'} >Nombre:</Typography>
             <TextField
               {...register('firstName', {
                 required: 'El nombre es obligatorio',

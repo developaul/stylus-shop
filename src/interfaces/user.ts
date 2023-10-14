@@ -12,7 +12,7 @@ export interface User {
   favoriteProductIds: string[]
 }
 
-export interface ShortUser extends Pick<User, '_id' | 'firstName' | 'lastName' | 'email' | 'cartProducts'> {
+export interface ShortUser extends Pick<User, '_id' | 'firstName' | 'lastName' | 'email'> {
 }
 
 export interface TokenUser extends Pick<User, '_id' | 'email'> { }

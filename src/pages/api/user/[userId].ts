@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import { UserModel, getFavoriteProductsByIds, mongoConnection } from '@/server'
+import { UserModel, mongoConnection } from '@/server'
 
 import { ShortUser } from '@/interfaces'
 
@@ -35,9 +35,7 @@ export const getUserById = async (req: NextApiRequest, res: NextApiResponse<Data
     .select({
       firstName: 1,
       lastName: 1,
-      email: 1,
-      cartProducts: 1,
-      favoriteProductIds: 1
+      email: 1
     })
     .lean()
   await mongoConnection.disconnect()
