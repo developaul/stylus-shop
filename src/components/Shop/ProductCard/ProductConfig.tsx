@@ -76,6 +76,7 @@ export const ProductConfig: FC<Props> = ({ product }) => {
 
   const handleAddCartProduct = () => {
     addProductToCart(tempProduct)
+    setTempProduct(prev => ({ ...prev, quantity: 1, size: undefined }))
   }
 
   return (

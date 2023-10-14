@@ -1,30 +1,16 @@
-import { FC, useContext } from 'react'
 import { useRouter } from 'next/router';
-import { Box, Button, IconButton, Typography, styled } from '@mui/material'
-import CloseIcon from '@mui/icons-material/Close';
+import { FC, useContext } from 'react'
+import { Box, Button, IconButton, Typography } from '@mui/material'
+import { Close as CloseIcon } from '@mui/icons-material';
 
 import { CartList } from '../CartList';
+
 import { CartProductsContext } from '@/context'
 import { Currency } from '@/utils';
 
 interface Props {
   onClose: () => void
 }
-
-const ButtonStyled = styled(Button)(
-  ({ theme }) => `
-  text-transform: none;
-  font-weight: 400;
-  background-color: ${theme.palette.grey[400]};
-  border-color: ${theme.palette.grey[400]};
-  color: ${theme.palette.common.black};
-  border-radius: 50px;
-
-  &:hover {
-    border-color: ${theme.palette.grey[400]};
-    background-color: ${theme.palette.grey[400]};
-  }
-`)
 
 export const CartDrawer: FC<Props> = ({ onClose }) => {
   const router = useRouter()
@@ -59,9 +45,9 @@ export const CartDrawer: FC<Props> = ({ onClose }) => {
             </Box>
 
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 4 }}>
-              <ButtonStyled onClick={onRedirect} variant='contained' >
+              <Button onClick={onRedirect} variant='contained' >
                 Continuar con la compra
-              </ButtonStyled>
+              </Button>
             </Box>
           </>
         )

@@ -1,5 +1,6 @@
 import { FC, ReactElement, useEffect, useMemo, useReducer } from 'react'
 import { useSession } from 'next-auth/react'
+
 import { CartProductsContext, cartProductsReducer } from './'
 
 import { CartProduct } from '@/interfaces'

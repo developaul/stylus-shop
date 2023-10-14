@@ -19,7 +19,7 @@ const CartPage: NextPage = () => {
       </Grid>
 
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', my: 4 }}>
-        <Button LinkComponent={NextLink} href='/checkout' >
+        <Button variant='contained' LinkComponent={NextLink} href='/checkout' >
           Continuar con pedido
         </Button>
       </Box>

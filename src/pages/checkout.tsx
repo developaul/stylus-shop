@@ -9,14 +9,14 @@ import {
 const CheckoutPage: NextPage = () => {
   return (
     <CheckoutLayout title='checkout' >
-      <Grid container>
-        <Grid xs={12} md={8} item>
+      <Grid spacing={10} container>
+        <Grid xs={12} md={7} item>
           <Box>
             <Logo />
           </Box>
           <CheckoutForm />
         </Grid>
-        <Grid xs={12} md={4} item>
+        <Grid xs={12} md={5} item>
           <CartList />
           <OrderCalculation />
         </Grid>
