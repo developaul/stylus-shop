@@ -1,6 +1,7 @@
+import { keyBy } from "@/utils";
 import { ProductModel, getCategoryById, getSubCategoryById, mongoConnection } from "..";
 
-import { FavoriteProduct, Product, ShortProduct } from "@/interfaces";
+import { CartProduct, FavoriteProduct, Product, ShortProduct, User } from "@/interfaces";
 
 export const getBestProducts = async (): Promise<ShortProduct[]> => {
 
@@ -95,4 +96,36 @@ export const getFavoriteProductsByIds = async (productIds: string[]): Promise<Fa
   await mongoConnection.disconnect()
 
   return products.map(({ images, ...rest }) => ({ ...rest, image: images[0] }))
+}
+
+export const getCartProductsByUser = async (user: Pick<User, '_id' | 'cartProducts'>): Promise<CartProduct[]> => {
+  const productIds = user.cartProducts.map(({ productId }) => productId)
+
+  await mongoConnection.connect()
+  const products = await ProductModel
+    .find({ _id: { $in: productIds } })
+    .select({
+      _id: 1,
+      slug: 1,
+      title: 1,
+      images: 1,
+      inStock: 1,
+      price: 1,
+    })
+    .lean()
+  await mongoConnection.disconnect()
+
+  const productBy = keyBy(products, '_id')
+
+  return user.cartProducts.map(({ productId, quantity, size }) => {
+    const product = productBy[productId]
+    const { images, ...restProduct } = product
+
+    return {
+      ...restProduct,
+      image: images[0],
+      quantity,
+      size
+    }
+  })
 }

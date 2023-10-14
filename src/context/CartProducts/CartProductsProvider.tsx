@@ -1,8 +1,10 @@
 import { FC, ReactElement, useEffect, useMemo, useReducer } from 'react'
+import { useSession } from 'next-auth/react'
 import { CartProductsContext, cartProductsReducer } from './'
 
 import { CartProduct } from '@/interfaces'
 import { Product } from '@/utils'
+import { userDataSource } from '@/datasources'
 
 export interface CartProductsState {
   cartProducts: CartProduct[]
@@ -17,6 +19,9 @@ interface Props {
 }
 
 export const CartProductsProvider: FC<Props> = ({ children }) => {
+  const { data, status } = useSession()
+  const user = data?.user
+
   const [state, dispatch] = useReducer(cartProductsReducer, CartProducts_INITIAL_STATE)
 
   useEffect(() => {
@@ -27,6 +32,14 @@ export const CartProductsProvider: FC<Props> = ({ children }) => {
       loadCartProducts([])
     }
   }, [])
+
+  useEffect(() => {
+    if (['unauthenticated', 'loading'].includes(status) || !user) return
+
+    loadCartProductsFromDb(user._id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, status])
+
 
   const orderSummary = useMemo(() => {
     const orderValue = state.cartProducts.reduce((prev, current) => prev + (current.price * current.quantity), 0)
@@ -40,8 +53,18 @@ export const CartProductsProvider: FC<Props> = ({ children }) => {
     }
   }, [state.cartProducts])
 
+  const loadCartProductsFromDb = async (userId: string) => {
+    try {
+      const cartProducts = await userDataSource.getCartProducts(userId)
+      loadCartProducts(cartProducts)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   const loadCartProducts = (cartProducts: CartProduct[]) => {
-    dispatch({ type: '[CartProducts] - Load products from storage', payload: cartProducts })
+    localStorage.setItem('cart', JSON.stringify(cartProducts))
+    dispatch({ type: '[CartProducts] - Load cart products', payload: cartProducts })
   }
 
   const getNewCartProducts = (newCartProduct: CartProduct) => {
@@ -63,6 +86,12 @@ export const CartProductsProvider: FC<Props> = ({ children }) => {
 
   const addProductToCart = (newCartProduct: CartProduct) => {
     const newCartProducts = getNewCartProducts(newCartProduct)
+
+    if (user) {
+      const newUserCartProducts = Product.transformToUserCartProduct(newCartProducts)
+      userDataSource.updateCartProducts(user._id, newUserCartProducts)
+    }
+
     localStorage.setItem('cart', JSON.stringify(newCartProducts))
     dispatch({ type: '[CartProducts] - Add product to cart', payload: newCartProducts })
   }
@@ -70,6 +99,11 @@ export const CartProductsProvider: FC<Props> = ({ children }) => {
   const removeProductFromCart = (newCartProduct: CartProduct) => {
     const newCartProducts = state.cartProducts
       .filter(cartProduct => !Product.productsAreEqual(cartProduct, newCartProduct))
+
+    if (user) {
+      const newUserCartProducts = Product.transformToUserCartProduct(newCartProducts)
+      userDataSource.updateCartProducts(user._id, newUserCartProducts)
+    }
 
     localStorage.setItem('cart', JSON.stringify(newCartProducts))
     dispatch({ type: '[CartProducts] - Remove product from cart', payload: newCartProducts })
@@ -84,6 +118,11 @@ export const CartProductsProvider: FC<Props> = ({ children }) => {
         quantity: newCartProduct.quantity
       }
     })
+
+    if (user) {
+      const newUserCartProducts = Product.transformToUserCartProduct(newCartProducts)
+      userDataSource.updateCartProducts(user._id, newUserCartProducts)
+    }
 
     localStorage.setItem('cart', JSON.stringify(newCartProducts))
     dispatch({ type: '[CartProducts] - Update product from cart', payload: newCartProducts })

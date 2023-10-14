@@ -1,9 +1,9 @@
 import { FC, ReactElement, useEffect, useReducer } from 'react'
+import { useSession } from 'next-auth/react'
 import { FavoriteProductsContext, favoriteProductsReducer } from './'
 
 import { userDataSource } from '@/datasources'
 import { FavoriteProduct } from '@/interfaces'
-import { useSession } from 'next-auth/react'
 
 export interface FavoriteProductsState {
   favoriteProducts: FavoriteProduct[]

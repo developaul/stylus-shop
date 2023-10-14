@@ -3,14 +3,14 @@ import { CartProductsState } from '.';
 import { CartProduct } from '@/interfaces';
 
 type CartProductsActionType =
-  | { type: '[CartProducts] - Load products from storage', payload: CartProduct[] }
+  | { type: '[CartProducts] - Load cart products', payload: CartProduct[] }
   | { type: '[CartProducts] - Add product to cart', payload: CartProduct[] }
   | { type: '[CartProducts] - Remove product from cart', payload: CartProduct[] }
   | { type: '[CartProducts] - Update product from cart', payload: CartProduct[] }
 
 export const cartProductsReducer = (state: CartProductsState, action: CartProductsActionType): CartProductsState => {
   switch (action.type) {
-    case '[CartProducts] - Load products from storage':
+    case '[CartProducts] - Load cart products':
       return { ...state, cartProducts: action.payload }
 
     case '[CartProducts] - Add product to cart':

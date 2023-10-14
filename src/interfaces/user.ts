@@ -1,4 +1,4 @@
-import { FavoriteProduct, UserCartProduct } from "."
+import { UserCartProduct } from "."
 import { AuthProvider } from "@/constants"
 
 export interface User {
