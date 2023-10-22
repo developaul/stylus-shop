@@ -6,5 +6,6 @@ export * from './store'
 export * from './contact'
 export * from './filter'
 export * from './user'
+export * from './countries'
 
 export * as Seed from './seed'

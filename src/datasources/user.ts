@@ -1,7 +1,6 @@
 import axios from "axios"
 
-import { CartProduct, FavoriteProduct, ShortUser, UserCartProduct } from "@/interfaces"
-import { RegisterArgs } from "@/context"
+import { CartProduct, FavoriteProduct, RegisterUserArgs, ShortUser, UpdateUserArgs, UserCartProduct } from "@/interfaces"
 
 const userApi = axios.create({
   baseURL: '/api/user'
@@ -13,7 +12,7 @@ export const getUserById = async (userId: string): Promise<ShortUser> => {
   return data
 }
 
-export const registerUser = async (args: RegisterArgs): Promise<void> => {
+export const registerUser = async (args: RegisterUserArgs): Promise<void> => {
   await userApi.post('/create', args)
 }
 
@@ -39,4 +38,8 @@ export const getCartProducts = async (userId: string): Promise<CartProduct[]> =>
   const { data } = await userApi.get<CartProduct[]>(`/cart/${userId}`)
 
   return data
+}
+
+export const updateUser = async (args: UpdateUserArgs) => {
+  await userApi.post('/update', args)
 }

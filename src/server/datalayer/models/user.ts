@@ -35,6 +35,11 @@ const userSchema = new Schema({
     },
     required: true
   },
+  address: { type: String },
+  country: { type: String },
+  city: { type: String },
+  zipCode: { type: String },
+  phone: { type: String },
   favoriteProductIds: { type: [ObjectId], default: [] },
   cartProducts: { type: [UserCartProductSchema], default: [] }
 }, { timestamps: true })

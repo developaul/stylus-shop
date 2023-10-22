@@ -3,8 +3,11 @@ import bcrypt from 'bcryptjs'
 import { mongoConnection } from ".."
 import { UserModel } from "../models"
 
+import { TokenUser, UpdateUserArgs, User } from "@/interfaces"
 import { AuthProvider } from "@/constants"
-import { TokenUser, User } from "@/interfaces"
+import { Validations } from '@/utils'
+
+Validations
 
 interface CreateUserArgs {
   firstName: string,
@@ -14,7 +17,7 @@ interface CreateUserArgs {
   provider: AuthProvider
 }
 
-export const getUserToCreate = (args: CreateUserArgs) => {
+const getUserToCreate = (args: CreateUserArgs) => {
   const {
     firstName,
     lastName,
@@ -49,6 +52,9 @@ interface CheckUserArgs {
 }
 
 export const checkUserByCredentials = async ({ email, password }: Omit<CheckUserArgs, 'provider'>): Promise<TokenUser | null> => {
+
+  if (!Validations.isValidEmail(email)) return null
+
   await mongoConnection.connect()
   const user = await UserModel.findOne({ email })
     .select({
@@ -77,4 +83,32 @@ export const checkUser = async ({ email, password, provider }: CheckUserArgs): P
   // return checkUserByOauth({ email, password })
 
   return null
+}
+
+const getUserFieldsToUpdate = async ({ address, city, country, email, phone, userId, zipCode }: UpdateUserArgs) => {
+  if (!Validations.isValidEmail(email)) throw new Error('El email es invalido')
+
+  mongoConnection.connect()
+  const userExists = await UserModel.exists({ email, _id: { $ne: userId } })
+  mongoConnection.disconnect()
+
+  if (userExists) throw new Error('El email ya esta en uso')
+
+
+  return {
+    address,
+    city,
+    country,
+    phone,
+    userId,
+    zipCode
+  }
+}
+
+export const updateUser = async (args: UpdateUserArgs): Promise<void> => {
+  const userFieldsToUpdate = await getUserFieldsToUpdate(args)
+
+  mongoConnection.connect()
+  await UserModel.findByIdAndUpdate(args.userId, { $set: userFieldsToUpdate })
+  mongoConnection.disconnect()
 }

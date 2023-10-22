@@ -4,18 +4,11 @@ import { useSession, signOut, signIn } from 'next-auth/react'
 import { UserContext, userReducer } from './'
 
 import { userDataSource } from '@/datasources'
-import { ShortUser } from '@/interfaces'
+import { RegisterUserArgs, ShortUser, UpdateUserArgs } from '@/interfaces'
 
 export interface UserState {
   user: ShortUser | null
   isLoggedIn: boolean
-}
-
-export interface RegisterArgs {
-  firstName: string
-  lastName: string
-  email: string
-  password: string
 }
 
 const User_INITIAL_STATE: UserState = {
@@ -47,7 +40,7 @@ export const UserProvider: FC<Props> = ({ children }) => {
     }
   }
 
-  const register = async (args: RegisterArgs) => {
+  const register = async (args: RegisterUserArgs) => {
     try {
       const { email, password } = args
 
@@ -70,13 +63,26 @@ export const UserProvider: FC<Props> = ({ children }) => {
     signOut()
   }
 
+  const updateUser = async (args: Omit<UpdateUserArgs, '_id'>) => {
+    try {
+      await userDataSource.updateUser({ ...args, userId: state.user!._id })
+
+      const newUser = { ...state.user!, ...args }
+
+      dispatch({ type: '[User] - Update user', payload: newUser })
+    } catch (error) {
+      throw error
+    }
+  }
+
   return (
     <UserContext.Provider
       value={{
         ...state,
         login,
         logout,
-        register
+        register,
+        updateUser
       }}>
       {children}
     </UserContext.Provider>

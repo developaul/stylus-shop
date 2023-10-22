@@ -10,7 +10,6 @@ export interface User {
   provider: AuthProvider
   cartProducts: UserCartProduct[]
   favoriteProductIds: string[]
-
   phone?: string
   address?: string
   zipCode?: string
@@ -22,3 +21,20 @@ export interface ShortUser extends Pick<User, '_id' | 'firstName' | 'lastName' |
 }
 
 export interface TokenUser extends Pick<User, '_id' | 'email'> { }
+
+export interface RegisterUserArgs {
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+}
+
+export interface UpdateUserArgs {
+  userId: string
+  email: string
+  country: string
+  address: string
+  zipCode: string
+  phone: string
+  city: string
+}

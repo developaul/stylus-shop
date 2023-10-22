@@ -1,9 +1,9 @@
 import NextLink from 'next/link'
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import {
-  Box, Button, FormControl, FormHelperText, Grid, InputAdornment,
-  OutlinedInput, TextField, Typography
+  Box, Button, FormControl, FormControlLabel, FormHelperText, Grid, InputAdornment,
+  OutlinedInput, Radio, RadioGroup, Typography
 } from '@mui/material'
 import {
   ArrowBackRounded as ArrowBackRoundedIcon
@@ -12,6 +12,7 @@ import {
 import { UserContext } from '@/context';
 import { Validations } from '@/utils';
 
+
 interface FormData {
   phone: string;
   address: string;
@@ -19,40 +20,58 @@ interface FormData {
   country: string;
   city: string;
   email: string;
+  loaded: boolean;
 }
 
 export const CheckoutForm = () => {
 
-  const { user } = useContext(UserContext)
+  const { user, updateUser } = useContext(UserContext)
 
   const {
     register,
     handleSubmit,
-    formState: { errors }
-  } = useForm<FormData>({
-    defaultValues: {
+    formState: { errors },
+    reset,
+    setError,
+  } = useForm<FormData>()
+
+  useEffect(() => {
+    if (!user) return
+
+    reset({
       email: user?.email ?? '',
       address: user?.address ?? '',
       country: user?.country ?? '',
       city: user?.city ?? '',
       phone: user?.phone ?? '',
-      zipCode: user?.zipCode ?? ''
+      zipCode: user?.zipCode ?? '',
+      loaded: true
+    })
+  }, [reset, user])
+
+  const handleUpdateUser = async ({ address, city, country, email, phone, zipCode }: FormData) => {
+    try {
+      await updateUser({
+        address,
+        city,
+        country,
+        email,
+        phone,
+        zipCode,
+        userId: user!._id!,
+      })
+    } catch (error: any) {
+      const errorMessage = error?.response?.data?.message
+
+      setError('email', { message: errorMessage })
     }
-  })
-
-  const updateUser = () => {
-    // call api
-
-    // redirect or show feedback
-
-
   }
 
   return (
-    <Box sx={{ mt: 4 }} onSubmit={handleSubmit(updateUser)} noValidate component={'form'}>
-      <Typography sx={{ mb: 2 }} variant='subtitle1' component='h2' >Información</Typography>
+    <Box sx={{ mt: 4 }} onSubmit={handleSubmit(handleUpdateUser)} noValidate component={'form'}>
+      <Typography variant='subtitle1' component='h2' >Información</Typography>
 
-      <Grid spacing={1} container>
+      <Grid sx={{ mt: 2 }} spacing={1} container>
         <Grid xs={12} md={6} item>
           <FormControl
             fullWidth
@@ -62,7 +81,7 @@ export const CheckoutForm = () => {
               error={Boolean(errors.address)}
               fullWidth
               id="outlined-adornment-address"
-              startAdornment={<InputAdornment sx={{ mr: 2 }} position="end">Direccion: </InputAdornment>}
+              startAdornment={<InputAdornment component='label' htmlFor='outlined-adornment-address' sx={{ mr: 2 }} position="end">Direccion: </InputAdornment>}
               aria-describedby="outlined-address-helper-text"
               inputProps={{
                 'aria-label': 'address',
@@ -83,7 +102,7 @@ export const CheckoutForm = () => {
               error={Boolean(errors.zipCode)}
               fullWidth
               id="outlined-adornment-zipCode"
-              startAdornment={<InputAdornment sx={{ mr: 2 }} position="end">Codigo zip: </InputAdornment>}
+              startAdornment={<InputAdornment component='label' htmlFor='outlined-adornment-zipCode' sx={{ mr: 2 }} position="end">Codigo zip: </InputAdornment>}
               aria-describedby="outlined-zipCode-helper-text"
               inputProps={{
                 'aria-label': 'zipCode',
@@ -104,7 +123,7 @@ export const CheckoutForm = () => {
               error={Boolean(errors.phone)}
               fullWidth
               id="outlined-adornment-email"
-              startAdornment={<InputAdornment sx={{ mr: 2 }} position="end">Email: </InputAdornment>}
+              startAdornment={<InputAdornment component='label' htmlFor='outlined-adornment-email' sx={{ mr: 2 }} position="end">Email: </InputAdornment>}
               aria-describedby="outlined-email-helper-text"
               inputProps={{
                 'aria-label': 'email',
@@ -125,7 +144,7 @@ export const CheckoutForm = () => {
               error={Boolean(errors.phone)}
               fullWidth
               id="outlined-adornment-phone"
-              startAdornment={<InputAdornment sx={{ mr: 2 }} position="end">Celular: </InputAdornment>}
+              startAdornment={<InputAdornment component='label' htmlFor='outlined-adornment-phone' sx={{ mr: 2 }} position="end">Celular: </InputAdornment>}
               aria-describedby="outlined-phone-helper-text"
               inputProps={{
                 'aria-label': 'phone',
@@ -141,20 +160,22 @@ export const CheckoutForm = () => {
           <FormControl
             fullWidth
             variant="outlined">
-            <TextField
-              {...register('country', { required: 'El Pais es obligatorio' })}
+            <OutlinedInput
+              {...register('country', { required: 'El Pais es obligatoria' })}
               error={Boolean(errors.country)}
               fullWidth
-              select
               id="outlined-adornment-country"
-              label='Pais'
+              startAdornment={<InputAdornment component='label' htmlFor='outlined-adornment-country' sx={{ mr: 2 }} position="end">Pais: </InputAdornment>}
               aria-describedby="outlined-country-helper-text"
               inputProps={{
                 'aria-label': 'country',
               }}
-              helperText={errors.phone?.message}
             />
+            {Boolean(errors.country) && (
+              <FormHelperText error id="outlined-city-helper-text">{errors.country?.message}</FormHelperText>
+            )}
           </FormControl>
+
         </Grid>
 
         <Grid xs={12} md={6} item>
@@ -166,7 +187,7 @@ export const CheckoutForm = () => {
               error={Boolean(errors.city)}
               fullWidth
               id="outlined-adornment-city"
-              startAdornment={<InputAdornment sx={{ mr: 2 }} position="end">Ciudad: </InputAdornment>}
+              startAdornment={<InputAdornment component='label' htmlFor='outlined-adornment-city' sx={{ mr: 2 }} position="end">Ciudad: </InputAdornment>}
               aria-describedby="outlined-city-helper-text"
               inputProps={{
                 'aria-label': 'city',
@@ -177,6 +198,30 @@ export const CheckoutForm = () => {
             )}
           </FormControl>
         </Grid>
+      </Grid>
+
+      <Typography sx={{ mt: 2 }} variant='subtitle1' component='h2'>Metodo de pago</Typography>
+      <Typography>Todas las transacciones son seguras y están encriptadas</Typography>
+
+      <FormControl>
+        <RadioGroup
+          row
+          aria-labelledby="demo-controlled-radio-buttons-group"
+          name="controlled-radio-buttons-group"
+        // value={value}
+        // onChange={handleChange}
+        >
+          <FormControlLabel value="paypal" control={<Radio />} label="Paypal" />
+          <FormControlLabel value="creditCard" control={<Radio />} label="Tarjeta de credito / debito" />
+        </RadioGroup>
+      </FormControl>
+
+
+      <Grid sx={{ mt: 2 }} spacing={1} container>
+
+
+        <Grid xs={12} md={6} item></Grid>
+        <Grid xs={12} md={6} item></Grid>
       </Grid>
 
       <Grid sx={{ mt: 2 }} spacing={2} container>
@@ -192,6 +237,6 @@ export const CheckoutForm = () => {
             variant='contained' >Continuar con los envíos</Button>
         </Grid>
       </Grid>
-    </Box>
+    </Box >
   )
 }
