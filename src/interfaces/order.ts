@@ -13,6 +13,13 @@ export interface Order {
   updatedAt: Date
 }
 
+export interface ShortOrder extends Pick<Order, '_id' | 'status' | 'orderProducts' | 'orderSummary' | 'shippingAddress'> {
+}
+
+export interface OrderInput extends Pick<Order, 'createdById' | 'orderProducts' | 'orderSummary' | 'shippingAddress'> {
+
+}
+
 export interface OrderProduct {
   productId: string
   title: string
