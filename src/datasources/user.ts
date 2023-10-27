@@ -39,7 +39,3 @@ export const getCartProducts = async (userId: string): Promise<CartProduct[]> =>
 
   return data
 }
-
-export const updateUser = async (args: UpdateUserArgs) => {
-  await userApi.post('/update', args)
-}

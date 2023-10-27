@@ -4,16 +4,20 @@ import { Box, List, ListItem, ListItemText, Typography } from '@mui/material'
 import { CartListItem } from './CartListItem'
 
 import { CartProductsContext } from '@/context'
+import { CartProduct, OrderProduct } from '@/interfaces'
 
 interface Props {
   enableCounter?: boolean
   enableDelete?: boolean
-  onClose?: () => void
+  onClose?: () => void,
+  cartProduct?: OrderProduct[]
 }
 
-export const CartList: FC<Props> = ({ onClose, enableCounter = false, enableDelete = false }) => {
+export const CartList: FC<Props> = ({ cartProduct: cartProductProp, onClose, enableCounter = false, enableDelete = false }) => {
 
-  const { cartProducts } = useContext(CartProductsContext)
+  const { cartProducts: cartProductsContext } = useContext(CartProductsContext)
+
+  const cartProducts = cartProductProp ?? cartProductsContext
 
   return (
     <Box sx={{ my: 4 }}>
@@ -26,7 +30,12 @@ export const CartList: FC<Props> = ({ onClose, enableCounter = false, enableDele
       <List>
         {
           cartProducts.length ?
-            cartProducts.map((product) => <CartListItem enableDelete={enableDelete} enableCounter={enableCounter} key={product._id} product={product} onClose={onClose} />) :
+            cartProducts.map((product) =>
+              <CartListItem
+                enableDelete={enableDelete}
+                enableCounter={enableCounter}
+                key={product.slug}
+                product={product as CartProduct} onClose={onClose} />) :
             (
               <ListItem>
                 <ListItemText primary={'No hay productos en el carrito aun...'} />

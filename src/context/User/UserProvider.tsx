@@ -63,18 +63,6 @@ export const UserProvider: FC<Props> = ({ children }) => {
     signOut()
   }
 
-  const updateUser = async (args: Omit<UpdateUserArgs, '_id'>) => {
-    try {
-      await userDataSource.updateUser({ ...args, userId: state.user!._id })
-
-      const newUser = { ...state.user!, ...args }
-
-      dispatch({ type: '[User] - Update user', payload: newUser })
-    } catch (error) {
-      throw error
-    }
-  }
-
   return (
     <UserContext.Provider
       value={{
@@ -82,7 +70,6 @@ export const UserProvider: FC<Props> = ({ children }) => {
         login,
         logout,
         register,
-        updateUser
       }}>
       {children}
     </UserContext.Provider>

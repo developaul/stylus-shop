@@ -1,5 +1,6 @@
 import type { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react';
+import { SnackbarProvider } from 'notistack';
 import { SWRConfig } from 'swr';
 
 import { CssBaseline, ThemeProvider } from '@mui/material'
@@ -19,21 +20,23 @@ import 'swiper/css/thumbs';
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    <SessionProvider session={session}>
-      <SWRConfig value={{ fetcher: (resource, init) => fetch(resource, init).then(res => res.json()) }}>
-        <UserProvider>
-          <FavoriteProductsProvider>
-            <CartProductsProvider>
-              <ProductFilterProvider>
-                <ThemeProvider theme={lightTheme}>
-                  <CssBaseline />
-                  <Component {...pageProps} />
-                </ThemeProvider>
-              </ProductFilterProvider>
-            </CartProductsProvider>
-          </FavoriteProductsProvider>
-        </UserProvider>
-      </SWRConfig>
-    </SessionProvider>
+    <SnackbarProvider maxSnack={1} autoHideDuration={3000} >
+      <SessionProvider session={session}>
+        <SWRConfig value={{ fetcher: (resource, init) => fetch(resource, init).then(res => res.json()) }}>
+          <UserProvider>
+            <FavoriteProductsProvider>
+              <CartProductsProvider>
+                <ProductFilterProvider>
+                  <ThemeProvider theme={lightTheme}>
+                    <CssBaseline />
+                    <Component {...pageProps} />
+                  </ThemeProvider>
+                </ProductFilterProvider>
+              </CartProductsProvider>
+            </FavoriteProductsProvider>
+          </UserProvider>
+        </SWRConfig>
+      </SessionProvider>
+    </SnackbarProvider>
   )
 }

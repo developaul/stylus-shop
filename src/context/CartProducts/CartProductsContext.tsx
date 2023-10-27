@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import { CartProduct, OrderSummary } from '@/interfaces';
+import { CartProduct, OrderSummary, ShippingAddress, ShortOrder } from '@/interfaces';
 
 interface ContextProps {
   cartProducts: CartProduct[]
@@ -10,6 +10,7 @@ interface ContextProps {
   addProductToCart: (newCartProduct: CartProduct) => void
   removeProductFromCart: (newCartProduct: CartProduct) => void
   updateCartProduct: (newCartProduct: CartProduct) => void
+  createOrder: (shippingAddress: ShippingAddress) => Promise<ShortOrder>
 }
 
 export const CartProductsContext = createContext({} as ContextProps)

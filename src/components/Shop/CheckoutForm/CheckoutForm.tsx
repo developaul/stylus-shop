@@ -1,16 +1,19 @@
 import NextLink from 'next/link'
 import { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSnackbar } from 'notistack';
 import {
-  Box, Button, FormControl, FormControlLabel, FormHelperText, Grid, InputAdornment,
-  OutlinedInput, Radio, RadioGroup, Typography
+  Box, Button, FormControl, FormHelperText, Grid, InputAdornment,
+  OutlinedInput, Typography
 } from '@mui/material'
 import {
   ArrowBackRounded as ArrowBackRoundedIcon
 } from '@mui/icons-material';
 
-import { UserContext } from '@/context';
+import { CartProductsContext, UserContext } from '@/context';
 import { Validations } from '@/utils';
+import { useRouter } from 'next/router';
+
 
 
 interface FormData {
@@ -20,19 +23,20 @@ interface FormData {
   country: string;
   city: string;
   email: string;
-  loaded: boolean;
 }
 
 export const CheckoutForm = () => {
+  const router = useRouter()
+  const { user } = useContext(UserContext)
+  const { createOrder } = useContext(CartProductsContext)
 
-  const { user, updateUser } = useContext(UserContext)
+  const snackController = useSnackbar()
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-    setError,
   } = useForm<FormData>()
 
   useEffect(() => {
@@ -45,25 +49,24 @@ export const CheckoutForm = () => {
       city: user?.city ?? '',
       phone: user?.phone ?? '',
       zipCode: user?.zipCode ?? '',
-      loaded: true
     })
   }, [reset, user])
 
   const handleUpdateUser = async ({ address, city, country, email, phone, zipCode }: FormData) => {
     try {
-      await updateUser({
+      const order = await createOrder({
         address,
         city,
         country,
         email,
         phone,
         zipCode,
-        userId: user!._id!,
       })
-    } catch (error: any) {
-      const errorMessage = error?.response?.data?.message
 
-      setError('email', { message: errorMessage })
+      router.replace(`/orden/${order._id}`)
+
+    } catch (error: any) {
+      snackController.enqueueSnackbar(error.message ?? 'Algo salio mal', { variant: 'error' })
     }
   }
 
@@ -198,30 +201,6 @@ export const CheckoutForm = () => {
             )}
           </FormControl>
         </Grid>
-      </Grid>
-
-      <Typography sx={{ mt: 2 }} variant='subtitle1' component='h2'>Metodo de pago</Typography>
-      <Typography>Todas las transacciones son seguras y están encriptadas</Typography>
-
-      <FormControl>
-        <RadioGroup
-          row
-          aria-labelledby="demo-controlled-radio-buttons-group"
-          name="controlled-radio-buttons-group"
-        // value={value}
-        // onChange={handleChange}
-        >
-          <FormControlLabel value="paypal" control={<Radio />} label="Paypal" />
-          <FormControlLabel value="creditCard" control={<Radio />} label="Tarjeta de credito / debito" />
-        </RadioGroup>
-      </FormControl>
-
-
-      <Grid sx={{ mt: 2 }} spacing={1} container>
-
-
-        <Grid xs={12} md={6} item></Grid>
-        <Grid xs={12} md={6} item></Grid>
       </Grid>
 
       <Grid sx={{ mt: 2 }} spacing={2} container>

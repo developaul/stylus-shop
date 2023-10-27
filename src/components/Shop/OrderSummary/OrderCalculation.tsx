@@ -1,9 +1,10 @@
-import { useContext } from 'react'
+import { FC, useContext } from 'react'
 import { Box, Divider, Typography, styled } from '@mui/material'
 import { CartProductsContext } from '@/context'
 
 
 import { Currency } from '@/utils'
+import { OrderSummary } from '@/interfaces'
 
 const BoxStyled = styled(Box)`
   display: grid;
@@ -16,10 +17,14 @@ const BoxStyled = styled(Box)`
   }
 `
 
+interface Props {
+  orderSummary?: OrderSummary
+}
 
-export const OrderCalculation = () => {
-  const { orderSummary } = useContext(CartProductsContext)
+export const OrderCalculation: FC<Props> = ({ orderSummary: orderSummaryProp }) => {
+  const { orderSummary: orderSummaryContext } = useContext(CartProductsContext)
 
+  const orderSummary = orderSummaryProp ?? orderSummaryContext
 
   return (
     <>

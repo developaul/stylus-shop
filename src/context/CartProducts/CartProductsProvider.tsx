@@ -3,9 +3,9 @@ import { useSession } from 'next-auth/react'
 
 import { CartProductsContext, cartProductsReducer } from './'
 
-import { CartProduct } from '@/interfaces'
+import { CartProduct, OrderProduct, ShippingAddress, ShortOrder } from '@/interfaces'
 import { Product } from '@/utils'
-import { userDataSource } from '@/datasources'
+import { userDataSource, orderDataSource } from '@/datasources'
 
 export interface CartProductsState {
   cartProducts: CartProduct[]
@@ -129,6 +129,37 @@ export const CartProductsProvider: FC<Props> = ({ children }) => {
     dispatch({ type: '[CartProducts] - Update product from cart', payload: newCartProducts })
   }
 
+  const cleanCartProducts = () => {
+    dispatch({ type: '[CartProducts] - Clean cart products' })
+    localStorage.setItem('cart', JSON.stringify([]))
+  }
+
+  const createOrder = async (shippingAddress: ShippingAddress): Promise<ShortOrder> => {
+    try {
+      const orderProducts: OrderProduct[] = state.cartProducts.map(cartProduct => {
+        const { _id, inStock, size, ...restCartProduct } = cartProduct
+
+        return {
+          ...restCartProduct,
+          productId: _id,
+          size: size!
+        }
+      })
+
+      const order = await orderDataSource.createOrder({
+        orderSummary,
+        orderProducts,
+        shippingAddress
+      })
+
+      cleanCartProducts()
+
+      return order
+    } catch (error) {
+      throw error
+    }
+  }
+
   return (
     <CartProductsContext.Provider
       value={{
@@ -138,7 +169,8 @@ export const CartProductsProvider: FC<Props> = ({ children }) => {
         // Methods
         addProductToCart,
         removeProductFromCart,
-        updateCartProduct
+        updateCartProduct,
+        createOrder
       }}>
       {children}
     </CartProductsContext.Provider>

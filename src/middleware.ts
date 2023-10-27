@@ -18,7 +18,7 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  if (requestedPage.startsWith('/checkout')) {
+  if (requestedPage.startsWith('/checkout') || requestedPage.startsWith('/orden')) {
     const session = await getToken({ req, secret: process.env.NEXTAUTH_URL })
 
     if (session) return NextResponse.next()

@@ -18,7 +18,8 @@ export const getOrderById = async (id: string): Promise<ShortOrder | null> => {
       status: 1,
       orderProducts: 1,
       orderSummary: 1,
-      shippingAddress: 1
+      shippingAddress: 1,
+      createdById: 1
     })
     .lean()
   await mongoConnection.disconnect()
@@ -74,7 +75,7 @@ export const createOrder = async (args: OrderInput): Promise<ShortOrder> => {
   const newOrder = await OrderModel.create(orderToCreate)
   await mongoConnection.disconnect()
 
-  const { _id, status, orderProducts, orderSummary, shippingAddress } = newOrder
+  const { _id, status, orderProducts, orderSummary, shippingAddress, createdById } = newOrder
 
-  return { _id, status, orderProducts, orderSummary, shippingAddress }
+  return { _id, status, orderProducts, orderSummary, shippingAddress, createdById }
 }
