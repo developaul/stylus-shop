@@ -1,11 +1,11 @@
 import Head from 'next/head'
-import { FC, ReactElement } from 'react'
+import { FC, PropsWithChildren } from 'react'
 import { Container } from '@mui/material'
 
 import { Footer, Header } from '@/components'
 
-interface Props {
-  children: ReactElement | ReactElement[]
+
+interface Props extends PropsWithChildren {
   title: string
 }
 

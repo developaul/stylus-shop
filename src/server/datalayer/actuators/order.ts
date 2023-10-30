@@ -29,6 +29,26 @@ export const getOrderById = async (id: string): Promise<ShortOrder | null> => {
   return JSON.parse(JSON.stringify(order))
 }
 
+export const getOrdersByUserId = async (userId: string): Promise<ShortOrder[]> => {
+  if (!isValidObjectId(userId)) return []
+
+  await mongoConnection.connect()
+  const orders = await OrderModel
+    .find({ createdById: userId })
+    .select({
+      _id: 1,
+      status: 1,
+      orderProducts: 1,
+      orderSummary: 1,
+      shippingAddress: 1,
+      createdById: 1
+    })
+    .lean()
+  await mongoConnection.disconnect()
+
+  return JSON.parse(JSON.stringify(orders))
+}
+
 interface GetOrderInputResponse extends OrderInput {
   status: OrderStatus
 }

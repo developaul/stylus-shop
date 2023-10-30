@@ -13,6 +13,7 @@ export * from './CartList'
 export * from './OrderSummary'
 
 export * from './CheckoutForm'
+export * from './ShippingAddress'
 
 export * from './StoreSlider'
 export * from './Services'

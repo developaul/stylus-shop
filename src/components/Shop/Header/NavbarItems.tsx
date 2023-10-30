@@ -1,11 +1,13 @@
 import { FC, useContext, useState } from 'react';
 import { useRouter } from 'next/router';
+import NextLink from 'next/link'
 import { Button, Drawer, Grid, GridDirection, styled } from '@mui/material'
 import {
   PersonOutlineRounded as PersonOutlineRoundedIcon,
   FavoriteBorderRounded as FavoriteBorderRoundedIcon,
   ShoppingCartOutlined as ShoppingCartOutlinedIcon,
-  LogoutRounded as LogoutRoundedIcon
+  LogoutRounded as LogoutRoundedIcon,
+  ConfirmationNumberOutlined as ConfirmationNumberOutlinedIcon
 } from '@mui/icons-material';
 
 import { CartProductsContext, UserContext } from '@/context';
@@ -76,6 +78,19 @@ export const NavbarItems: FC<Props> = ({ direction, gap }) => {
             Carrito ({cartProducts.length})
           </ButtonStyled>
         </Grid>
+
+        {(isLoggedIn) && (
+          <Grid item>
+            <ButtonStyled
+              LinkComponent={NextLink}
+              href='/orden/historial'
+              startIcon={<ConfirmationNumberOutlinedIcon color='info' />}
+            >
+              Mis Ordenes
+            </ButtonStyled>
+          </Grid>
+        )}
+
       </Grid>
 
       <Drawer

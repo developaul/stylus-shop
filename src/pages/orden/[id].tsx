@@ -2,12 +2,12 @@ import { GetServerSideProps, NextPage } from 'next'
 import { getServerSession } from 'next-auth'
 import { Box, Grid } from '@mui/material'
 
+import { authOptions } from '../api/auth/[...nextauth]'
 import { getOrderById } from '@/server'
 import {
   CartList, CheckoutLayout,
-  Logo, OrderCalculation
+  Logo, OrderCalculation, ShippingAddress
 } from '@/components'
-import { authOptions } from '../api/auth/[...nextauth]'
 
 import { ShortOrder } from '@/interfaces'
 
@@ -17,19 +17,21 @@ interface Props {
 
 const OrdenPage: NextPage<Props> = ({ order }) => {
 
+  const { _id, shippingAddress, orderProducts, orderSummary } = order
 
   return (
     <CheckoutLayout title={`Orden ${order._id}`} >
       <Grid spacing={10} container>
         <Grid xs={12} md={7} item>
-          <Box>
+          <Box sx={{ mb: 6 }}>
             <Logo />
           </Box>
-          {/* <CheckoutForm /> */}
+          <ShippingAddress shippingAddress={shippingAddress} />
+          {/* TODO: ADD PAYPAL METHOD HERE */}
         </Grid>
         <Grid xs={12} md={5} item>
-          <CartList cartProduct={order.orderProducts} />
-          <OrderCalculation orderSummary={order.orderSummary} />
+          <CartList cartProduct={orderProducts} />
+          <OrderCalculation orderSummary={orderSummary} />
         </Grid>
       </Grid>
     </CheckoutLayout>
