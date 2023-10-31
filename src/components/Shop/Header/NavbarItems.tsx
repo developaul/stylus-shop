@@ -1,7 +1,7 @@
 import { FC, useContext, useState } from 'react';
 import { useRouter } from 'next/router';
 import NextLink from 'next/link'
-import { Button, Drawer, Grid, GridDirection, styled } from '@mui/material'
+import { Button, Divider, Drawer, Grid, GridDirection, styled } from '@mui/material'
 import {
   PersonOutlineRounded as PersonOutlineRoundedIcon,
   FavoriteBorderRounded as FavoriteBorderRoundedIcon,
@@ -43,6 +43,23 @@ export const NavbarItems: FC<Props> = ({ direction, gap }) => {
   return (
     <>
       <Grid container direction={direction} gap={gap} >
+        <Grid item>
+          <ButtonStyled
+            onClick={toggleFavoriteListIsOpen}
+            startIcon={<FavoriteBorderRoundedIcon color='error' />}
+          >
+            Favoritos
+          </ButtonStyled>
+        </Grid>
+        <Grid item>
+          <ButtonStyled
+            onClick={toggleCartListIsOpen}
+            startIcon={<ShoppingCartOutlinedIcon color='info' />}
+          >
+            Carrito ({cartProducts.length})
+          </ButtonStyled>
+        </Grid>
+
         {isLoggedIn ? (
           <Grid item>
             <ButtonStyled
@@ -62,22 +79,6 @@ export const NavbarItems: FC<Props> = ({ direction, gap }) => {
             </ButtonStyled>
           </Grid>
         )}
-        <Grid item>
-          <ButtonStyled
-            onClick={toggleFavoriteListIsOpen}
-            startIcon={<FavoriteBorderRoundedIcon color='error' />}
-          >
-            Favoritos
-          </ButtonStyled>
-        </Grid>
-        <Grid item>
-          <ButtonStyled
-            onClick={toggleCartListIsOpen}
-            startIcon={<ShoppingCartOutlinedIcon color='info' />}
-          >
-            Carrito ({cartProducts.length})
-          </ButtonStyled>
-        </Grid>
 
         {(isLoggedIn) && (
           <Grid item>
@@ -90,6 +91,8 @@ export const NavbarItems: FC<Props> = ({ direction, gap }) => {
             </ButtonStyled>
           </Grid>
         )}
+
+        <Divider />
 
       </Grid>
 

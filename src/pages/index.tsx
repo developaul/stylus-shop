@@ -4,11 +4,10 @@ import { getAllCategories, getBestProducts } from "@/server"
 
 import {
   CategoryGrid, CategoryList,
-  ProductSlider, Services, StoreSlider,
+  ProductSlider, Services,
   ShopLayout
 } from "@/components"
 
-import { stores } from "@/constants"
 import { Category, ShortProduct } from "@/interfaces"
 import { Box } from "@mui/material"
 
@@ -32,9 +31,7 @@ const HomePage: NextPage<Props> = ({ categories, bestProducts }) => {
       <CategoryGrid
         categories={categories}
       />
-      <StoreSlider
-        stores={stores}
-      />
+
       <Services />
     </ShopLayout>
   )

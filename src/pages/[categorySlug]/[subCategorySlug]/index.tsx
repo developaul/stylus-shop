@@ -11,13 +11,12 @@ import {
 
 import {
   CategoryList,
-  Services, StoreSlider,
+  Services,
   ShopLayout,
   ProductList
 } from '@/components'
 
 import { Category, SubCategory } from '@/interfaces'
-import { stores } from '@/constants'
 
 interface Props {
   category: Category
@@ -62,9 +61,6 @@ const SubCategoryPage: NextPage<Props> = ({ categories, category, subCategory })
         subCategory={subCategory}
       />
 
-      <StoreSlider
-        stores={stores}
-      />
       <Services />
     </ShopLayout >
   )

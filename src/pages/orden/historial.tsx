@@ -34,7 +34,7 @@ const HistorialPage: NextPage<Props> = ({ orders }) => {
 
   return (
     <ShopLayout title='asd'>
-      <Typography sx={{ my: 5 }} variant='h4' component='h1'>Historial de pedidos:</Typography>
+      <Typography sx={{ mt: 5, mb: 2 }} variant='h6' component='h1'>Historial de pedidos:</Typography>
 
       <DataGrid
         rows={rows}
