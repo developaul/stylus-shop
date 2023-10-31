@@ -1,5 +1,9 @@
-import { Box, Typography } from '@mui/material'
-import { MenuBookRounded as MenuBookRoundedIcon } from '@mui/icons-material'
+import NextLink from 'next/link'
+import { Box, Typography, Link } from '@mui/material'
+import {
+  MenuBookRounded as MenuBookRoundedIcon,
+  FavoriteRounded as FavoriteRoundedIcon
+} from '@mui/icons-material'
 
 import { SocialNetworks } from './SocialNetworks'
 
@@ -59,7 +63,14 @@ export const Footer = () => {
 
       <Typography>Todos los derechos reservados</Typography>
 
-      <Typography>Desarrollado por @developaul {new Date().getFullYear()}</Typography>
+      <Typography display='flex' alignItems='center'>
+        Hecho por&nbsp;
+        <Link
+          component={NextLink}
+          href='https://github.com/developaul'>
+          @developaul
+        </Link>&nbsp;
+        con&nbsp;<FavoriteRoundedIcon color='primary' /> </Typography>
     </Box>
   )
 }

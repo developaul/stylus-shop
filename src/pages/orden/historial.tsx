@@ -16,11 +16,10 @@ interface Props {
   orders: ShortOrder[]
 }
 
-
 const HistorialPage: NextPage<Props> = ({ orders }) => {
 
   const rows = useMemo(() => {
-    return orders.map((order, index) => {
+    return orders.map((order) => {
       const { orderSummary, status, _id } = order
       const { total } = orderSummary
 
