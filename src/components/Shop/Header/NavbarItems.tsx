@@ -61,14 +61,25 @@ export const NavbarItems: FC<Props> = ({ direction, gap }) => {
         </Grid>
 
         {isLoggedIn ? (
-          <Grid item>
-            <ButtonStyled
-              startIcon={<LogoutRoundedIcon />}
-              onClick={logout}
-            >
-              Cerrar sesión
-            </ButtonStyled>
-          </Grid>
+          <>
+            <Grid item>
+              <ButtonStyled
+                LinkComponent={NextLink}
+                href='/orden/historial'
+                startIcon={<ConfirmationNumberOutlinedIcon color='info' />}
+              >
+                Mis Ordenes
+              </ButtonStyled>
+            </Grid>
+            <Grid item>
+              <ButtonStyled
+                startIcon={<LogoutRoundedIcon />}
+                onClick={logout}
+              >
+                Cerrar sesión
+              </ButtonStyled>
+            </Grid>
+          </>
         ) : (
           <Grid item>
             <ButtonStyled
@@ -79,21 +90,6 @@ export const NavbarItems: FC<Props> = ({ direction, gap }) => {
             </ButtonStyled>
           </Grid>
         )}
-
-        {(isLoggedIn) && (
-          <Grid item>
-            <ButtonStyled
-              LinkComponent={NextLink}
-              href='/orden/historial'
-              startIcon={<ConfirmationNumberOutlinedIcon color='info' />}
-            >
-              Mis Ordenes
-            </ButtonStyled>
-          </Grid>
-        )}
-
-        <Divider />
-
       </Grid>
 
       <Drawer

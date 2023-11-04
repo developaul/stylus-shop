@@ -2,12 +2,10 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { createUser, } from '@/server'
 
-import { ShortUser } from '@/interfaces'
 import { AuthProvider } from '@/constants'
 
 type Data =
   | { message: string }
-  | ShortUser
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   try {

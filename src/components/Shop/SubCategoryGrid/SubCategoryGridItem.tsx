@@ -37,10 +37,11 @@ export const SubCategoryGridItem: FC<Props> = ({ category, subCategory }) => {
             variant='h6'
             sx={{
               position: 'absolute',
-              top: '90%',
+              top: 20,
               left: '50%',
               transform: 'translate(-50%, -50%)',
-              color: 'black'
+              color: 'grey.700',
+              whiteSpace: 'nowrap'
             }}
           >
             {subCategory.title}

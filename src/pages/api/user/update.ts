@@ -2,12 +2,11 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { updateUser, } from '@/server'
 
-import { ShortUser, UpdateUserArgs } from '@/interfaces'
+import { UpdateUserArgs } from '@/interfaces'
 
 
 type Data =
   | { message: string }
-  | ShortUser
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   try {

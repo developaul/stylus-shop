@@ -9,6 +9,7 @@ export const Services = () => {
     <Box
       maxWidth={950}
       marginX='auto'
+      marginTop={10}
     >
       <Grid
         spacing={2}

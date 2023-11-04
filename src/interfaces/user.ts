@@ -1,5 +1,5 @@
 import { UserCartProduct } from "."
-import { AuthProvider } from "@/constants"
+import { AuthProvider, UserRole } from "@/constants"
 
 export interface User {
   _id: string
@@ -8,6 +8,7 @@ export interface User {
   email: string
   password?: string
   provider: AuthProvider
+  role: UserRole
   cartProducts: UserCartProduct[]
   favoriteProductIds: string[]
   phone?: string
@@ -17,7 +18,7 @@ export interface User {
   city?: string
 }
 
-export interface ShortUser extends Pick<User, '_id' | 'firstName' | 'lastName' | 'email' | 'phone' | 'address' | 'zipCode' | 'country' | 'city'> {
+export interface ShortUser extends Pick<User, '_id' | 'firstName' | 'lastName' | 'email' | 'phone' | 'address' | 'zipCode' | 'country' | 'city' | 'role'> {
 }
 
 export interface TokenUser extends Pick<User, '_id' | 'email'> { }

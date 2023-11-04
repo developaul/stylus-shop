@@ -10,3 +10,13 @@ export const AuthProvidersEnum = [
   AuthProvider.Github,
   AuthProvider.Google
 ]
+
+export const enum UserRole {
+  Client = 'CLIENT',
+  Admin = 'ADMIN'
+}
+
+export const UserRoleEnum = [
+  UserRole.Client,
+  UserRole.Admin
+]

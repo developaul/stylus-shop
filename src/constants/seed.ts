@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs'
 
 import { Category, Product, User, SubCategory } from "@/interfaces";
-import { AuthProvider, Size } from '@/constants'
+import { AuthProvider, Size, UserRole } from '@/constants'
 
 export const users: Omit<User, '_id' | 'favoriteProductIds' | 'cartProducts'>[] = [
   {
@@ -10,6 +10,7 @@ export const users: Omit<User, '_id' | 'favoriteProductIds' | 'cartProducts'>[] 
     lastName: 'developaul',
     password: bcrypt.hashSync('123456'),
     provider: AuthProvider.Credentials,
+    role: UserRole.Admin
   }
 ]
 

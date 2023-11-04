@@ -4,7 +4,7 @@ import { useSession, signOut, signIn } from 'next-auth/react'
 import { UserContext, userReducer } from './'
 
 import { userDataSource } from '@/datasources'
-import { RegisterUserArgs, ShortUser, UpdateUserArgs } from '@/interfaces'
+import { RegisterUserArgs, ShortUser } from '@/interfaces'
 
 export interface UserState {
   user: ShortUser | null

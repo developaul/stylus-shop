@@ -40,7 +40,8 @@ export const getUserById = async (req: NextApiRequest, res: NextApiResponse<Data
       address: 1,
       zipCode: 1,
       phone: 1,
-      city: 1
+      city: 1,
+      role: 1
     })
     .lean()
   await mongoConnection.disconnect()
