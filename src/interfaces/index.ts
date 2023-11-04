@@ -6,5 +6,6 @@ export * from './service'
 export * from './store'
 export * from './contact'
 export * from './user'
+export * from './dashboard'
 
 export * from './paginate'

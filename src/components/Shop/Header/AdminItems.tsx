@@ -31,7 +31,7 @@ export const AdminItems: FC<Props> = ({ direction, gap }) => {
     <Grid container direction={direction} gap={gap} >
       <Grid item>
         <ButtonStyled
-          onClick={navigate('/admin/dashboard')}
+          onClick={navigate('/admin')}
           startIcon={<DashboardOutlinedIcon color='info' />}
         >
           Dashboard
