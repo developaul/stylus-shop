@@ -31,7 +31,7 @@ export const MobileMenu = () => {
           <>
             <Divider />
             <Container sx={{ paddingTop: 2 }} >
-              <AdminItems gap={1} direction="column" />
+              <AdminItems onClose={toggleDrawer} gap={1} direction="column" />
             </Container>
           </>
         )}

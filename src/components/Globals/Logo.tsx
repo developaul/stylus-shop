@@ -7,6 +7,7 @@ export const Logo = () => {
   return (
     <Link href={'/'} component={NextLink}>
       <Image
+        priority
         src='/logo.svg'
         width={200}
         alt="Logo"

@@ -12,6 +12,7 @@ import {
 interface Props {
   direction: GridDirection
   gap: number
+  onClose: () => void
 }
 
 const ButtonStyled = styled(Button)(
@@ -21,11 +22,14 @@ const ButtonStyled = styled(Button)(
   color: ${theme.palette.common.black};
 `)
 
-export const AdminItems: FC<Props> = ({ direction, gap }) => {
+export const AdminItems: FC<Props> = ({ onClose, direction, gap }) => {
 
   const router = useRouter()
 
-  const navigate = (path: string) => () => router.push(path)
+  const navigate = (path: string) => () => {
+    onClose()
+    router.push(path)
+  }
 
   return (
     <Grid container direction={direction} gap={gap} >
