@@ -7,5 +7,6 @@ export * from './store'
 export * from './contact'
 export * from './user'
 export * from './dashboard'
+export * as IPaypal from './paypal'
 
 export * from './paginate'

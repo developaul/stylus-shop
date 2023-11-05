@@ -63,7 +63,7 @@ export const lightTheme = createTheme({
           '&:hover': {
             backgroundColor: theme.palette.grey[50]
           }
-        })
+        }),
       },
       variants: [
         {
@@ -75,8 +75,8 @@ export const lightTheme = createTheme({
               backgroundColor: theme.palette.grey[600]
             }
           })
-        }
-      ]
+        },
+      ],
     },
     MuiCard: {
       defaultProps: {

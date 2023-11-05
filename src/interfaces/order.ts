@@ -12,6 +12,7 @@ export interface Order {
   createdById: string
   createdAt: Date
   updatedAt: Date
+  transactionId?: string
 
   createdBy?: CreatedByUser
 }
@@ -46,4 +47,9 @@ export interface OrderSummary {
   orderValue: number
   delivery: number
   total: number
+}
+
+export interface PayOrderInput {
+  orderId: string,
+  transactionId: string
 }

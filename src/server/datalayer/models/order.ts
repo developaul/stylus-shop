@@ -45,6 +45,7 @@ const orderSchema = new Schema({
   orderSummary: { type: OrderSummary, required: true },
   shippingAddress: { type: ShippingAddress, required: true },
   paidAt: { type: Date },
+  transactionId: { type: String },
   cancelledAt: { type: Date },
   createdById: { type: ObjectId, ref: 'User' }
 }, { timestamps: true })

@@ -14,6 +14,7 @@ export * from './OrderSummary'
 
 export * from './CheckoutForm'
 export * from './ShippingAddress'
+export * from './PayButtons'
 
 export * from './StoreSlider'
 export * from './Services'

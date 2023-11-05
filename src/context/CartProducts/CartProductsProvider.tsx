@@ -130,8 +130,8 @@ export const CartProductsProvider: FC<Props> = ({ children }) => {
   }
 
   const cleanCartProducts = () => {
-    dispatch({ type: '[CartProducts] - Clean cart products' })
     localStorage.setItem('cart', JSON.stringify([]))
+    dispatch({ type: '[CartProducts] - Clean cart products' })
   }
 
   const createOrder = async (shippingAddress: ShippingAddress): Promise<ShortOrder> => {

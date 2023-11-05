@@ -213,7 +213,7 @@ export const CheckoutForm = () => {
         <Grid xs={12} md={6} item sx={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Button
             type='submit'
-            variant='contained' >Continuar con los envíos</Button>
+            variant='contained' >Continuar con la orden</Button>
         </Grid>
       </Grid>
     </Box >

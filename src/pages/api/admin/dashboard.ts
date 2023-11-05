@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { OrderModel, ProductModel, UserModel, mongoConnection } from '@/server'
 
 import { DashboardInfo } from '@/interfaces'
+import { UserRole } from '@/constants'
 
 type Data =
   | { message: string }
@@ -27,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
 }
 
-export const getDashboardInfo = async (req: NextApiRequest, res: NextApiResponse<Data>): Promise<void> => {
+export const getDashboardInfo = async (_: NextApiRequest, res: NextApiResponse<Data>): Promise<void> => {
   await mongoConnection.connect()
 
   const [
@@ -40,7 +41,7 @@ export const getDashboardInfo = async (req: NextApiRequest, res: NextApiResponse
   ] = await Promise.all([
     OrderModel.countDocuments(),
     OrderModel.countDocuments({ isPaid: true }),
-    UserModel.countDocuments({ role: 'client' }),
+    UserModel.countDocuments({ role: UserRole.Client }),
     ProductModel.countDocuments(),
     ProductModel.countDocuments({ inStock: 0 }),
     ProductModel.countDocuments({ inStock: { $lte: 10 } })
