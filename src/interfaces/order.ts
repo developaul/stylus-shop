@@ -1,4 +1,5 @@
 import { OrderStatus, Size } from "@/constants"
+import { CreatedByUser } from "./user"
 
 export interface Order {
   _id: string
@@ -11,9 +12,11 @@ export interface Order {
   createdById: string
   createdAt: Date
   updatedAt: Date
+
+  createdBy?: CreatedByUser
 }
 
-export interface ShortOrder extends Pick<Order, '_id' | 'status' | 'orderProducts' | 'orderSummary' | 'shippingAddress' | 'createdById'> {
+export interface ShortOrder extends Pick<Order, '_id' | 'status' | 'orderProducts' | 'orderSummary' | 'shippingAddress' | 'createdById' | 'createdAt' | 'createdBy'> {
 }
 
 export interface OrderInput extends Pick<Order, 'createdById' | 'orderProducts' | 'orderSummary' | 'shippingAddress'> {

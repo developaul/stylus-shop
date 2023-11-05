@@ -3,9 +3,7 @@ import useSWR from 'swr';
 import { useContext, useMemo } from 'react';
 import { useSnackbar } from 'notistack';
 import { Grid, MenuItem, Select } from '@mui/material';
-import {
-  DashboardOutlined as DashboardOutlinedIcon,
-} from '@mui/icons-material';
+import { DashboardOutlined as DashboardOutlinedIcon } from '@mui/icons-material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 import { UserContext } from '@/context';

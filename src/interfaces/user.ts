@@ -21,6 +21,8 @@ export interface User {
 export interface ShortUser extends Pick<User, '_id' | 'firstName' | 'lastName' | 'email' | 'phone' | 'address' | 'zipCode' | 'country' | 'city' | 'role'> {
 }
 
+export interface CreatedByUser extends Pick<User, '_id' | 'firstName' | 'lastName'> { }
+
 export interface TokenUser extends Pick<User, '_id' | 'email' | 'role'> { }
 
 export interface RegisterUserArgs {

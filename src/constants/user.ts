@@ -45,3 +45,9 @@ export const TokenUserSelect = {
   password: 1,
   role: 1
 }
+
+export const CreatedByUserSelect = {
+  _id: 1,
+  firstName: 1,
+  lastName: 1
+}

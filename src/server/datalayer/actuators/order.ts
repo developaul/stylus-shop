@@ -95,7 +95,7 @@ export const createOrder = async (args: OrderInput): Promise<ShortOrder> => {
   const newOrder = await OrderModel.create(orderToCreate)
   await mongoConnection.disconnect()
 
-  const { _id, status, orderProducts, orderSummary, shippingAddress, createdById } = newOrder
+  const { _id, status, orderProducts, orderSummary, shippingAddress, createdById, createdAt } = newOrder
 
-  return { _id, status, orderProducts, orderSummary, shippingAddress, createdById }
+  return { _id, status, orderProducts, orderSummary, shippingAddress, createdById, createdAt }
 }
