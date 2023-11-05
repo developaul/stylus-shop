@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { ListItem, ListItemAvatar, ListItemButton, ListItemText, Box } from '@mui/material'
 
-import { ProductCounter } from '@/components'
+import { ProductCounter } from '@/components/Globals'
 import { CartProductsContext } from '@/context'
 import { CartProduct } from '@/interfaces'
 import { Currency } from '@/utils'

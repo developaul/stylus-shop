@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { Box, FormControl, Grid, TextField, Typography } from '@mui/material'
 
 import { UserContext } from '@/context'
-import { CustomButton } from '..'
+import { CustomButton } from '@/components/Globals'
 
 import { Validations } from '@/utils'
 

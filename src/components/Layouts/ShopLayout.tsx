@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { FC, PropsWithChildren } from 'react'
 import { Container } from '@mui/material'
 
-import { Footer, Header } from '@/components'
+import { Footer, Header } from '@/components/Shop'
 
 
 interface Props extends PropsWithChildren {

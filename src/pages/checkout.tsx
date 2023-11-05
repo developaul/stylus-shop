@@ -3,8 +3,10 @@ import { Box, Grid } from '@mui/material'
 
 import {
   CartList, CheckoutForm,
-  CheckoutLayout, Logo, OrderCalculation
-} from '@/components'
+  OrderCalculation
+} from '@/components/Shop'
+import { Logo } from '@/components/Globals'
+import { CheckoutLayout } from '@/components/Layouts'
 
 const CheckoutPage: NextPage = () => {
   return (

@@ -2,12 +2,14 @@ import { useContext, useState } from 'react';
 import { Container, Divider, Drawer, IconButton } from '@mui/material'
 import { MenuRounded as MenuRoundedIcon } from '@mui/icons-material';
 
-import { UserContext } from '@/context';
 import { NavbarItems } from './NavbarItems';
-import { AdminItems } from './AdminItems'
+import { AdminItems } from './AdminItems';
+
+import { UserContext } from '@/context';
+import { UserRole } from '@/constants';
 
 export const MobileMenu = () => {
-  const { isLoggedIn } = useContext(UserContext)
+  const { user } = useContext(UserContext)
 
   const [drawerIsOpen, setDrawerIsOpen] = useState(false)
 
@@ -27,7 +29,7 @@ export const MobileMenu = () => {
         <Container sx={{ paddingTop: 6, paddingBottom: 2 }} >
           <NavbarItems gap={1} direction="column" />
         </Container>
-        {isLoggedIn && (
+        {(user?.role === UserRole.Admin) && (
           <>
             <Divider />
             <Container sx={{ paddingTop: 2 }} >

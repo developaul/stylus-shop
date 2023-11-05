@@ -4,7 +4,7 @@ import { mongoConnection } from ".."
 import { UserModel } from "../models"
 
 import { TokenUser, UpdateUserArgs, User } from "@/interfaces"
-import { AuthProvider } from "@/constants"
+import { AuthProvider, TokenUserSelect, UserRole } from "@/constants"
 import { Validations } from '@/utils'
 
 Validations
@@ -29,6 +29,7 @@ const getUserToCreate = (args: CreateUserArgs) => {
   return {
     firstName,
     lastName,
+    role: UserRole.Client,
     email: email.toLowerCase(),
     provider,
     ...password ? { password: bcrypt.hashSync(password) } : {},
@@ -58,8 +59,7 @@ export const checkUserByCredentials = async ({ email, password }: Omit<CheckUser
   await mongoConnection.connect()
   const user = await UserModel.findOne({ email })
     .select({
-      _id: 1,
-      email: 1,
+      ...TokenUserSelect,
       password: 1
     })
     .lean()

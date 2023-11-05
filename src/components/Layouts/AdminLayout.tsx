@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { FC, ReactElement } from 'react'
 import { Box, Container, Typography } from '@mui/material'
 
-import { Header } from '@/components/Shop/Header'
+import { Header } from '@/components/Shop'
 
 interface Props {
   children: ReactElement | ReactElement[]

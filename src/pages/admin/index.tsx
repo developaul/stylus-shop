@@ -1,4 +1,5 @@
 import { NextPage } from 'next';
+import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { Grid } from '@mui/material';
 import {
@@ -12,10 +13,9 @@ import {
   ProductionQuantityLimitsOutlined as ProductionQuantityLimitsOutlinedIcon
 } from '@mui/icons-material';
 
-import { AdminLayout } from "@/components"
+import { AdminLayout } from "@/components/Layouts"
 import { SummaryCard, SummaryCardSkeleton } from '@/components/Admin'
 import { DashboardInfo } from '@/interfaces';
-import { useEffect, useState } from 'react';
 
 const AdminPage: NextPage = () => {
 
@@ -27,7 +27,6 @@ const AdminPage: NextPage = () => {
 
     return () => clearInterval(interval)
   }, [])
-
 
   const {
     numberOfOrders, paidOrders, notPaidOrders, numberOfClients,

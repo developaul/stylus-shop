@@ -1,6 +1,6 @@
 import mongoose, { Schema, model, Model } from 'mongoose'
 
-import { AuthProvidersEnum, SizeEnum, UserRoleEnum } from '@/constants'
+import { AuthProvidersEnum, SizeEnum, UserRole, UserRoleEnum } from '@/constants'
 import { User } from '@/interfaces'
 
 const { Types } = Schema
@@ -33,7 +33,8 @@ const userSchema = new Schema({
       values: UserRoleEnum,
       message: `{VALUE} no es un role valido`
     },
-    required: true
+    required: true,
+    default: UserRole.Client
   },
   provider: {
     type: String,

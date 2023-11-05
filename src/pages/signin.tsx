@@ -1,4 +1,5 @@
-import { AuthLayout, SignInForm } from "@/components"
+import { SignInForm } from "@/components/Auth"
+import { AuthLayout } from '@/components/Layouts'
 
 const Signin = () => {
   return (

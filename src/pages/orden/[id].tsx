@@ -5,9 +5,11 @@ import { Box, Grid } from '@mui/material'
 import { authOptions } from '../api/auth/[...nextauth]'
 import { getOrderById } from '@/server'
 import {
-  CartList, CheckoutLayout,
-  Logo, OrderCalculation, ShippingAddress
-} from '@/components'
+  CartList, OrderCalculation, ShippingAddress
+} from '@/components/Shop'
+import { CheckoutLayout } from '@/components/Layouts'
+import { Logo } from '@/components/Globals'
+
 
 import { ShortOrder } from '@/interfaces'
 

@@ -7,7 +7,7 @@ import Inventory2RoundedIcon from '@mui/icons-material/Inventory2Rounded';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 
-import { ProductCounter, SelectSize } from '@/components'
+import { ProductCounter, SelectSize } from '@/components/Globals'
 import { FavoriteProductsContext, CartProductsContext } from '@/context';
 import { CartProduct, Product } from '@/interfaces'
 import { Currency } from '@/utils'

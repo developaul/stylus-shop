@@ -1,6 +1,6 @@
 import { Box } from "@mui/material"
 
-import { Logo } from "../.."
+import { Logo } from "@/components/Globals"
 import { Navbar } from "./Navbar"
 
 export const Header = () => {

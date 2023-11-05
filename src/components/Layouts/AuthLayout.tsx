@@ -1,8 +1,9 @@
+import Head from 'next/head'
 import { FC, ReactElement } from 'react'
 import { Box, Container } from '@mui/material'
 
-import { AuthSwitch, Logo } from '@/components'
-import Head from 'next/head'
+import { Logo } from '@/components/Globals'
+import { AuthSwitch } from '@/components/Auth'
 
 interface Props {
   children: ReactElement | ReactElement[]

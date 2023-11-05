@@ -4,7 +4,7 @@ import { getServerSession } from 'next-auth';
 import { Typography } from '@mui/material'
 import { DataGrid, } from '@mui/x-data-grid';
 
-import { ShopLayout } from '@/components'
+import { ShopLayout } from '@/components/Layouts'
 
 import { authOptions } from '../api/auth/[...nextauth]';
 import { getOrdersByUserId } from '@/server';
@@ -41,7 +41,7 @@ const HistorialPage: NextPage<Props> = ({ orders }) => {
         columns={userOrderHistory}
         initialState={{
           pagination: {
-            paginationModel: { pageSize: 5 }
+            paginationModel: { pageSize: 10 }
           },
         }}
         pageSizeOptions={[10]}

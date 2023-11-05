@@ -4,7 +4,7 @@ import { Swiper, SwiperRef } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
 
 import { ProductSlide } from './ProductSlide';
-import { SliderButton } from '@/components/Globals/SliderButton';
+import { SliderButton } from '@/components/Globals';
 
 import { Direction, ShortProduct } from '@/interfaces';
 import { productSliderBreakPoints } from '@/constants';

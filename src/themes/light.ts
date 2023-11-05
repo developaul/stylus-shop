@@ -91,7 +91,6 @@ export const lightTheme = createTheme({
     }
   }
 });
-console.log("🚀 ~ file: light.ts:52 ~ lightTheme:", lightTheme)
 
 
 

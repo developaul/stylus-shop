@@ -5,8 +5,8 @@ import { getAllCategories, getBestProducts } from "@/server"
 import {
   CategoryGrid, CategoryList,
   ProductSlider, Services,
-  ShopLayout
-} from "@/components"
+} from "@/components/Shop"
+import { ShopLayout } from '@/components/Layouts'
 
 import { Category, ShortProduct } from "@/interfaces"
 import { Box } from "@mui/material"

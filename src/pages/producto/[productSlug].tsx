@@ -10,10 +10,9 @@ import {
 } from '@/server'
 
 import {
-  CategoryList,
-  Services,
-  ShopLayout, ProductCard, ProductSlider
-} from '@/components'
+  CategoryList, Services, ProductCard, ProductSlider
+} from '@/components/Shop'
+import { ShopLayout } from '@/components/Layouts'
 
 import { Category, Product, ShortProduct } from '@/interfaces'
 

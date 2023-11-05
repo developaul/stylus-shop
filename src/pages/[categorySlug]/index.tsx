@@ -11,9 +11,9 @@ import {
 
 import {
   CategoryList, ProductSlider,
-  Services, SubCategoryGrid,
-  ShopLayout
-} from '@/components'
+  Services, SubCategoryGrid
+} from '@/components/Shop'
+import { ShopLayout } from '@/components/Layouts'
 
 import { Category, ShortProduct, SubCategory } from '@/interfaces'
 

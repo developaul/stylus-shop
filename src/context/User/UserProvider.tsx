@@ -3,8 +3,9 @@ import { useSession, signOut, signIn } from 'next-auth/react'
 
 import { UserContext, userReducer } from './'
 
-import { userDataSource } from '@/datasources'
+import { adminDataSource, userDataSource } from '@/datasources'
 import { RegisterUserArgs, ShortUser } from '@/interfaces'
+import { UserRole } from '@/constants'
 
 export interface UserState {
   user: ShortUser | null
@@ -63,6 +64,15 @@ export const UserProvider: FC<Props> = ({ children }) => {
     signOut()
   }
 
+  const updateUserRole = async (userId: string, role: UserRole) => {
+    try {
+      await adminDataSource.updateUserRole(userId, role)
+    } catch (error) {
+      console.error(error)
+      throw error
+    }
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -70,6 +80,7 @@ export const UserProvider: FC<Props> = ({ children }) => {
         login,
         logout,
         register,
+        updateUserRole
       }}>
       {children}
     </UserContext.Provider>

@@ -3,7 +3,8 @@ import { NextPage } from 'next'
 import NextLink from 'next/link'
 import { Box, Button, Grid } from '@mui/material'
 
-import { Services, ShopLayout, OrderSummary, CartList } from '@/components'
+import { Services, OrderSummary, CartList } from '@/components/Shop'
+import { ShopLayout } from '@/components/Layouts'
 
 const CartPage: NextPage = () => {
   return (

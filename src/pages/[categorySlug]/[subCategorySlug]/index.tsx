@@ -12,9 +12,9 @@ import {
 import {
   CategoryList,
   Services,
-  ShopLayout,
   ProductList
-} from '@/components'
+} from '@/components/Shop'
+import { ShopLayout } from '@/components/Layouts'
 
 import { Category, SubCategory } from '@/interfaces'
 
