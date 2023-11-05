@@ -35,10 +35,10 @@ export const userOrderHistory: GridColDef[] = [
     width: 250,
     renderCell: ({ row }) => {
       if (row.status === OrderStatus.Paid)
-        return <Chip color="success" label='Pagada' variant='outlined' />
+        return <Chip color="success" label='Pagado' variant='outlined' />
 
       if (row.status === OrderStatus.Cancelled)
-        return <Chip color="error" label='Cancelada' variant='outlined' />
+        return <Chip color="error" label='Cancelado' variant='outlined' />
 
       return <Chip color="warning" label='Pendiente' variant='outlined' />
     }
@@ -71,7 +71,7 @@ export const adminOrderHistory: GridColDef[] = [
   { field: 'id', headerName: 'Id', description: 'Id de la orden', width: 250 },
   { field: 'email', headerName: 'Correo', width: 250 },
   { field: 'name', headerName: 'Nombre completo', width: 300 },
-  { field: 'total', headerName: 'Monto total', width: 300 },
+  { field: 'total', headerName: 'Monto total', width: 300, renderCell: ({ row }) => Currency.format(row.total) },
   {
     field: 'status',
     headerName: 'Estado',
@@ -79,10 +79,10 @@ export const adminOrderHistory: GridColDef[] = [
     width: 250,
     renderCell: ({ row }) => {
       if (row.status === OrderStatus.Paid)
-        return <Chip color="success" label='Pagada' variant='outlined' />
+        return <Chip color="success" label='Pagado' variant='outlined' />
 
       if (row.status === OrderStatus.Cancelled)
-        return <Chip color="error" label='Cancelada' variant='outlined' />
+        return <Chip color="error" label='Cancelado' variant='outlined' />
 
       return <Chip color="warning" label='Pendiente' variant='outlined' />
     }
