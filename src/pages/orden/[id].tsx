@@ -1,7 +1,9 @@
 import { GetServerSideProps, NextPage } from 'next'
+import { useRouter } from 'next/router';
 import { getServerSession } from 'next-auth'
-import { Box, Button, Card, CardContent, Grid, ButtonBase } from '@mui/material'
+import { Box, Button, Card, CardContent, Grid } from '@mui/material'
 import { NotInterestedOutlined as NotInterestedOutlinedIconIcon } from '@mui/icons-material';
+import { useSnackbar } from 'notistack';
 
 import { authOptions } from '../api/auth/[...nextauth]'
 import { getOrderById } from '@/server'
@@ -13,6 +15,8 @@ import { Logo } from '@/components/Globals'
 
 
 import { ShortOrder } from '@/interfaces'
+import { orderDataSource } from '@/datasources';
+import { useState } from 'react';
 
 interface Props {
   order: ShortOrder
@@ -22,8 +26,22 @@ const OrdenPage: NextPage<Props> = ({ order }) => {
 
   const { _id, shippingAddress, orderProducts, orderSummary } = order
 
-  const onCancelOrder = () => {
+  const router = useRouter()
+  const snackbarController = useSnackbar()
 
+  const [isCancelling, setIsCancelling] = useState(false)
+
+  const onCancelOrder = async () => {
+    setIsCancelling(true)
+
+    try {
+      await orderDataSource.cancelOrder(_id)
+      router.reload()
+    } catch (error: any) {
+      setIsCancelling(false)
+      console.error(error)
+      snackbarController.enqueueSnackbar(error.message ?? 'Hubo un error', { variant: 'error' })
+    }
   }
 
   return (
@@ -38,7 +56,7 @@ const OrdenPage: NextPage<Props> = ({ order }) => {
             <CardContent>
               <ShippingAddress shippingAddress={shippingAddress} />
 
-              <PayButtons order={order} />
+              <PayButtons isCancelling={isCancelling} order={order} />
             </CardContent>
           </Card>
 
@@ -46,6 +64,7 @@ const OrdenPage: NextPage<Props> = ({ order }) => {
             <Button
               onClick={onCancelOrder}
               variant='contained'
+              disabled={isCancelling}
               color='error'
               startIcon={<NotInterestedOutlinedIconIcon />}
             >

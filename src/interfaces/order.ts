@@ -13,7 +13,7 @@ export interface Order {
   createdAt: Date
   updatedAt: Date
   transactionId?: string
-
+  cancelledById?: string
   createdBy?: CreatedByUser
 }
 

@@ -11,9 +11,10 @@ import { orderDataSource } from '@/datasources'
 
 interface Props {
   order: ShortOrder
+  isCancelling: boolean
 }
 
-export const PayButtons: FC<Props> = ({ order }) => {
+export const PayButtons: FC<Props> = ({ order, isCancelling }) => {
 
   const snackController = useSnackbar()
 
@@ -68,6 +69,7 @@ export const PayButtons: FC<Props> = ({ order }) => {
 
         {order.status === OrderStatus.Pending && (
           <PayPalButtons
+            disabled={isCancelling || isPaying}
             createOrder={(_, actions) => {
               return actions.order.create({
                 purchase_units: [

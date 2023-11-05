@@ -47,6 +47,7 @@ const orderSchema = new Schema({
   paidAt: { type: Date },
   transactionId: { type: String },
   cancelledAt: { type: Date },
+  cancelledById: { type: ObjectId, ref: 'User' },
   createdById: { type: ObjectId, ref: 'User' }
 }, { timestamps: true })
 

@@ -3,8 +3,9 @@ import { getServerSession } from 'next-auth'
 
 import { authOptions } from '../auth/[...nextauth]'
 
-import { createOrder, mongoConnection } from '@/server'
+import { OrderModel, mongoConnection } from '@/server'
 import { ShortOrder } from '@/interfaces'
+import { OrderStatus } from '@/constants'
 
 
 type Data =
@@ -15,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   try {
     switch (req.method) {
       case 'POST':
-        return await handleCreateOrder(req, res)
+        return await handleCancelOrder(req, res)
 
       default:
         return res
@@ -30,21 +31,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
 }
 
-export const handleCreateOrder = async (req: NextApiRequest, res: NextApiResponse<Data>): Promise<void> => {
+export const handleCancelOrder = async (req: NextApiRequest, res: NextApiResponse<Data>): Promise<void> => {
   const session = await getServerSession(req, res, authOptions)
   if (!session) return res.status(401).json({ message: 'Session is required' })
 
-  const { orderProducts, orderSummary, shippingAddress } = req.body
+  const { orderId } = req.body
 
-  try {
-    await mongoConnection.connect()
-    const order = await createOrder({ createdById: session.user._id, orderProducts, orderSummary, shippingAddress })
-    await mongoConnection.disconnect()
+  await mongoConnection.connect()
+  await OrderModel.findByIdAndUpdate(
+    orderId,
+    {
+      $set: {
+        status: OrderStatus.Cancelled,
+        cancelledAt: new Date(),
+        cancelledById: session.user._id
+      }
+    }
+  )
+  await mongoConnection.disconnect()
 
-    return res.status(201).json(order)
-  } catch (error: any) {
-    await mongoConnection.disconnect()
-    console.log(error)
-    return res.status(400).json({ message: 'Hubo un error' })
-  }
+  return res.status(201).json({ message: 'Orden Cancelada' })
 }

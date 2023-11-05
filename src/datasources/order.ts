@@ -16,3 +16,7 @@ export const createOrder = async (args: Omit<OrderInput, 'createdById'>): Promis
 export const payOrder = async (args: PayOrderInput) => {
   await orderApi.post('/pay', args)
 }
+
+export const cancelOrder = async (orderId: string) => {
+  await orderApi.post('/cancel', { orderId })
+}
