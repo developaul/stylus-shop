@@ -10,7 +10,8 @@ import {
   CreditCardOffOutlined as CreditCardOffOutlinedIcon,
   DashboardOutlined as DashboardOutlinedIcon,
   GroupOutlined as GroupOutlinedIcon,
-  ProductionQuantityLimitsOutlined as ProductionQuantityLimitsOutlinedIcon
+  ProductionQuantityLimitsOutlined as ProductionQuantityLimitsOutlinedIcon,
+  NotInterestedOutlined as NotInterestedOutlinedIconIcon
 } from '@mui/icons-material';
 
 import { AdminLayout } from "@/components/Layouts"
@@ -30,7 +31,7 @@ const AdminPage: NextPage = () => {
 
   const {
     numberOfOrders, paidOrders, notPaidOrders, numberOfClients,
-    numberOfProducts, productsWithNoInventory, lowInventory
+    numberOfProducts, productsWithNoInventory, lowInventory, cancelledOrders
   } = data! ?? {}
 
   return (
@@ -50,12 +51,14 @@ const AdminPage: NextPage = () => {
             <SummaryCardSkeleton />
             <SummaryCardSkeleton />
             <SummaryCardSkeleton />
+            <SummaryCardSkeleton />
           </>
         ) : (
           <>
             <SummaryCard title={numberOfOrders} subTitle='Ordenes totales' icon={<CreditCardOffOutlinedIcon color='secondary' sx={{ fontSize: 40 }} />} />
             <SummaryCard title={paidOrders} subTitle='Ordenes pagadas' icon={<AttachMoneyOutlinedIcon color='success' sx={{ fontSize: 40 }} />} />
-            <SummaryCard title={notPaidOrders} subTitle='Ordenes pendientes' icon={<CreditCardOffOutlinedIcon color='error' sx={{ fontSize: 40 }} />} />
+            <SummaryCard title={notPaidOrders} subTitle='Ordenes pendientes' icon={<CreditCardOffOutlinedIcon color='warning' sx={{ fontSize: 40 }} />} />
+            <SummaryCard title={cancelledOrders} subTitle='Ordenes canceladas' icon={<NotInterestedOutlinedIconIcon color='error' sx={{ fontSize: 40 }} />} />
             <SummaryCard title={numberOfClients} subTitle='Clientes' icon={<GroupOutlinedIcon color='primary' sx={{ fontSize: 40 }} />} />
             <SummaryCard title={numberOfProducts} subTitle='Productos' icon={<CategoryOutlinedIcon color='warning' sx={{ fontSize: 40 }} />} />
             <SummaryCard title={productsWithNoInventory} subTitle='Sin Existencias' icon={<CancelPresentationOutlinedIcon color='error' sx={{ fontSize: 40 }} />} />

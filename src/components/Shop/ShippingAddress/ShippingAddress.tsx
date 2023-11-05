@@ -7,6 +7,7 @@ import { ShippingAddress as IShippingAddress } from '@/interfaces'
 const BoxStyled = styled(Box)`
   grid-template-columns: 100px 1fr;
   display: grid;
+  align-items: center;
 `
 
 interface Props {
@@ -50,8 +51,6 @@ export const ShippingAddress: FC<Props> = ({ shippingAddress }) => {
           <Typography variant='subtitle2'>Codigo zip:</Typography>
           <Typography variant='body2'>{zipCode}</Typography>
         </BoxStyled>
-
-
       </Box>
     </Box >
   )

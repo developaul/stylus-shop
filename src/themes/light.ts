@@ -62,8 +62,8 @@ export const lightTheme = createTheme({
           borderRadius: theme.spacing(4),
           '&:hover': {
             backgroundColor: theme.palette.grey[50]
-          }
-        }),
+          },
+        })
       },
       variants: [
         {
@@ -76,6 +76,16 @@ export const lightTheme = createTheme({
             }
           })
         },
+        {
+          props: { variant: 'contained', color: 'error' },
+          style: ({ theme }) => ({
+            color: theme.palette.common.white,
+            backgroundColor: theme.palette.error.main,
+            '&:hover': {
+              backgroundColor: theme.palette.error.dark
+            }
+          })
+        }
       ],
     },
     MuiCard: {

@@ -1,14 +1,20 @@
 import { GetServerSideProps, NextPage } from 'next'
 import { useRouter } from 'next/router';
+import NextLink from 'next/link'
+import { useState } from 'react';
 import { getServerSession } from 'next-auth'
 import { Box, Button, Card, CardContent, Grid } from '@mui/material'
-import { NotInterestedOutlined as NotInterestedOutlinedIconIcon } from '@mui/icons-material';
+import {
+  NotInterestedOutlined as NotInterestedOutlinedIcon,
+  ArrowBack as ArrowBackIcon
+} from '@mui/icons-material';
+
 import { useSnackbar } from 'notistack';
 
 import { authOptions } from '../api/auth/[...nextauth]'
 import { getOrderById } from '@/server'
 import {
-  CartList, OrderCalculation, PayButtons, ShippingAddress
+  CartList, OrderCalculation, OrderStatus, PayButtons, ShippingAddress
 } from '@/components/Shop'
 import { CheckoutLayout } from '@/components/Layouts'
 import { Logo } from '@/components/Globals'
@@ -16,7 +22,7 @@ import { Logo } from '@/components/Globals'
 
 import { ShortOrder } from '@/interfaces'
 import { orderDataSource } from '@/datasources';
-import { useState } from 'react';
+import { OrderStatus as IOrderStatus } from '@/constants';
 
 interface Props {
   order: ShortOrder
@@ -60,20 +66,32 @@ const OrdenPage: NextPage<Props> = ({ order }) => {
             </CardContent>
           </Card>
 
-          <Box sx={{ mt: 4, display: 'flex' }}>
+          <Box sx={{ mt: 4, display: 'flex', justifyContent: 'space-between' }}>
             <Button
-              onClick={onCancelOrder}
+              href='/'
+              LinkComponent={NextLink}
               variant='contained'
               disabled={isCancelling}
-              color='error'
-              startIcon={<NotInterestedOutlinedIconIcon />}
+              startIcon={<ArrowBackIcon />}
             >
-              Cancelar orden
+              Seguir comprando
             </Button>
 
+            {order.status === IOrderStatus.Pending && (
+              <Button
+                onClick={onCancelOrder}
+                variant='contained'
+                disabled={isCancelling}
+                color='error'
+                startIcon={<NotInterestedOutlinedIcon />}
+              >
+                Cancelar orden
+              </Button>
+            )}
           </Box>
         </Grid>
         <Grid xs={12} md={5} item>
+          <OrderStatus status={order.status} />
           <CartList cartProduct={orderProducts} />
           <OrderCalculation orderSummary={orderSummary} />
         </Grid>

@@ -1,13 +1,9 @@
-import NextLink from 'next/link'
-import { Box, Typography, Link } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import {
-  MenuBookRounded as MenuBookRoundedIcon,
-  FavoriteRounded as FavoriteRoundedIcon
+  MenuBookRounded as MenuBookRoundedIcon
 } from '@mui/icons-material'
 
-import { SocialNetworks } from './SocialNetworks'
-
-import { socialNetworks } from '@/constants'
+import { MadeBy } from './MadeBy'
 
 export const Footer = () => {
   return (
@@ -18,11 +14,8 @@ export const Footer = () => {
       flexDirection='column'
       maxWidth={950}
       marginX='auto'
-      marginTop={5}
+      marginY={5}
     >
-      <SocialNetworks
-        socialNetworks={socialNetworks} />
-
       <MenuBookRoundedIcon
         sx={{
           width: 100,
@@ -63,14 +56,7 @@ export const Footer = () => {
 
       <Typography>Todos los derechos reservados</Typography>
 
-      <Typography display='flex' alignItems='center'>
-        Hecho por&nbsp;
-        <Link
-          component={NextLink}
-          href='https://github.com/developaul'>
-          @developaul
-        </Link>&nbsp;
-        con&nbsp;<FavoriteRoundedIcon color='primary' /> </Typography>
+      <MadeBy />
     </Box>
   )
 }

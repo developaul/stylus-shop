@@ -2,11 +2,15 @@ import { useRouter } from 'next/router'
 import { FC, useState } from 'react'
 import { PayPalButtons } from '@paypal/react-paypal-js'
 import { Box, Chip, CircularProgress } from '@mui/material'
-import { CreditScoreOutlined as CreditScoreOutlinedIcon } from '@mui/icons-material'
+import {
+  CreditScoreOutlined as CreditScoreOutlinedIcon,
+} from '@mui/icons-material'
 import { useSnackbar } from 'notistack'
 
+import { OrderStatus } from '@/components/Shop'
+
 import { ShortOrder, IPaypal } from '@/interfaces'
-import { OrderStatus } from '@/constants'
+import { OrderStatus as IOrderStatus } from '@/constants'
 import { orderDataSource } from '@/datasources'
 
 interface Props {
@@ -47,27 +51,12 @@ export const PayButtons: FC<Props> = ({ order, isCancelling }) => {
       </Box>
 
       <Box sx={{ display: isPaying ? 'none' : 'flex', flex: 1, flexDirection: 'column' }}>
-        {order.status === OrderStatus.Paid && (
-          <Chip
-            sx={{ my: 2 }}
-            label='Orden ya fue pagada'
-            variant='outlined'
-            color='success'
-            icon={<CreditScoreOutlinedIcon />}
-          />
+
+        {[IOrderStatus.Cancelled, IOrderStatus.Paid].includes(order.status) && (
+          <OrderStatus status={order.status} />
         )}
 
-        {order.status === OrderStatus.Cancelled && (
-          <Chip
-            sx={{ my: 2 }}
-            label='Orden cancelada'
-            variant='outlined'
-            color='error'
-            icon={<CreditScoreOutlinedIcon />}
-          />
-        )}
-
-        {order.status === OrderStatus.Pending && (
+        {order.status === IOrderStatus.Pending && (
           <PayPalButtons
             disabled={isCancelling || isPaying}
             createOrder={(_, actions) => {

@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { FC, ReactElement } from 'react'
 import { Box, Container, Typography } from '@mui/material'
 
-import { Header } from '@/components/Shop'
+import { MadeBy, Header } from '@/components/Shop'
 
 interface Props {
   children: ReactElement | ReactElement[]
@@ -37,6 +37,9 @@ export const AdminLayout: FC<Props> = ({ children, title, icon, subTitle }) => {
           {children}
         </Box>
 
+        <Box sx={{ my: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <MadeBy />
+        </Box>
       </Container>
     </>
   )

@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { FC, ReactElement } from 'react'
 import { Container } from '@mui/material'
+import { Footer } from '../Shop'
 
 interface Props {
   children: ReactElement | ReactElement[]
@@ -18,6 +19,8 @@ export const CheckoutLayout: FC<Props> = ({ children, title }) => {
         sx={{ paddingTop: 2 }}
         maxWidth='xl'>
         {children}
+
+        <Footer />
       </Container>
     </>
   )
