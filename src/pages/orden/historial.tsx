@@ -16,7 +16,7 @@ interface Props {
   orders: ShortOrder[]
 }
 
-const HistorialPage: NextPage<Props> = ({ orders }) => {
+const HistoryPage: NextPage<Props> = ({ orders }) => {
 
   const rows = useMemo(() => {
     return orders.map((order) => {
@@ -62,4 +62,4 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   }
 }
 
-export default HistorialPage
+export default HistoryPage

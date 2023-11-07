@@ -28,7 +28,7 @@ interface Props {
   order: ShortOrder
 }
 
-const OrdenPage: NextPage<Props> = ({ order }) => {
+const OrderPage: NextPage<Props> = ({ order }) => {
 
   const { _id, shippingAddress, orderProducts, orderSummary } = order
 
@@ -131,4 +131,4 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res, query }
   }
 }
 
-export default OrdenPage
+export default OrderPage
