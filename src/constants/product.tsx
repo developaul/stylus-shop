@@ -23,7 +23,7 @@ export const productColumns: GridColDef[] = [
   {
     field: 'title',
     headerName: 'Titulo',
-    width: 250,
+    width: 300,
     renderCell: ({ row }) => {
       return (
         <Link
@@ -35,8 +35,8 @@ export const productColumns: GridColDef[] = [
       )
     }
   },
-  { field: 'subCategory', headerName: 'Sub categoria' },
-  { field: 'category', headerName: 'Categoria' },
+  { field: 'category', headerName: 'Categoria', width: 150 },
+  { field: 'subCategory', headerName: 'Sub categoria', width: 150 },
   { field: 'inStock', headerName: 'Inventario' },
   { field: 'price', headerName: 'Precio', renderCell: ({ row }) => Currency.format(row.price) },
   { field: 'sizes', headerName: 'Tallas', width: 250 }

@@ -14,8 +14,8 @@ export interface Product {
   categoryId: string
   subCategoryId: string
 
-  category: Category
-  subCategory: SubCategory
+  category?: Category
+  subCategory?: SubCategory
 }
 
 export interface ShortProduct extends Pick<Product, '_id' | 'images' | 'title' | 'slug'> { }
@@ -36,4 +36,17 @@ export interface UserCartProduct {
 
 export interface FavoriteProduct extends Pick<Product, '_id' | 'slug' | 'title'> {
   image: string;
+}
+
+export interface ProductFormData {
+  _id: string;
+  title: string;
+  slug: string;
+  images: string[];
+  description: string;
+  inStock: number;
+  sizes: Size[];
+  price: number;
+  categoryId: string;
+  subCategoryId: string;
 }
