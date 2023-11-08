@@ -36,10 +36,10 @@ export const CategoryGridItem: FC<Props> = ({ category }) => {
             variant='h6'
             sx={{
               position: 'absolute',
-              top: '90%',
+              top: 40,
               left: '50%',
               transform: 'translate(-50%, -50%)',
-              color: 'white'
+              color: 'grey.100',
             }}
           >
             {category.title}

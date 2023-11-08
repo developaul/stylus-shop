@@ -20,7 +20,7 @@ export const categories: Category[] = [
     title: 'Damas',
     icon: '/assets/icons/category/women.svg',
     slug: 'mujer',
-    image: '/assets/images/category/pantalones.svg'
+    image: '/assets/images/products/8765115-00-A_0_2000.jpg'
   },
   {
     _id: '651b7558caf530c9616e3829',
@@ -34,14 +34,14 @@ export const categories: Category[] = [
     title: 'Niños',
     icon: '/assets/icons/category/kid.svg',
     slug: 'ninos',
-    image: '/assets/images/category/pantalones.svg'
+    image: '/assets/images/products/1473809-00-A_1_2000.jpg'
   },
   {
     _id: '651b7562ab11d642cd24c945',
     title: 'Bebés',
     icon: '/assets/icons/category/baby.svg',
     slug: 'bebes',
-    image: '/assets/images/category/pantalones.svg'
+    image: '/assets/images/products/1740417-00-A_0_2000.jpg'
   }
 ]
 
@@ -359,7 +359,7 @@ export const products: Omit<Product, '_id' | 'category' | 'subCategory'>[] = [
     description: "Introducing the Tesla Chill Collection. The Chill Pullover Hoodie has a premium, heavyweight exterior and soft fleece interior for comfort in any season. The unisex hoodie features subtle thermoplastic polyurethane Tesla logos across the chest and on the sleeve, a double layer single seam hood and pockets with custom matte zipper pulls. Made from 60% cotton and 40% recycled polyester.",
     images: [
       '/assets/images/products/1740051-00-A_0_2000.jpg',
-      '1740051-00-A_1.jpg',
+      '/assets/images/products/1740051-00-A_1.jpg',
     ],
     inStock: 10,
     price: 130,
@@ -415,7 +415,7 @@ export const products: Omit<Product, '_id' | 'category' | 'subCategory'>[] = [
     description: "The Unisex 3D Large Wordmark Pullover Hoodie features soft fleece and an adjustable, jersey-lined hood for comfort and coverage. Designed in a unisex style, the pullover hoodie includes a tone-on-tone 3D silicone-printed wordmark across the chest.",
     images: [
       '/assets/images/products/8529107-00-A_0_2000.jpg',
-      '8529107-00-A_1.jpg',
+      '/assets/images/products/8529107-00-A_1.jpg',
     ],
     inStock: 15,
     price: 70,
@@ -429,7 +429,7 @@ export const products: Omit<Product, '_id' | 'category' | 'subCategory'>[] = [
     description: "As with the iconic Tesla logo, the Cybertruck Graffiti Hoodie is a classic in the making. Unisex style featuring soft fleece and an adjustable, jersey-lined hood for comfortable coverage.",
     images: [
       '/assets/images/products/7654420-00-A_0_2000.jpg',
-      '7654420-00-A_1_2000.jpg',
+      '/assets/images/products/7654420-00-A_1_2000.jpg',
     ],
     inStock: 13,
     price: 60,
@@ -443,7 +443,7 @@ export const products: Omit<Product, '_id' | 'category' | 'subCategory'>[] = [
     description: "The Relaxed T Logo Hat is a classic silhouette combined with modern details, featuring a 3D T logo and a custom metal buckle closure. The ultrasoft design is flexible and abrasion resistant, while the inner sweatband includes quilted padding for extra comfort and moisture wicking. The visor is fully made from recycled plastic bottles. 100% Cotton.",
     images: [
       '/assets/images/products/1657932-00-A_0_2000.jpg',
-      '1657932-00-A_1.jpg',
+      '/assets/images/products/1657932-00-A_1.jpg',
     ],
     inStock: 11,
     price: 30,
@@ -457,7 +457,7 @@ export const products: Omit<Product, '_id' | 'category' | 'subCategory'>[] = [
     description: "The Relaxed T Logo Hat is a classic silhouette combined with modern details, featuring a 3D T logo and a custom metal buckle closure. The ultrasoft design is flexible and abrasion resistant, while the inner sweatband includes quilted padding for extra comfort and moisture wicking. The visor is fully made from recycled plastic bottles. 100% Cotton.",
     images: [
       '/assets/images/products/1740417-00-A_0_2000.jpg',
-      '1740417-00-A_1.jpg',
+      '/assets/images/products/1740417-00-A_1.jpg',
     ],
     inStock: 13,
     price: 35,
