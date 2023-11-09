@@ -4,8 +4,9 @@ import { useSession, signOut, signIn } from 'next-auth/react'
 import { UserContext, userReducer } from './'
 
 import { adminDataSource, userDataSource } from '@/datasources'
-import { RegisterUserArgs, ShortUser } from '@/interfaces'
+import { CartProduct, FavoriteProduct, RegisterUserArgs, ShortUser } from '@/interfaces'
 import { UserRole } from '@/constants'
+import { Product } from '@/utils'
 
 export interface UserState {
   user: ShortUser | null
@@ -47,15 +48,19 @@ export const UserProvider: FC<Props> = ({ children }) => {
 
       await userDataSource.registerUser(args)
 
-      await signIn('credentials', { email, password })
-
+      await login(email, password)
     } catch (error) {
       console.error(error)
     }
   }
 
   const login = async (email: string, password: string) => {
-    await signIn('credentials', { email, password }).catch(console.error)
+    const cart: CartProduct[] = JSON.parse(localStorage.getItem('cart') ?? '') ?? []
+    const cartProducts = JSON.stringify(Product.transformToUserCartProduct(cart))
+    const favoriteProducts: FavoriteProduct[] = JSON.parse(localStorage.getItem('favorites') ?? '') ?? []
+    const favoriteProductIds = JSON.stringify(favoriteProducts.map(({ _id }) => _id))
+
+    await signIn('credentials', { email, password, cartProducts, favoriteProductIds }).catch(console.error)
   }
 
   const logout = () => {

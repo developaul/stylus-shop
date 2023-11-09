@@ -1,6 +1,6 @@
 import { isValidObjectId } from "mongoose";
 
-import { OrderModel, ProductModel, mongoConnection } from "..";
+import { OrderModel, ProductModel, UserModel, mongoConnection } from "..";
 
 import { OrderInput, ShortOrder } from "@/interfaces";
 import { keyBy } from "@/utils";
@@ -89,9 +89,16 @@ const getOrderInput = async ({ createdById, orderProducts, orderSummary, shippin
 }
 
 export const createOrder = async (args: OrderInput): Promise<ShortOrder> => {
-
   const orderToCreate = await getOrderInput(args)
   await mongoConnection.connect()
+
+  await UserModel.findByIdAndUpdate(args.createdById, {
+    $set: {
+      ...args.shippingAddress,
+      cartProducts: []
+    }
+  })
+
   const newOrder = await OrderModel.create(orderToCreate)
   await mongoConnection.disconnect()
 

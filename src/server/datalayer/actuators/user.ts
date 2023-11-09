@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs'
 import { mongoConnection } from ".."
 import { UserModel } from "../models"
 
-import { TokenUser, UpdateUserArgs, User } from "@/interfaces"
+import { TokenUser, UpdateUserArgs, User, UserCartProduct } from "@/interfaces"
 import { AuthProvider, TokenUserSelect, UserRole } from "@/constants"
 import { Validations } from '@/utils'
 
@@ -50,9 +50,11 @@ interface CheckUserArgs {
   email: string,
   password: string,
   provider: AuthProvider
+  favoriteProductIds: string[],
+  cartProducts: UserCartProduct[]
 }
 
-export const checkUserByCredentials = async ({ email, password }: Omit<CheckUserArgs, 'provider'>): Promise<TokenUser | null> => {
+export const checkUserByCredentials = async ({ email, password }: Omit<CheckUserArgs, 'provider' | 'cartProducts' | 'favoriteProductIds'>): Promise<TokenUser | null> => {
 
   if (!Validations.isValidEmail(email)) return null
 
@@ -74,13 +76,17 @@ export const checkUserByCredentials = async ({ email, password }: Omit<CheckUser
   return restUser
 }
 
-export const checkUser = async ({ email, password, provider }: CheckUserArgs): Promise<TokenUser | null> => {
+export const checkUser = async ({ email, password, provider, cartProducts, favoriteProductIds }: CheckUserArgs): Promise<TokenUser | null> => {
 
-  if (provider === AuthProvider.Credentials)
-    return checkUserByCredentials({ email, password })
+  if (provider === AuthProvider.Credentials) {
+    const user = await checkUserByCredentials({ email, password })
 
-  // if (provider === AuthProvider.Github)
-  // return checkUserByOauth({ email, password })
+    if (!user) return null
+
+    await updateCartProductsAndFavorites({ userId: user._id, cartProducts, favoriteProductIds })
+
+    return user
+  }
 
   return null
 }
@@ -111,4 +117,18 @@ export const updateUser = async (args: UpdateUserArgs): Promise<void> => {
   mongoConnection.connect()
   await UserModel.findByIdAndUpdate(args.userId, { $set: userFieldsToUpdate })
   mongoConnection.disconnect()
+}
+
+interface UpdateCartProductsAndFavoritesArgs {
+  favoriteProductIds: string[],
+  cartProducts: UserCartProduct[],
+  userId: string
+}
+
+export const updateCartProductsAndFavorites = async ({ userId, cartProducts, favoriteProductIds }: UpdateCartProductsAndFavoritesArgs): Promise<void> => {
+
+  await mongoConnection.connect()
+  await UserModel.findByIdAndUpdate(userId, { $set: { cartProducts, favoriteProductIds } })
+  await mongoConnection.disconnect()
+
 }
