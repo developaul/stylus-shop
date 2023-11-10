@@ -23,8 +23,8 @@ const ProductsPage = () => {
         id: _id,
         img: images[0],
         title,
-        subCategory: subCategory.title,
-        category: category.title,
+        subCategory: subCategory!.title,
+        category: category!.title,
         inStock,
         price,
         sizes: sizes.join(', '),
@@ -45,7 +45,7 @@ const ProductsPage = () => {
         <Button
           startIcon={<AddOutlinedIcon />}
           color='secondary'
-          href='/admin/products/new'>
+          href='/admin/productos/new'>
           Crear producto
         </Button>
       </Box>

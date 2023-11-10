@@ -68,13 +68,13 @@ const OrderPage: NextPage<Props> = ({ order }) => {
 
           <Box sx={{ mt: 4, display: 'flex', justifyContent: 'space-between' }}>
             <Button
-              href='/'
+              href='/orden/historial'
               LinkComponent={NextLink}
               variant='contained'
               disabled={isCancelling}
               startIcon={<ArrowBackIcon />}
             >
-              Seguir comprando
+              Volver a todas las ordenes
             </Button>
 
             {order.status === IOrderStatus.Pending && (

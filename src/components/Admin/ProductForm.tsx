@@ -37,7 +37,13 @@ export const ProductForm: FC<Props> = ({ product, categories, subCategories }) =
     register, handleSubmit, getValues,
     setValue, watch, formState: { errors, isSubmitting },
     control
-  } = useForm<Omit<ProductFormData, '_id'>>({ defaultValues: product })
+  } = useForm<Omit<ProductFormData, '_id'>>({
+    defaultValues: {
+      ...product,
+      categoryId: categories[0]._id,
+      subCategoryId: subCategories[0]._id
+    }
+  })
 
   useEffect(() => {
     const subscription = watch((value, { name }) => {
@@ -86,10 +92,12 @@ export const ProductForm: FC<Props> = ({ product, categories, subCategories }) =
   }
 
   const onSubmit = async (formData: Omit<ProductFormData, '_id'>) => {
+    console.log("🚀 ~ file: ProductForm.tsx:89 ~ onSubmit ~ formData:", formData)
     if (formData.images.length < 2) return snackbarController.enqueueSnackbar('Minimo 2 imagenes', { variant: 'error' })
 
     try {
 
+      console.log("🚀 ~ file: ProductForm.tsx:94 ~ onSubmit ~ product._id:", product._id)
       if (product._id) {
         await adminDataSource.updateProduct({ ...formData, _id: product._id })
         return
@@ -104,11 +112,12 @@ export const ProductForm: FC<Props> = ({ product, categories, subCategories }) =
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form>
       <Box display='flex' justifyContent='end' sx={{ mb: 2 }}>
         <Button
           color="secondary"
           variant='contained'
+          onClick={handleSubmit(onSubmit)}
           startIcon={<SaveOutlinedIcon />}
           sx={{ width: 150 }}
           type="submit"
@@ -187,9 +196,7 @@ export const ProductForm: FC<Props> = ({ product, categories, subCategories }) =
               name='categoryId'
               control={control}
               disabled={isSubmitting}
-              rules={{ required: 'Este campo es requerido' }}
               render={({ field }) => {
-                console.log("🚀 ~ file: ProductForm.tsx:226 ~ field:", field)
                 return (
                   <RadioGroup {...field} row  >
                     {
@@ -215,9 +222,7 @@ export const ProductForm: FC<Props> = ({ product, categories, subCategories }) =
               name='subCategoryId'
               control={control}
               disabled={isSubmitting}
-              rules={{ required: 'Este campo es requerido' }}
               render={({ field }) => {
-                console.log("🚀 ~ file: ProductForm.tsx:253 ~ field:", field)
                 return (
                   <RadioGroup {...field} row  >
                     {
