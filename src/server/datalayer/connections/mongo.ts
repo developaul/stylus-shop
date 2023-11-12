@@ -34,7 +34,7 @@ export const connect = async () => {
 
 export const disconnect = async () => {
 
-  if (process.env.NODE_ENV === 'development') return;
+  if (['phase-production-build', 'development'.includes(process.env.NEXT_PHASE!)]) return;
 
   if (mongoConnection.isConnected === 0) return;
 
