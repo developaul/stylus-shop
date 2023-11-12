@@ -15,7 +15,6 @@ export const authOptions: AuthOptions = {
         favoriteProductIds: {}
       },
       authorize: async (credentials): Promise<any> => {
-        console.log("🚀 ~ file: [...nextauth].ts:16 ~ authorize: ~ credentials:", credentials)
         const user = await checkUser({
           cartProducts: JSON.parse(credentials?.cartProducts ?? '[]') ?? [],
           favoriteProductIds: JSON.parse(credentials?.favoriteProductIds ?? '[]') ?? [],

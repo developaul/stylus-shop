@@ -1,5 +1,6 @@
 import { FC, ReactElement, useEffect, useReducer } from 'react'
 import { useSession, signOut, signIn } from 'next-auth/react'
+import { useSnackbar } from 'notistack'
 
 import { UserContext, userReducer } from './'
 
@@ -23,6 +24,8 @@ interface Props {
 }
 
 export const UserProvider: FC<Props> = ({ children }) => {
+  const snackbarController = useSnackbar()
+
   const [state, dispatch] = useReducer(userReducer, User_INITIAL_STATE)
 
   const { data: session, status } = useSession()
@@ -49,8 +52,9 @@ export const UserProvider: FC<Props> = ({ children }) => {
       await userDataSource.registerUser(args)
 
       await login(email, password)
-    } catch (error) {
+    } catch (error: any) {
       console.error(error)
+      snackbarController.enqueueSnackbar(error.response?.data ?? 'Hubo un error', { variant: 'error' })
     }
   }
 
@@ -60,7 +64,13 @@ export const UserProvider: FC<Props> = ({ children }) => {
     const favoriteProducts: FavoriteProduct[] = JSON.parse(localStorage.getItem('favorites') ?? '') ?? []
     const favoriteProductIds = JSON.stringify(favoriteProducts.map(({ _id }) => _id))
 
-    await signIn('credentials', { email, password, cartProducts, favoriteProductIds }).catch(console.error)
+    try {
+      const { ok } = await signIn('credentials', { email, password, cartProducts, favoriteProductIds, redirect: false }) ?? {}
+      if (!ok) throw new Error('Credenciales incorrectas')
+    } catch (error: any) {
+      console.error(error)
+      snackbarController.enqueueSnackbar(error.response?.data ?? error.message ?? 'Hubo un error', { variant: 'error' })
+    }
   }
 
   const logout = () => {

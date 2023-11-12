@@ -21,7 +21,7 @@ import 'swiper/css/thumbs';
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    <SnackbarProvider maxSnack={1} autoHideDuration={3000} >
+    <SnackbarProvider maxSnack={1} autoHideDuration={3000} variant='error' >
       <SessionProvider session={session}>
         <PayPalScriptProvider options={{ clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT ?? '' }}>
           <SWRConfig value={{ fetcher: (resource, init) => fetch(resource, init).then(res => res.json()) }}>

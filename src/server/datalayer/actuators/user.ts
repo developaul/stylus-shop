@@ -17,7 +17,7 @@ interface CreateUserArgs {
   provider: AuthProvider
 }
 
-const getUserToCreate = (args: CreateUserArgs) => {
+const getUserToCreate = async (args: CreateUserArgs) => {
   const {
     firstName,
     lastName,
@@ -25,6 +25,14 @@ const getUserToCreate = (args: CreateUserArgs) => {
     email,
     provider
   } = args
+
+  await mongoConnection.connect()
+  const exists = await UserModel.exists({ email })
+  if (exists) {
+    await mongoConnection.disconnect()
+    throw new Error('Ya existe un usuario con ese email')
+  }
+  await mongoConnection.disconnect()
 
   return {
     firstName,
@@ -37,7 +45,7 @@ const getUserToCreate = (args: CreateUserArgs) => {
 }
 
 export const createUser = async (args: CreateUserArgs): Promise<User> => {
-  const userToCreate = getUserToCreate(args)
+  const userToCreate = await getUserToCreate(args)
 
   await mongoConnection.connect()
   const newUser = await UserModel.create(userToCreate)

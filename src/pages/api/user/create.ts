@@ -28,8 +28,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
 export const handleCreateUser = async (req: NextApiRequest, res: NextApiResponse<Data>): Promise<void> => {
   const { firstName, lastName, email, password } = req.body
+  try {
+    await createUser({ email, firstName, provider: AuthProvider.Credentials, lastName, password })
+    return res.status(200).json({ message: 'User created' })
 
-  await createUser({ email, firstName, provider: AuthProvider.Credentials, lastName, password })
-
-  return res.status(200).json({ message: 'User created' })
+  } catch (error: any) {
+    return res.status(400).json({ message: error.message })
+  }
 }
