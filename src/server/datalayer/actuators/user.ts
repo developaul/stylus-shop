@@ -102,9 +102,9 @@ export const checkUser = async ({ email, password, provider, cartProducts, favor
 const getUserFieldsToUpdate = async ({ address, city, country, email, phone, userId, zipCode }: UpdateUserArgs) => {
   if (!Validations.isValidEmail(email)) throw new Error('El email es invalido')
 
-  mongoConnection.connect()
+  await mongoConnection.connect()
   const userExists = await UserModel.exists({ email, _id: { $ne: userId } })
-  mongoConnection.disconnect()
+  await mongoConnection.disconnect()
 
   if (userExists) throw new Error('El email ya esta en uso')
 
@@ -122,9 +122,9 @@ const getUserFieldsToUpdate = async ({ address, city, country, email, phone, use
 export const updateUser = async (args: UpdateUserArgs): Promise<void> => {
   const userFieldsToUpdate = await getUserFieldsToUpdate(args)
 
-  mongoConnection.connect()
+  await mongoConnection.connect()
   await UserModel.findByIdAndUpdate(args.userId, { $set: userFieldsToUpdate })
-  mongoConnection.disconnect()
+  await mongoConnection.disconnect()
 }
 
 interface UpdateCartProductsAndFavoritesArgs {

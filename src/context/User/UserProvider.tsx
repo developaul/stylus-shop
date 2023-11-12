@@ -1,5 +1,6 @@
 import { FC, ReactElement, useEffect, useReducer } from 'react'
 import { useSession, signOut, signIn } from 'next-auth/react'
+import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 
 import { UserContext, userReducer } from './'
@@ -24,6 +25,7 @@ interface Props {
 }
 
 export const UserProvider: FC<Props> = ({ children }) => {
+  const router = useRouter()
   const snackbarController = useSnackbar()
 
   const [state, dispatch] = useReducer(userReducer, User_INITIAL_STATE)
@@ -67,6 +69,7 @@ export const UserProvider: FC<Props> = ({ children }) => {
     try {
       const { ok } = await signIn('credentials', { email, password, cartProducts, favoriteProductIds, redirect: false }) ?? {}
       if (!ok) throw new Error('Credenciales incorrectas')
+      router.replace('/')
     } catch (error: any) {
       console.error(error)
       snackbarController.enqueueSnackbar(error.response?.data ?? error.message ?? 'Hubo un error', { variant: 'error' })
