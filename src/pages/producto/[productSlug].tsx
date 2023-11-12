@@ -27,7 +27,7 @@ const CategoryPage: NextPage<Props> = ({ categories, product, relatedProducts })
   return (
     <ShopLayout title={product.title} >
       <CategoryList
-        categorySlugSelected={product.category.slug}
+        categorySlugSelected={product.category!.slug}
         categories={categories} />
 
       <Breadcrumbs
@@ -48,17 +48,17 @@ const CategoryPage: NextPage<Props> = ({ categories, product, relatedProducts })
           component={NextLink}
           underline="hover"
           color="inherit"
-          href={`/${product.category.slug}`}
+          href={`/${product.category!.slug}`}
         >
-          {product.category.title}
+          {product.category!.title}
         </Link>
         <Link
           component={NextLink}
           underline="hover"
           color="inherit"
-          href={`/${product.category.slug}/${product.subCategory.slug}`}
+          href={`/${product.category!.slug}/${product.subCategory!.slug}`}
         >
-          {product.subCategory.title}
+          {product.subCategory!.title}
         </Link>
         <Typography color="text.primary">{product.title}</Typography>
       </Breadcrumbs>

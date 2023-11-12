@@ -17,7 +17,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
         variant='h5'
         component='h2'
       >
-        {product.category.title} / {product.title}
+        {product.category!.title} / {product.title}
       </Typography>
 
       <Grid spacing={6} container>
